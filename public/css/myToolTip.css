@@ -1,0 +1,53 @@
+
+.myToolTip{
+    position : relative;
+    cursor : help
+}
+
+.myToolTipTarget{
+
+}
+
+.myToolTipContent{
+    position : absolute;
+    z-index: 999;
+    width : 300px;
+    visibility: hidden;
+    background-color : rgba(34, 34, 34, 0.9);
+    border-radius : 5px;
+    color : white;
+    opacity : 0;
+
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+
+}
+
+
+.myToolTipTarget:hover ~ .myToolTipContent{
+    visibility: visible;  
+    opacity : 1.0;
+}
+
+.mTTP-right.myToolTipContent{
+    left : calc(100% + 10px);
+    top : 50%;
+    transform : translateY(-50%) !important;
+}
+
+.mTTP-left.myToolTipContent{
+    right : calc(100% + 10px);
+    top : 50%;
+    transform : translateY(-50%) !important;
+}
+
+.mTTP-bottom.myToolTipContent{
+  top : calc(100% + 10px); left : calc(-150px + 50% )
+}
+
+.mTTP-top.myToolTipContent{
+   bottom : calc(100% + 10px); left : calc(-150px + 50% )
+}

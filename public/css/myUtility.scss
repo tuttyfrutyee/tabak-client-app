@@ -1,0 +1,722 @@
+//noMargin Group
+.noMargin{
+    margin : 0px !important;
+}
+.noMarginB{
+    margin-bottom : 0px !important;
+}
+.noMarginT{
+    margin-top : 0px !important;
+}
+.noMarginR{
+    margin-right : 0px !important;
+}
+.noMarginL{
+    margin-left : 0px !important;
+}
+.noMarginLAR{
+    margin-left : 0px !important;
+    margin-right : 0px !important;
+}
+.noMarginTAB{
+    margin-top: 0px !important;
+    margin-bottom : 0px !important;
+}
+//noPadding Group
+.noPadding{
+    padding : 0px !important;
+}
+.noPaddingB{
+    padding-bottom : 0px !important;
+}
+.noPaddingT{
+    padding-top : 0px !important;
+}
+.noPaddingR{
+    padding-right : 0px !important;
+}
+.noPaddingL{
+    padding-left : 0px !important;
+}
+.noPaddingLAR{
+    padding-left : 0px !important;
+    padding-right : 0px !important;
+}
+.noPaddingTAB{
+    padding-top: 0px !important;
+    padding-bottom : 0px !important;
+}
+//addMargin Group
+//variables for addMargin
+$smallMargin : 15px;
+$mediumMargin : 40px;
+$largeMargin : 80px;
+//endOf Variables
+//addMargin
+.addMargin-S{
+    margin : $smallMargin !important;
+}
+.addMargin-M{
+    margin : $mediumMargin !important;
+}
+.addMargin-L{
+    margin : $largeMargin !important;
+}
+//addMarginL
+.addMarginL-S{
+    margin-left : $smallMargin !important;
+}
+.addMarginL-M{
+    margin-left : $mediumMargin !important;
+}
+.addMarginL-L{
+    margin-left : $largeMargin !important;
+}
+//addMarginR
+.addMarginR-S{
+    margin-right : $smallMargin !important;
+}
+.addMarginR-M{
+    margin-right : $mediumMargin !important;
+}
+.addMarginR-L{
+    margin-right : $largeMargin !important;
+}
+//addMarginT
+.addMarginT-S{
+    margin-top : $smallMargin !important;
+}
+.addMarginT-M{
+    margin-top : $mediumMargin !important;
+}
+.addMarginT-L{
+    margin-top : $largeMargin !important;
+}
+//addMarginB
+.addMarginB-S{
+    margin-bottom : $smallMargin !important;
+}
+.addMarginB-M{
+    margin-bottom : $mediumMargin !important;
+}
+.addMarginB-L{
+    margin-bottom : $largeMargin !important;
+}
+//addMarginLAR
+.addMarginLAR-S{
+    margin-left : $smallMargin !important;
+    margin-right : $smallMargin !important;
+}
+.addMarginLAR-M{
+    margin-left : $mediumMargin !important;
+    margin-right : $mediumMargin !important;
+}
+.addMarginLAR-L{
+    margin-left : $largeMargin !important;
+    margin-right : $largeMargin !important;
+}
+//addMarginTAB
+.addMarginTAB-S{
+    margin-top : $smallMargin !important;
+    margin-bottom : $smallMargin !important;
+}
+.addMarginTAB-M{
+    margin-top : $mediumMargin !important;
+    margin-bottom : $mediumMargin !important;
+}
+.addMarginTAB-L{
+    margin-top : $largeMargin !important;
+    margin-bottom : $largeMargin !important;
+}
+//endOf addMargin Group
+
+//beginOf fontS 
+//variables for fontS
+$fontSmall : 15px;
+$fontMedium : 25px;
+$fontLarge : 40px;
+$fontXLarge : 60px;
+$fontXXLarge : 80px;
+.fontSSmall{
+    font-size : $fontSmall !important;
+}
+.fontSMedium{
+    font-size : $fontMedium !important;
+}
+.fontSLarge{
+    font-size : $fontLarge !important;
+}
+.fontSXLarge{
+    font-size : $fontXLarge !important;
+}
+.fontSXXLarge{
+    font-size : $fontXXLarge !important;
+}
+$fontSVSmall_R : 1.1rem;
+$fontSmall_R : 1.3rem;
+$fontMedium_R : 1.5rem;
+$fontLarge_R : 1.7rem;
+$fontXLarge_R : 2.0rem;
+$fontXXLarge_R : 2.5rem;
+.fontSVSmall_R{
+    font-size : $fontSVSmall_R !important;
+}
+.fontSSmall_R{
+    font-size : $fontSmall_R !important;
+}
+.fontSMedium_R{
+    font-size : $fontMedium_R !important;
+}
+.fontSLarge_R{
+    font-size : $fontLarge_R !important;
+}
+.fontSXLarge_R{
+    font-size : $fontXLarge_R !important;
+}
+.fontSXXLarge_R{
+    font-size : $fontXXLarge_R !important;
+}
+//endOf fontS
+
+//beginning of addBorder Group
+//variables for addBorder
+$borderWidthSmall : 1px;
+$borderWidthMedium : 2px;
+$borderWidthLarge : 3px;
+
+$borderColor : #cecece;
+$borderType : solid;
+
+.addBorder-S{
+    border : $borderWidthSmall $borderType $borderColor !important;
+}
+.addBorder-M{
+    border : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorder-L{
+    border : $borderWidthLarge $borderType $borderColor !important;
+}
+//addBorderL
+.addBorderL-S{
+    border-left : $borderWidthSmall $borderType $borderColor !important;
+}
+.addBorderL-M{
+    border-left : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorderL-L{
+    border-left : $borderWidthLarge $borderType $borderColor !important;
+}
+//addBorderR
+.addBorderR-S{
+    border-right : $borderWidthSmall $borderType $borderColor !important;    
+}
+.addBorderR-M{
+    border-right : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorderR-L{
+    border-right : $borderWidthLarge $borderType $borderColor !important;
+}
+//addBorderT
+.addBorderT-S{
+    border-top : $borderWidthSmall $borderType $borderColor !important;
+}
+.addBorderT-M{
+    border-top : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorderT-L{
+    border-top : $borderWidthLarge $borderType $borderColor !important;
+}
+//addBorderB
+.addBorderB-S{
+    border-bottom : $borderWidthSmall $borderType $borderColor !important;
+}
+.addBorderB-M{
+    border-bottom : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorderB-L{
+    border-bottom : $borderWidthLarge $borderType $borderColor !important;
+}
+//addBorderTAB
+.addBorderTAB-S{
+    border-top : $borderWidthSmall $borderType $borderColor !important;
+    border-bottom : $borderWidthSmall $borderType $borderColor !important;
+}
+.addBorderTAB-M{
+    border-top : $borderWidthMedium $borderType $borderColor !important;
+    border-bottom : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorderTAB-L{
+    border-top : $borderWidthLarge $borderType $borderColor !important;
+    border-bottom : $borderWidthLarge $borderType $borderColor !important;
+}
+//addBorderLAR
+.addBorderLAR-S{
+    border-left : $borderWidthSmall $borderType $borderColor !important;
+    border-right : $borderWidthSmall $borderType $borderColor !important;
+}
+.addBorderLAR-M{
+    border-left : $borderWidthMedium $borderType $borderColor !important;
+    border-right : $borderWidthMedium $borderType $borderColor !important;
+}
+.addBorderLAR-L{
+    border-left : $borderWidthLarge $borderType $borderColor !important;
+    border-right : $borderWidthLarge $borderType $borderColor !important;
+}
+
+//noBorder
+.noBorder{
+    border : none !important;
+}
+.noBoxShadow{
+    box-shadow: none !important;
+}
+
+//some special bordering
+.borderStyle_dashed{
+    border-style : dashed !important;
+}
+.borderColor_grey{
+    border-color : grey !important
+}
+.borderColor_black{
+    border-color : black !important
+}
+.borderColor_white{
+    border-color : white !important
+}
+//endOf addBorder
+
+//beginning of addPadding
+//padding variables
+$paddingSmall : 10px;
+$paddingMedium : 25px;
+$paddingLarge : 40px;
+.addPadding-S{
+    padding : $paddingSmall !important;
+}
+.addPadding-M{
+    padding : $paddingMedium !important;
+}
+.addPadding-L{
+    padding : $paddingLarge !important;
+}
+//addPaddingL
+.addPaddingL-S{
+    padding-left : $paddingSmall !important;
+}
+.addPaddingL-M{
+    padding-left : $paddingMedium !important;
+}
+.addPaddingL-L{
+    padding-left : $paddingLarge !important;
+}
+//addPaddingR
+.addPaddingR-S{
+    padding-right : $paddingSmall !important;
+}
+.addPaddingR-M{
+    padding-right : $paddingMedium !important;
+}
+.addPaddingR-L{
+    padding-right : $paddingLarge !important;
+}
+//addPaddingT
+.addPaddingT-S{
+    padding-top : $paddingSmall !important;
+}
+.addPaddingT-M{
+    padding-top : $paddingMedium !important;
+}
+.addPaddingT-L{
+    padding-top : $paddingLarge !important;
+}
+//addPaddingB
+.addPaddingB-S{
+    padding-bottom : $paddingSmall !important;
+}
+.addPaddingB-M{
+    padding-bottom : $paddingMedium !important;
+}
+.addPaddingB-L{
+    padding-bottom : $paddingLarge !important;
+}
+//addPaddingLAR
+.addPaddingLAR-S{
+    padding-left : $paddingSmall !important;
+    padding-right : $paddingSmall !important;
+}
+.addPaddingLAR-M{
+    padding-left : $paddingMedium !important;
+    padding-right : $paddingMedium !important;
+}
+.addPaddingLAR-L{
+    padding-left : $paddingLarge !important;
+    padding-right : $paddingLarge !important;
+}
+//addPaddingTAB
+.addPaddingTAB-S{
+    padding-top : $paddingSmall !important;
+    padding-bottom : $paddingSmall !important;
+}
+.addPaddingTAB-M{
+    padding-top : $paddingMedium !important;
+    padding-bottom : $paddingMedium !important;
+}
+.addPaddingTAB-L{
+    padding-top : $paddingLarge !important;
+    padding-bottom : $paddingLarge !important;
+}
+//beginning fixHeight
+//fixHeight variables
+$heightSmall-Screen : 10vh;
+$heightSmally-Screen : 15vh;
+$heightMedium-Screen : 25vh;
+$heightLarge-Screen : 40vh;
+$heightXLarge-Screen : 60vh;
+$heightXXLarge-Screen : 80vh;
+
+$heightSmall : 50px;
+$heightMedium : 80px;
+$heightLarge : 120px;
+$heightLargey : 150px;
+$heightXLarge : 180px;
+$heightXXLarge : 250px;
+//fixHeight by screen
+.fixHeightS-Screen{
+    height : $heightSmall-Screen !important;
+}
+.fixHeightSs-Screen{
+    height : $heightSmally-Screen !important;
+}
+.fixHeightM-Screen{
+    height : $heightMedium-Screen !important;
+}
+.fixHeightL-Screen{
+    height : $heightLarge-Screen !important;
+}
+.fixHeightXL-Screen{
+    height : $heightXLarge-Screen !important;
+}
+.fixHeightXLL-Screen{
+    height : $heightXXLarge-Screen !important;
+}
+//fixHeight
+.fixHeightS{
+    height : $heightSmall !important;
+}
+.fixHeightM{
+    height : $heightMedium !important
+}
+.fixHeightL{
+    height : $heightLarge !important;
+}
+.fixHeightLl{
+    height : $heightLargey !important;
+}
+.fixHeightXL{
+    height : $heightXLarge !important;
+}
+.fixHeightXXL{
+    height : $heightXXLarge !important;
+}
+//endOf fixHeight
+
+//beginning fixWidth
+//fixWidth variables
+$widthSmall-Screen : 10vw;
+$widthMedium-Screen : 25vw;
+$widthLarge-Screen : 40vw;
+
+$widthSmall : 75px;
+$widthMedium : 150px;
+$widthLarge : 250px;
+$widthXLarge : 400px;
+
+//fixHeight by screen
+.fixWidthS-Screen{
+    width : $widthSmall-Screen !important;
+}
+.fixWidthM-Screen{
+    width : $widthMedium-Screen !important;
+}
+.fixWidthL-Screen{
+    width : $widthLarge-Screen !important;
+}
+//fixHeight
+.fixWidthS{
+    width : $widthSmall !important;
+}
+.fixWidthM{
+    width : $widthMedium !important
+}
+.fixWidthL{
+    width : $widthLarge !important;
+}
+.fixWidthXL{
+    width : $widthXLarge !important;
+}
+//endOf fixHeight
+//percentageFixHeight
+.fourHeight{
+    height : 40% !important;
+}
+.sixHeight{
+    height : 60% !important;
+}
+.eightHeight{
+    height : 80% !important;
+}
+.fullHeight{
+    height: 100% !important;
+}
+//percentageFixWidth
+.fourWidth{
+    width : 40% !important;
+}
+.sixWidth{
+    width : 60% !important;
+}
+.sevenWidth{
+    width : 70% !important
+}
+.eightWidth{
+    width : 80% !important;
+}
+.fullWidth{
+    width : 100% !important;
+}
+
+//maxHeight
+//maxHeight variables
+$maxHeightS-Screen : 10vh;
+$maxHeightM-Screen : 25vh;
+$maxHeightL-Screen : 40vh;
+$maxHeightXL-Screen : 60vh;
+.maxHeightS-Screen{
+    max-height: $maxHeightS-Screen !important
+}
+.maxHeightM-Screen{
+    max-height: $maxHeightM-Screen !important
+}
+.maxHeightL-Screen{
+    max-height: $maxHeightL-Screen !important
+}
+.maxHeightXL-Screen{
+    max-height: $maxHeightXL-Screen !important
+}
+$maxHeightS : 100px;
+$maxHeightM : 180px;
+$maxHeightL : 250px;
+$maxHeightXL : 400px;
+.maxHeightS{
+    max-height: $maxHeightS !important
+}
+.maxHeightM{
+    max-height: $maxHeightM !important
+}
+.maxHeightL{
+    max-height: $maxHeightL !important
+}
+.maxHeightXL{
+    max-height: $maxHeightXL !important
+}
+.maxWidthFull_notImportant{
+    max-width : 100%;
+}
+
+//THE OTHERS - RANDOM SHIT
+ 
+.centerWithMargin{
+    margin : 0px auto !important;
+}
+.centerInHeight{
+    top : 50%;
+    transform: translateY(-50%) !important;
+}
+.centerInWidth{
+    left : 50%;
+    transform : translateX(-50%);
+}
+.centerInCenter{
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%,-50%)
+}
+.hideMe{
+    width: 0px !important;
+    height : 0px !important;
+    overflow : hidden !important;
+}
+.boldFont{
+    font-weight: bold;
+}
+.beRelative{
+    position : relative;
+}
+.beAbsolute{
+    position : absolute;
+}
+.beFixed{
+    position : fixed;
+}
+.unSelectable{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.line{
+    width: 80%;
+    height : 3px;
+    background-color : #cecece;
+    margin : 0px auto;
+  }
+.lineJ{
+    width: 50%;
+    height : 3px;
+    background-color : #cecece;
+    margin : 0px auto;    
+}
+.clickable{
+    cursor : pointer;
+    user-select: none;
+}
+.clickable.Cteal:hover{
+    background-color : rgba(77, 182, 172,0.4)  !important    
+}
+.clickable.Cred:hover{
+    background-color : rgba(211, 47, 47,0.8)  !important
+}
+.clickable.Cgreen:hover{
+    background-color : #66bb6a !important
+}
+.clickable.Cgrey:hover{
+    background-color : #bdbdbd !important
+}
+.clickable.Cblue:hover{
+    background-color : #64b5f6 !important
+}
+.clickable:hover{
+    background-color : rgba(206,206,206,0.2) !important
+}
+.clickableIconS{
+    cursor : pointer;
+    user-select : none;
+}
+.clickableIconM{
+    cursor : pointer;
+    user-select : none;
+}
+.clickableIconL{
+    cursor : pointer;
+    user-select : none;
+}
+.clickableIconS:hover{
+    font-size : 30px !important;
+}
+.clickableIconM:hover{
+    font-size : 50px !important
+}
+.clickableIconL:hover{
+    font-size : 70px !important
+}
+//<a id="recoveryButton" class="btn-floating btn-large waves-effect waves-light red darken-3"><i class="material-icons">rotate_right</i></a>
+.recoveryButton{
+    bottom : 30px;
+    right : 30px;
+    position : fixed;
+    z-index : 4
+}
+.toLeft{
+    float : left;
+}
+.toRight{
+    float : right;
+}
+.filterDiv{
+    position : absolute;
+    top : 0px;
+    left : 0px;
+    width : 100%;
+    height : 100%;
+    background-color : rgba(7, 7, 7, 0.5);
+}
+.invisibleWrapper{
+    display : contents;
+}
+.z-indexLow{
+    z-index: 250;
+}
+.z-indexMedium{
+    z-index : 500;
+}
+.z-indexHigh{
+    z-index: 999;
+}
+.overflowX-visible{
+    overflow-x : visible !important;
+}
+.noOverflow{
+    overflow: hidden !important;
+}
+.overFlowVisible{
+    overflow : visible !important;
+}
+.bColorTabak{
+    background-color : rgb(248,2,27)
+}
+.bColorRed{
+    background-color : #d32f2f !important;
+}
+.bColorRedLight{
+    background-color : #ffcdd2 !important
+}
+.bColorGrey{
+    background-color : #cecece !important
+}
+.bColorGreyLight{
+    background-color : #ececec !important
+}
+.bColorGreen{
+    background-color : #4db6ac !important
+}
+.tColorWhite{
+    color : white !important
+}
+.tColorBlack{
+    color : black !important;
+}
+.tColorGrey{
+    color : #cecece
+}
+.tColorRed{
+    color : #f44336 !important
+}
+.cleanFloats{
+
+}
+.cleanFloats:after{
+    content: ""; 
+    visibility: hidden; 
+    display: block; 
+    height: 0; 
+    clear: both;
+}
+.scrollB{
+    overflow : auto !important;
+}
+.borderBox{
+    box-sizing: border-box !important;
+}
+.displayBlock{
+    display : block !important
+}
+.displayInlineBlock{
+    display : inline-block !important
+}
+.noDisplay{
+    display : none !important;
+}
+.pointerCursor{
+    cursor: pointer !important;
+}
