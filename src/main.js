@@ -7,6 +7,7 @@ const uuid = require("uuid/v4")
 
 //untracked global variables that changes machine to machine(developing period)
 import untrackedGlobalVariables from "./untrackedGlobalVariables.json"
+import globalVariables from "./globalVariables.json"
 
 //importing materialize css and javascript
 import "materialize-css/dist/css/materialize.min.css"
@@ -32,7 +33,8 @@ Vue.mixin({
       //uuid
       uuid,
       //untrackedGlobalVariables
-      uTGlobalVariables : untrackedGlobalVariables
+      uTGlobalVariables : untrackedGlobalVariables,
+      globalVariables,
     }
   }
 })

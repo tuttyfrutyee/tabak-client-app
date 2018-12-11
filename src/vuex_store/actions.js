@@ -41,7 +41,7 @@ export default {
     getFirestoreClientPowers(context){
 
         return new Promise((resolve,rej)=>{
-            context.dispatch("setFirestoreForSelectedRestaurant",context.state.uTGlobalVariables.clientCredentials)
+            context.dispatch("setFirestoreForSelectedRestaurant",context.state.globalVariables.clientCredentials)
             console.log("got the client powers honn")
             resolve();
 

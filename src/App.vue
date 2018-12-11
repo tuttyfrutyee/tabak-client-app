@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition :name="calculatedTransition" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -10,37 +12,75 @@
 import store from "./vuex_store/index.js";
 
 //Routing
-import VueRouter from "vue-router"
+
+import VueRouter from 'vue-router'
+
+
 
 import Login from "./components/Login.vue"
+import Categories from "./components/Categories.vue"
 
 const routes = [
-  {path : "/login", component : Login}
+  {
+    path : "/login",
+    component : Login
+  },
+  {
+    path : "/categories",
+    component : Categories
+  }
 ]
 
-var router = new VueRouter({mode : "history", routes})
+
+var router = new VueRouter({mode: 'history',routes});
 
 //For vuex store, mapState and mapActions
 //Info : mapAction and mapMutations both inserted in methods block
 import { mapActions, mapMutations, mapState } from "vuex";
 
-import HelloWorld from './components/HelloWorld.vue'
 
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
   },
-  router,
   store,
+  router,
   computed : {
-
+    //mapState
+    ...mapState([
+      "calculatedTransition"
+    ])
   },
   methods : {
+    handleRouteChange(to,from){
+
+      //transitionTable is polarized, to access it transitionTable[to][from] --> FIRST refer to "to" then "from"
+      var transitionTable = {
+        "login" : {
+          //no such operation occurs
+        },
+        "categories" : {
+          "login" : "slideLeft"
+        },
+        "products" : {
+
+        },
+        "product" : {
+
+        },
+        "tabak" : {
+
+        }
+      }
+
+      this.updateCalculatedTransition( transitionTable[to][from] )
+
+    },
     //mapMutations
     ...mapMutations([
-      "update_http"
+      "update_http",
+      "updateCalculatedTransition"
     ]),
     //mapActions
     ...mapActions([
@@ -50,18 +90,27 @@ export default {
   created(){
     //connect to firestore
     this.getFirestoreClientPowers().then(()=>{
-      this.$router.push("/login")
     })
 
     this.update_http(this.$http)
   },
-  mounted(){
+  watch : {
+  '$route' (to, from) {
 
-    console.log(screen.height,window.height,document.documentElement.clientHeight)
+    to = to.path.slice(1) //removes / from /routePath --> does not work for multiple depth
+    from = from.path.slice(1)
+
+    this.handleRouteChange(to,from)
+  }
+  },
+  mounted(){
+    this.$router.push("/login")
+
+/*     console.log(screen.height,window.height,document.documentElement.clientHeight)
     this.$store.dispatch("debug",{
       "screen-height" : screen.height,
       "client-height" : document.documentElement.clientHeight
-    })
+    }) */
 
   }
   
@@ -69,5 +118,19 @@ export default {
 </script>
 
 <style>
-
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slideLeft-enter-active {
+  transition: all .3s ease-out;
+}
+.slideLeft-leave-active {
+  transition: all .3s ease-in;
+}
+ .slideLeft-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform : translateX(-100%);
+}
+.slideLeft-enter {
+  /* nothing */
+}
 </style>

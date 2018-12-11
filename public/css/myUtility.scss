@@ -720,3 +720,11 @@ $maxHeightXL : 400px;
 .pointerCursor{
     cursor: pointer !important;
 }
+.backgroundCard{
+    position: absolute;
+    top : -10vh;
+    left : 0px;
+    width : 100vw;
+    height : 110vh;
+    z-index: -1;
+}

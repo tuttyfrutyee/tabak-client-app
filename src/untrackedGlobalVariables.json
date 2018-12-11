@@ -1,13 +1,5 @@
 {
-    "clientCredentials" : {
-        "apiKey": "AIzaSyDyc7r3GW2qDIf1MQt8H2noS6OY_UG1Vf0",
-        "authDomain": "restaurant-narquilla.firebaseapp.com",
-        "databaseURL": "https://restaurant-narquilla.firebaseio.com",
-        "projectId": "restaurant-narquilla",
-        "storageBucket": "restaurant-narquilla.appspot.com",
-        "messagingSenderId": "203067910128"
-        },
-    "tabakColor" : "#E63638",
-    "serverAddress" : "http://192.168.1.22:3000"
+
+    "serverAddress" : "http://192.168.1.27:3000"
 
 }

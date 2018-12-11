@@ -8,11 +8,13 @@ Vue.use(Vuex);
 
 //untracked global variables that changes machine to machine(developing period)
 import untrackedGlobalVariables from "../untrackedGlobalVariables.json"
+import globalVariables from "../globalVariables.json"
 
 export default new Vuex.Store({
     state : {
         //global variables
         uTGlobalVariables : untrackedGlobalVariables,
+        globalVariables,
         //shared firestore // it does not matter
         firestore : null,
         //http requests from vuex files
@@ -22,7 +24,6 @@ export default new Vuex.Store({
             onGoingProcessCount : 0,
             waitingScreen : null,
         },
-
         //login stuff
         userIsLoggedIn_toFirestoreRestaurant : false,
 
@@ -30,6 +31,9 @@ export default new Vuex.Store({
         r_app : null,
         r_db : null,
         r_auth : null,
+
+        //animation tracker
+        calculatedTransition : "nothing",
     },
     mutations : main_mutations,
     actions :   main_actions,

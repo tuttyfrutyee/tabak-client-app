@@ -1,6 +1,11 @@
 
 export default {
 
+    changeActiveComponent(state,componentName){
+        clearAllComponents(state.componentIsActive); 
+        state.componentIsActive[componentName] = true
+    },
+
     update_uTGlobalVariables(state,variables){
         state.uTGlobalVariables = variables
     },
@@ -53,6 +58,25 @@ export default {
             removeWaitingScreen(state.gadget_waitingScreen.waitingScreen);
             state.gadget_waitingScreen.waitingScreen = null;
         }
+    },
+    changeThemeColor(state,color){
+        var metaThemeColor = document.querySelector("meta[name=theme-color]");
+        metaThemeColor.setAttribute("content", color);
+
+    },
+    updateCalculatedTransition(state,value){
+        state.calculatedTransition = value
+    },
+
+    //helpers
+
+    updateBackgroundCard(state,details){
+
+        var operation = details.operation
+        var element = document.getElementById(details.elementId);
+        var change = details.change
+
+        element.style[operation] = change
     }
 
     
@@ -60,6 +84,8 @@ export default {
 
 
 //helpers
+
+//screen
 function createScreen() {
     var allScreen = document.createElement("div");
     allScreen.style.width = "100vw";
@@ -78,3 +104,11 @@ function createScreen() {
     myPreloader.deActivatePreloaderAt(screen);
     document.body.removeChild(screen);
   }
+
+//component management
+  function clearAllComponents(componentListObject){
+
+    for(var component in componentListObject){
+        componentListObject[component] = false
+    }
+}
