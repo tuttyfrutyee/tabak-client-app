@@ -10,6 +10,11 @@ Vue.use(Vuex);
 import untrackedGlobalVariables from "../untrackedGlobalVariables.json"
 import globalVariables from "../globalVariables.json"
 
+//modules
+import moduleCategories from "./modules/moduleCategories"
+import moduleSubCategories from "./modules/moduleSubCategories"
+import moduleProduct from "./modules/moduleProduct"
+
 export default new Vuex.Store({
     state : {
         //global variables
@@ -38,7 +43,8 @@ export default new Vuex.Store({
     mutations : main_mutations,
     actions :   main_actions,
     modules : {
-
-        
+        moduleCategories,
+        moduleSubCategories,
+        moduleProduct
     }
 })

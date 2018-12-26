@@ -1,15 +1,24 @@
 {
     "clientCredentials" : {
-        "apiKey": "AIzaSyDyc7r3GW2qDIf1MQt8H2noS6OY_UG1Vf0",
-        "authDomain": "restaurant-narquilla.firebaseapp.com",
-        "databaseURL": "https://restaurant-narquilla.firebaseio.com",
-        "projectId": "restaurant-narquilla",
-        "storageBucket": "restaurant-narquilla.appspot.com",
-        "messagingSenderId": "203067910128"
+        "apiKey": "AIzaSyDfywl2EI9FFLybwH42LZRhJwdi-W3RK28",
+        "authDomain": "damdam-c80fb.firebaseapp.com",
+        "databaseURL": "https://damdam-c80fb.firebaseio.com",
+        "projectId": "damdam-c80fb",
+        "storageBucket": "damdam-c80fb.appspot.com",
+        "messagingSenderId": "245002059595"
         },
     "colors" : {
         "tabakColor" : "#E63638",
-        "whiteyColor" : "#fafafa"
-    }
+        "whiteyColor" : "#fff",
+        "mainThemeColor" : "#000",
+        "helperThemeColor" : "#F38000",
+        "mainTextColor" : "#fff",
+        "helperTextColor" : "#000"
+    },
+    "pictures" : [
+        "dessert.png",
+        "fastfood.png",
+        "spagetti.png"
+    ]
 
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition :name="calculatedTransition" mode="out-in">
+    <transition :name="calculatedTransition">
       <router-view></router-view>
     </transition>
   </div>
@@ -19,6 +19,8 @@ import VueRouter from 'vue-router'
 
 import Login from "./components/Login.vue"
 import Categories from "./components/Categories.vue"
+import SubCategories from "./components/SubCategories.vue"
+import Product from "./components/Product.vue"
 
 const routes = [
   {
@@ -28,6 +30,14 @@ const routes = [
   {
     path : "/categories",
     component : Categories
+  },
+  {
+    path : "/subCategories",
+    component : SubCategories
+  },
+  {
+    path : "/product",
+    component : Product
   }
 ]
 
@@ -63,11 +73,11 @@ export default {
         "categories" : {
           "login" : "slideLeft"
         },
-        "products" : {
-
+        "subCategories" : {
+          "categories" : "slideLeft"
         },
         "product" : {
-
+          "subCategories" : "slideLeft"
         },
         "tabak" : {
 
@@ -85,14 +95,19 @@ export default {
     //mapActions
     ...mapActions([
       "getFirestoreClientPowers"
+    ]),
+    ...mapActions("moduleCategories",[
+      "watchCategories"
     ])
   },
   created(){
     //connect to firestore
     this.getFirestoreClientPowers().then(()=>{
+      this.watchCategories();
     })
 
     this.update_http(this.$http)
+
   },
   watch : {
   '$route' (to, from) {
@@ -121,16 +136,20 @@ export default {
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slideLeft-enter-active {
-  transition: all .3s ease-out;
+
+  transition: all .4s;
 }
 .slideLeft-leave-active {
-  transition: all .3s ease-in;
+  transition: all .4s;
 }
  .slideLeft-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
-  transform : translateX(-100%);
+  transform : translate(-100%);
+}
+.slideLeft-enter-to{
+  transform : translate(0);
 }
 .slideLeft-enter {
-  /* nothing */
+  transform : translate(100%)
 }
 </style>

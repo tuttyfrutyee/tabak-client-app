@@ -288,6 +288,7 @@ $borderType : solid;
 
 //beginning of addPadding
 //padding variables
+$paddingVSmall : 5px;
 $paddingSmall : 10px;
 $paddingMedium : 25px;
 $paddingLarge : 40px;
@@ -354,6 +355,10 @@ $paddingLarge : 40px;
     padding-right : $paddingLarge !important;
 }
 //addPaddingTAB
+.addPaddingTAB-VS{
+    padding-top : $paddingVSmall !important;
+    padding-bottom : $paddingVSmall !important;
+}
 .addPaddingTAB-S{
     padding-top : $paddingSmall !important;
     padding-bottom : $paddingSmall !important;
