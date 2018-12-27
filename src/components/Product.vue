@@ -3,6 +3,7 @@
       <div id="background_subCategories" class="backgroundCard"></div>
       
       <div class="row">
+
           <div class="col s12 beRelative noOverflow noPadding" style="height : 30vh">
 
                 <div id="imageFilter" class="beAbsolute fullWidth fullHeight centerInCenter border z-indexMedium blurMe"> </div>
@@ -13,13 +14,21 @@
 
 					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth"></div>
 
-				</div>
+		  </div>
+
+          <div class="col s12 beRelative" style="height:11vh">
+            <div class="beAbsolute" style="top:10%;left:5%;">
+                <p style="font-size:1.9rem;font-family: 'Sarabun', sans-serif;" class="noPadding noMargin">{{selectedProduct.productName}}</p>
+                <p style="color:#9e9e9e;font-size:0.9rem;font-family: 'Sarabun', sans-serif;" class="noPadding noMargin">{{selectedOptionContents}}</p>
+            </div>
+          </div>
+          <div class="col s12 noPadding ">
+          <div class="_line"></div>
+          </div>
+
          
           </div>
       </div>
-
-
-  </div>
 </template>
 
 <script>
@@ -31,18 +40,29 @@ export default {
   name: 'product',
   data(){
     return {
+        selectedExtras : [],
+        selectedOption : null,
+        orderCount : 0,
+
     }
   },
   methods : {
     
   },
   computed : {
+
+      selectedOptionContents(){
+          this.selectedOption.productOptionContents[0].charAt(0).toUpperCase();
+          return this.selectedOption.productOptionContents.join(", ")
+      },
+      //mapState
       ...mapState("moduleProduct",[
           "selectedProduct"
       ])
   },
   created(){
 
+      this.selectedOption = this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'})
 
 
   },
@@ -71,8 +91,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .border{
-    border: 7px solid rgba(0,0,0,0.6);
-    border-top : 8px solid black
+    border: 4px solid rgba(0,0,0,0.6);
+    border-top : 5px solid black
 
 }
 .blurMe
@@ -93,5 +113,14 @@ export default {
 #imageFilter{
 	opacity: 0;
 	transition: opacity 200ms ease-in;
+}
+#previewImage{
+	transition: opacity 200ms ease-in;
+}
+._line{
+    width: 90%;
+    height : 1px;
+    background-color : #cecece;
+    margin : 0px auto;
 }
 </style>
