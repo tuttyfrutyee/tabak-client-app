@@ -1,5 +1,5 @@
 <template>
-  <div id="categories" class="beAbsolute fullWidth" style="top:0px;left:0px">
+  <div id="categories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_categories" class="backgroundCard"></div>
       <banner></banner>
       <div class="container">

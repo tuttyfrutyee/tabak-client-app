@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="minHeight_full">
     <transition :name="calculatedTransition">
       <router-view></router-view>
     </transition>
@@ -21,6 +21,7 @@ import Login from "./components/Login.vue"
 import Categories from "./components/Categories.vue"
 import SubCategories from "./components/SubCategories.vue"
 import Product from "./components/Product.vue"
+import Plate from "./components/Plate.vue"
 
 const routes = [
   {
@@ -38,6 +39,10 @@ const routes = [
   {
     path : "/product",
     component : Product
+  },
+  {
+    path : "/plate",
+    component : Plate
   }
 ]
 
@@ -74,13 +79,15 @@ export default {
           "login" : "slideLeft"
         },
         "subCategories" : {
-          "categories" : "slideLeft"
+          "categories" : "slideLeft",
+          "product" : "slideRight"
         },
         "product" : {
           "subCategories" : "slideLeft"
         },
-        "tabak" : {
-
+        "plate" : {
+          "subCategories" : "slideDown",
+          "categories" : "slideDown"
         }
       }
 
@@ -135,6 +142,9 @@ export default {
 <style>
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
+
+/*-------------------  SlideLeft -------------------*/
+
 .slideLeft-enter-active {
 
   transition: all .4s;
@@ -151,5 +161,42 @@ export default {
 }
 .slideLeft-enter {
   transform : translate(100%)
+}
+/*-------------------  SlideRight ------------------- */
+.slideRight-enter-active {
+
+  transition: all .4s;
+}
+.slideRight-leave-active {
+  transition: all .4s;
+}
+ .slideRight-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform : translate(100%);
+}
+.slideRight-enter-to{
+  transform : translate(0);
+}
+.slideRight-enter {
+  transform : translate(-100%)
+}
+/*-------------------  SlideDown ------------------- */
+
+.slideDown-enter-active {
+
+  transition: all .4s;
+}
+.slideDown-leave-active {
+  transition: all .4s;
+}
+ .slideDown-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform : translate(0,0%);
+}
+.slideDown-enter-to{
+  transform : translate(0,0);
+}
+.slideDown-enter {
+  transform : translate(0,-100%)
 }
 </style>

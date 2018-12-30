@@ -15,6 +15,10 @@ export default {
     actions : {
         selectProduct(context,product){
             context.commit("updateProduct",product)
+        },
+        pushToPlate(context,order){
+            if(context.state.selectedProduct)
+            context.commit("modulePlate/pushToPlate",order,{root:true})
         }
     }
 }

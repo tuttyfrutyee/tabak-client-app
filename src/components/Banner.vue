@@ -6,7 +6,7 @@
         <div style="height:65px" class="col s8 center addPaddingTAB-S">
           <img class="" style="height:40px" src="../assets/bannerYusuf.png" alt="">
         </div>
-        <div class="col s2 beRelative waves-effect" style="height:65px">
+        <div @click="navigateToPlate" class="col s2 beRelative waves-effect" style="height:65px">
           <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;left:-1px;width:2px;opacity:0.4"></div>
           <img id="tabakIcon" src="../assets/tabakIcon.png" style="height:38px" alt="" class="centerWithMargin beAbsolute centerInCenter">
         </div>
@@ -27,7 +27,9 @@ export default {
     }
   },
   methods : {
-    
+    navigateToPlate(){
+      this.$router.push("/plate")
+    }
   },
   computed : {
 

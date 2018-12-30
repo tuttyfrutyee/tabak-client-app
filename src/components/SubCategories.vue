@@ -1,6 +1,6 @@
 <template>
 
-  <div id="subCategories" class="beAbsolute fullWidth" style="top:0px;left:0px">
+  <div id="subCategories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
       hello from subcategories
@@ -19,9 +19,7 @@
                         <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
                         <div class="beAbsolute fullWidth " :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
                             <div class="beRelative fullWidth fullHeight">
-                                <div class="beAbsolute centerInCenter tColorWhite boldFont" style="font-size:1.3rem">
-                                    {{product.productName}}
-                                </div>
+                                <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth" style="font-size:1.3rem">{{product.productName}}</div>
                             </div>
                         </div>
                     </div>

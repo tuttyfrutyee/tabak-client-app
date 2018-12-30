@@ -528,6 +528,10 @@ $maxHeightXL : 400px;
 .maxWidthFull_notImportant{
     max-width : 100%;
 }
+//min
+.minHeight_full{
+    min-height : 100vh !important
+}
 
 //THE OTHERS - RANDOM SHIT
  
@@ -562,7 +566,7 @@ $maxHeightXL : 400px;
     position : absolute;
 }
 .beFixed{
-    position : fixed;
+    position : fixed !important;
 }
 .unSelectable{
     -moz-user-select: none;
