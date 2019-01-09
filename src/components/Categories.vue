@@ -2,7 +2,7 @@
   <div id="categories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_categories" class="backgroundCard"></div>
       <banner></banner>
-      <div class="container">
+      <div class="container" style="margin-top:3vh">
         <div class="row">
 
           <!-- Modal Trigger -->

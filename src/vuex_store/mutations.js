@@ -92,6 +92,7 @@ function createScreen() {
     allScreen.style.height = "100vh";
     allScreen.style.position = "absolute";
     allScreen.style.top = "0px";
+    allScreen.style.zIndex = 1000;
     return allScreen;
   }
   function addWaitingScreen() {

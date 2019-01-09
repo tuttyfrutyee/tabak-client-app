@@ -25,10 +25,6 @@ import Plate from "./components/Plate.vue"
 
 const routes = [
   {
-    path : "/login",
-    component : Login
-  },
-  {
     path : "/categories",
     component : Categories
   },
@@ -126,7 +122,7 @@ export default {
   }
   },
   mounted(){
-    this.$router.push("/login")
+    this.$router.push("/categories")
 
 /*     console.log(screen.height,window.height,document.documentElement.clientHeight)
     this.$store.dispatch("debug",{
@@ -184,10 +180,10 @@ export default {
 
 .slideDown-enter-active {
 
-  transition: all .4s;
+  transition: all 0.3s;
 }
 .slideDown-leave-active {
-  transition: all .4s;
+  transition: all 0.3s;
 }
  .slideDown-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {

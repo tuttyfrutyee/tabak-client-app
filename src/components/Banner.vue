@@ -1,13 +1,13 @@
 <template>
   <div id="banner">
-      <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="row subwayGreen">
+      <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="row subwayGreen noMargin">
         <div class="col s2">
         </div>
         <div style="height:65px" class="col s8 center addPaddingTAB-S">
           <img class="" style="height:40px" src="../assets/bannerYusuf.png" alt="">
         </div>
         <div @click="navigateToPlate" class="col s2 beRelative waves-effect" style="height:65px">
-          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;left:-1px;width:2px;opacity:0.4"></div>
+          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;left:-1px;width:2px;opacity:0.8"></div>
           <img id="tabakIcon" src="../assets/tabakIcon.png" style="height:38px" alt="" class="centerWithMargin beAbsolute centerInCenter">
         </div>
       </div>

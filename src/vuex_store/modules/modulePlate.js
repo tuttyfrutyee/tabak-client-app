@@ -10,7 +10,11 @@ export default {
     mutations:{
         pushToPlate(state,order){
             state.plate.push(order)
-            console.log(state.plate)
+        },
+        removeFromPlate(state,order){
+            var removalIndex = state.plate.indexOf(order)
+            state.plate.splice(removalIndex,1)
+            console.log(removalIndex)
         },
         clearPlate(state){
             state.plate = [];

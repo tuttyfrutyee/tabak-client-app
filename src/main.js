@@ -14,6 +14,11 @@ import "materialize-css/dist/css/materialize.min.css"
 import "materialize-css/dist/js/materialize.min.js"
 //icons
 import "material-design-icons/iconfont/material-icons.css"
+//glider
+import Glide from "@glidejs/glide/dist/glide.min.js"
+import "@glidejs/glide/dist/css/glide.core.min.css"
+
+window.Glide = Glide
 
 //myAlert.css
 //attaching functions to window object --> hence reachable anywhere

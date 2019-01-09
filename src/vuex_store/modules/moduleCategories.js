@@ -26,6 +26,8 @@ export default {
             return
             context.commit("updateIsWatchingCategories",true);
 
+            context.commit("addProcess",null,{root:true})
+
             context.rootState.r_db.collection("productCategories").onSnapshot(querySnapShot=>{
 
                 var categories = [];
@@ -33,6 +35,7 @@ export default {
                     categories.push(doc.data())
                 })
                 context.commit("updateCategories",categories)
+                context.commit("removeProcess",null,{root:true})
 
             })
         },
