@@ -24,15 +24,15 @@
             <div class="row noMargin">
                 <div class="col s12 beRelative noPadding addMarginB-S" style="height:8vh;">
                     <div class="beAbsolute centerInHeight boldFont" style="left:5%;font-size:1.2rem">Tabağınız</div>
-                    <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:1.5px;backgroundColor:#cecece"></div>
+                    <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:2px;backgroundColor:#cecece"></div>
                 </div>
                 <!-- Orders here -->
                 <div class="col s12 noPadding" v-if="plate.length>0">
                     <div class="row noMargin">
                         <div v-for="order in plate" class="col s12 beRelative noPadding" style="height:10vh;margin-bottom:1vh">
 
-                            <div :style="{backgroundColor:dilutedHelperThemeColor}" class="beRelative fullHeight waves-effect" style="width:83%;margin-left:5%;border-radius:5px">
-                                <div class="beAbsolute centerInHeight boldFont" style="font-size:1.3rem;left:5%">x{{order.orderCount}} {{order.product.productName}}</div>
+                            <div :style="{backgroundColor:dilutedHelperThemeColor}" class="beRelative fullHeight waves-effect addShadow_button" style="width:83%;margin-left:5%;border-radius:5px">
+                                <div class="beAbsolute centerInHeight boldFont" style="font-size:6vw;left:5%">x{{order.orderCount}} {{order.product.productName}}</div>
                                 <div class="beAbsolute centerInHeight" style="right:15%">
                                     <i class="material-icons">edit</i>
                                 </div>
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="col s12 noPadding" style="margin-top:1.5vh">
-                            <div class="fullWidth" style="height:0.3vh;backgroundColor:#cecece"></div>
+                            <div class="fullWidth" style="height:3px;backgroundColor:#cecece"></div>
                         </div>
 
                         <div class="col s12 noPadding" style="height:7vh;margin-top:2.5vh;">
@@ -93,6 +93,35 @@
             </div>
         </div>
         <div id="track" class="col s12">
+            <div class="row noMargin">
+                <div class="col s12 beRelative noPadding addMarginB-S" style="height:8vh;">
+                    <div class="beAbsolute centerInHeight boldFont" style="left:5%;font-size:1.2rem">Takip Listesi</div>
+                    <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:2px;backgroundColor:#cecece"></div>
+                </div>
+                <!-- Order List here -->
+                <div v-if="true" class="col s12 noPadding">
+                    <div class="row noMargin">
+                        <div v-for="(order,index) in plate" class="col s12 noPadding beRelative" style="height:12vh">
+                            <div class="beAbsolute centerInHeight" style="left:5%">
+                              <span style="font-size:5vw" class="boldFont">x{{order.orderCount}} </span> <span class="boldFont" style="font-size:6vw">{{order.product.productName}}</span>
+                            </div>
+                            <div v-if="index%2===0" class="beAbsolute centerInHeight" style="right:5%;width:20%">
+                                <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">done_all</i>
+                                <p class="center noPadding noMargin">Hazırlanıyor</p>
+                            </div>
+                            <div v-else class="beAbsolute centerInHeight" style="right:5%;width:20%">
+                                <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">done</i>
+                                <p class="center noPadding noMargin">İletildi</p>
+                            </div>
+                            <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:98%;height:2px;backgroundColor:#cecece"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 noPadding boldFont center beRelative" style="font-size:6vw;margin-top:5vh;height:60vh" v-else>
+                    Tabağınızda ürün yok
+                        <img src="../assets/tabakIcon.png" alt="" class="beAbsolute centerInCenter">
+                </div>
+            </div>
         </div>
     </div>
   </div>
@@ -167,7 +196,7 @@ export default {
         slideBar[0].style.backgroundColor = this.globalVariables.colors.helperThemeColor
         slideBar[0].style.height = "5px";
     },0)
-
+    if(this.plate.length>0)
     new Glide('.glide',{
         type: 'carousel',
         startAt: 0,

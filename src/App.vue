@@ -17,11 +17,17 @@ import VueRouter from 'vue-router'
 
 
 
-import Login from "./components/Login.vue"
-import Categories from "./components/Categories.vue"
+/* import Categories from "./components/Categories.vue"
 import SubCategories from "./components/SubCategories.vue"
 import Product from "./components/Product.vue"
-import Plate from "./components/Plate.vue"
+import Plate from "./components/Plate.vue" */
+
+const Categories = () => import('./components/Categories.vue')
+const SubCategories = () => import('./components/SubCategories.vue')
+const Product = () => import('./components/Product.vue')
+const Plate = () => import('./components/Plate.vue')
+
+
 
 const routes = [
   {

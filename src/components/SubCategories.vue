@@ -5,7 +5,7 @@
       <banner></banner>
       <div class="fullWidth" style="height:1vh" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" ></div>
     <ul class="collapsible noMargin noBorder">
-        <li class="active">
+        <li @click="arrangeFiltersHeight()" class="active">
             <div class="collapsible-header beRelative" style="height:3.8rem" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
                 <p class="beAbsolute centerInCenter noMargin noPadding boldFont tColorWhite">Tercih Edilenler</p>
                 <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin add noDisplay" style="right:5%">add</i>
@@ -18,9 +18,9 @@
                         <div class="containerr" style="overflow:hidden">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
-                            <div class="beAbsolute fullWidth " :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
+                            <div class="beAbsolute fullWidth filter" :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth" style="font-size:1.3rem">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text" style="font-size:5.2vw">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </li>
-        <li v-for="subCategory in subCategories">
+        <li @click="arrangeFiltersHeight()" v-for="subCategory in subCategories">
             <div class="collapsible-header beRelative" style="height:3.8rem" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
                 <p class="beAbsolute centerInCenter noMargin noPadding boldFont tColorWhite">{{subCategory.subCategoryName}}</p>
                 <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin add" style="right:5%">add</i>
@@ -40,9 +40,9 @@
                         <div class="containerr" style="overflow:hidden">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
-                            <div class="beAbsolute fullWidth " :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
+                            <div class="beAbsolute fullWidth filter" :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth" style="font-size:1.3rem">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text" style="font-size:1.3rem">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
@@ -77,6 +77,24 @@ export default {
     _selectProduct(product){
         this.selectProduct(product)
         this.$router.push("/product")
+    },
+    //styles
+    arrangeFiltersHeight(){
+        setTimeout(()=>{
+            var allFilters = document.getElementsByClassName("filter")
+
+            for (let filter of allFilters) {
+                 var text = filter.getElementsByClassName("text")[0]
+
+                 if(text.offsetHeight > filter.offsetHeight){
+                     text.style.fontSize = "4.7vw"
+                    if(!(filter.parentNode.offsetHeight / 4 > (text.offsetHeight + 4)))
+                    filter.style.height = (text.offsetHeight + 4) + 'px'
+                    console.log(text.offsetHeight,filter.offsetHeight)
+                 }
+            }
+        },0)
+
     },
     ...mapActions("moduleProduct",[
         "selectProduct"
@@ -113,7 +131,7 @@ export default {
          element.getElementsByClassName("remove")[0].classList.toggle("noDisplay")
     }
     });
-
+    this.arrangeFiltersHeight()
   }
 }
 </script>
@@ -126,14 +144,6 @@ export default {
   position: relative; /* If you want text inside of it */
 }
 
-/* If you want text inside of the container */
-.text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
 
 .blurMe
 {
