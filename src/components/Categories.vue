@@ -6,7 +6,7 @@
         <div class="row">
 
           <!-- Modal Trigger -->
-          <div href="#modal1" class="col10 offset-s1 categoryBorder modal-trigger waves-effect" style="height:60px;margin-bottom:20px">
+          <div data-micromodal-trigger="modal-1" class="col10 offset-s1 categoryBorder waves-effect" style="height:60px;margin-bottom:20px">
             <div class="row noMargin fullHeight">
               <div class="col s6 valign-wrapper fullHeight">
                 <p class="center noMargin" style="font-size:20px;margin-left:20px!important">Özel İstek</p>
@@ -17,28 +17,30 @@
             </div>
           </div>
 
-          
           <!-- Modal Structure -->
-          <div id="modal1" class="modal" style="border-radius:7px">
-            <div class="modal-content noPadding">
-              <div class="row">
-                <div class="col s12 beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
-                  <h5 style="font-size:1.5rem" class="center tColorWhite boldFont">Özel İstek</h5>
-                  <i class="material-icons beAbsolute centerInHeight modal-close" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">close</i>
-                </div>
-                <div class="col s12 addMarginT-S">
-                  <textarea id="customOrderInput" style="min-height:55px" class="materialize-textarea boldFont" placeholder="İsteğinizi yazın (Peçete, buz, çatal...)"></textarea>
-                </div>
+          <div class="modal micromodal-slide z-indexMedium" id="modal-1" aria-hidden="true">
+            <div class="modal__overlay" data-micromodal-close>
+              <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+
+                  <div class="row noMargin">
+                    <div class="col s12 beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
+                      <h5 class="center tColorWhite boldFont fluidFont-L">Özel İstek</h5>
+                      <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
+                    </div>
+                    <div class="col s12">
+                      <textarea id="customOrderInput" style="min-height:60px" class="materialize-textarea boldFont fluidFont-L" placeholder="İsteğinizi yazın (Peçete, buz, çatal...)"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row noMargin" style="height:3rem">
+                    <div class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+                      <div class="beAbsolute centerInCenter center boldFont" :style="{color:globalVariables.colors.helperTextColor}" style="font-size:1.1rem">Gönder</div>
+                    </div>
+                  </div> 
+
               </div>
             </div>
-            <div class="modal-footer">
-              <div class="row noMargin fullHeight">
-                <div class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
-                  <div class="beAbsolute centerInCenter center boldFont" :style="{color:globalVariables.colors.helperTextColor}" style="font-size:1.1rem">Gönder</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div>          
 
           <div @click="_selectCategory(category)" v-for="(category,index) in categories" class="col10 offset-s1 categoryBorder addMarginT-S waves-effect" style="height:80px" :key="category.categoryUid">
             <div class="row noMargin fullHeight">
@@ -108,8 +110,9 @@ export default {
       operation : "backgroundColor"
     })
 
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, {onOpenEnd:()=>{document.getElementById("customOrderInput").focus()}});
+    MicroModal.init();
+
+
   },
 }
 </script>
@@ -125,8 +128,18 @@ export default {
 .waves-effect{
   display : block;
 }
+@media only screen and (max-width: 550px){
+  .modal {
+      width: 85%;
+  }
+}
+@media only screen and (min-width: 550px){
+  .modal {
+      width: 75%;
+  }
+}
 .modal{
-  width : 85% !important;
+  max-height : 100% !important;
 }
 
 

@@ -3,11 +3,11 @@
     <div id="background_plate" class="backgroundCard"></div>
 
     <div class="row noMargin">
-        <div class="col s12 noPadding" style="height:9vh">
+        <div class="col s12 noPadding" style="height:15vmin;max-height:100px">
             <ul :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="tabs fullHeight">
                 <li class="tab col s3 fullHeight">
                     <a href="#orders" class="tColorWhite beRelative fullHeight">
-                        <div class="beAbsolute centerInWidth" style="bottom:0vh">
+                        <div class="beAbsolute centerInCenter fluidFont-M" style="top:55%">
                             Tabağınız
                         </div>
                         <div class="beAbsolute" style="bottom:1.3vh;right:0px;height:50%;border:0.5px solid #cecece;width:0px"></div>
@@ -15,49 +15,50 @@
                 </li>
                 <li class="tab col s3 fullHeight">
                     <a href="#track" class="tColorWhite beRelative fullHeight">
-                        <div class="beAbsolute centerInWidth" style="bottom:0vh">Takip</div>
+                        <div class="beAbsolute centerInCenter fluidFont-M" style="top:55%">Takip</div>
                     </a>
                 </li>
             </ul>
         </div>
         <div id="orders" class="col s12">
             <div class="row noMargin">
-                <div class="col s12 beRelative noPadding addMarginB-S" style="height:8vh;">
-                    <div class="beAbsolute centerInHeight boldFont" style="left:5%;font-size:1.2rem">Tabağınız</div>
-                    <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:2px;backgroundColor:#cecece"></div>
+                <div class="col s12 beRelative noPadding orderBorder" style="height:16vmin;max-height:90px">
+                    <div class="beAbsolute centerInHeight fluidFont-L" style="left:5%;">
+                        Tabağınız
+                    </div>
                 </div>
                 <!-- Orders here -->
                 <div class="col s12 noPadding" v-if="plate.length>0">
                     <div class="row noMargin">
-                        <div v-for="order in plate" class="col s12 beRelative noPadding" style="height:10vh;margin-bottom:1vh">
+                        <div v-for="order in plate" class="col s12 beRelative noPadding order orderBorder" style="height:22vmin;max-height:100px">
 
-                            <div :style="{backgroundColor:dilutedHelperThemeColor}" class="beRelative fullHeight waves-effect addShadow_button" style="width:83%;margin-left:5%;border-radius:5px">
-                                <div class="beAbsolute centerInHeight boldFont" style="font-size:6vw;left:5%">x{{order.orderCount}} {{order.product.productName}}</div>
-                                <div class="beAbsolute centerInHeight" style="right:15%">
-                                    <i class="material-icons">edit</i>
-                                </div>
+                            <div class="beAbsolute centerInHeight fluidFont-L boldFont" style="left:2%">x{{order.orderCount}}</div>
+
+                            <div class="beAbsolute centerInHeight fullHeight waves-effect z-indexLow" style="left:0;right:10%"></div>
+                            
+                            <div class="beAbsolute centerInHeight text" style="left:15%;width:70%">
+                                <div class="fluidFont-L boldFont">{{order.product.productName}}</div>
+                                <div class="fluidFont-M"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
                             </div>
 
-                            <div @click="removeOrder(order)" class="beAbsolute centerInHeight" style="right:0%">
-                               <!-- <div class="beAbsolute centerInHeight" style="height:80%;width:1.5px;backgroundColor:#cecece;left:-15%"></div>-->
-                                <i class="material-icons tColorRed boldFont" style="font-size:8vw">clear</i>
-                            </div>
-                        </div>
-
-                        <div class="col s12 noPadding" style="margin-top:1.5vh">
-                            <div class="fullWidth" style="height:3px;backgroundColor:#cecece"></div>
-                        </div>
-
-                        <div class="col s12 noPadding" style="height:7vh;margin-top:2.5vh;">
-                            <div class="beRelative waves-effect waves-light centerWithMargin fullHeight noPadding addShadow_button " :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="width:70%;letter-spacing:.5px;text-transform:uppercase;display:block;border-radius:1vw">
-                                <div class="beAbsolute centerInCenter tColorWhite center fullWidth" style="font-size:1.1rem">
-                                    Siparişi Gönder
+                            <div class="beAbsolute centerInHeight fullHeight" style="right:0;width:10%">
+                                <div class="beRelative fullWidth fullHeight">
+                                    <div class="beAbsolute centerInHeight" style="height:40%;width:1px;left:0;background-color:#cecece"></div>
+                                    <i class="material-icons beAbsolute centerInCenter tColorRed fluidFont-LL" style="left:60%">&#xe5cd</i>
                                 </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="col s10 offset-s1 noPadding beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="height:18vmin;max-height:120px;margin-top:2.5vh;border-radius:4px">
+                            <div class="beAbsolute centerInCenter fluidFont-L tColorWhite">
+                                Siparişi Gönder
                             </div>
                         </div>
                     </div>
+                    <div style="height:2px;width:100%;background-color:#bdbdbd;margin-top:5vmin"></div>
                     <div class="row noMargin" style="">
-                        <div class="col s12 boldFont" style="margin-top:4vh;font-size:5.5vw">
+                        <div class="col s12 boldFont fluidFont-LL" style="margin-top:7vmin;">
                             Yanına yakışır...   
                         </div>
                         <div class="col s12 noPadding">
@@ -67,15 +68,15 @@
                                     <ul class="glide__slides">
                                         <li v-for="product in suggestedProducts()" class="glide__slide">
 
-                                            <div class="containerr" style="overflow:hidden">
+                                            <div class="fullWidth beRelative suggestion" style="overflow:hidden">
                                                 <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                                                <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
-                                                <div class="beAbsolute fullWidth " :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
-                                                    <div class="beRelative fullWidth fullHeight">
-                                                        <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth" style="font-size:1.3rem">{{product.productName}}</div>
+                                                     <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
+                                                    <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
+                                                        <div class="beRelative fullWidth fullHeight">
+                                                            <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
+                                            </div>                                         
 
                                         </li>                                                                      
                                     </ul>
@@ -86,7 +87,7 @@
                     </div>
                     <div style="margin-bottom:5vh"></div>
                 </div>
-                <div class="col s12 noPadding boldFont center beRelative" style="font-size:6vw;margin-top:5vh;height:60vh" v-else>
+                <div class="col s12 noPadding boldFont center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
                     Tabağınızda ürün yok
                         <img src="../assets/tabakIcon.png" alt="" class="beAbsolute centerInCenter">
                 </div>
@@ -94,8 +95,8 @@
         </div>
         <div id="track" class="col s12">
             <div class="row noMargin">
-                <div class="col s12 beRelative noPadding addMarginB-S" style="height:8vh;">
-                    <div class="beAbsolute centerInHeight boldFont" style="left:5%;font-size:1.2rem">Takip Listesi</div>
+                <div class="col s12 beRelative noPadding addMarginB-S" style="height:18vmin;">
+                    <div class="beAbsolute centerInHeight boldFont" style="left:5%;font-size:5.5vmin">Takip Listesi</div>
                     <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:2px;backgroundColor:#cecece"></div>
                 </div>
                 <!-- Order List here -->
@@ -106,18 +107,18 @@
                               <span style="font-size:5vw" class="boldFont">x{{order.orderCount}} </span> <span class="boldFont" style="font-size:6vw">{{order.product.productName}}</span>
                             </div>
                             <div v-if="index%2===0" class="beAbsolute centerInHeight" style="right:5%;width:20%">
-                                <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">done_all</i>
+                                <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">&#xe877</i>
                                 <p class="center noPadding noMargin">Hazırlanıyor</p>
                             </div>
                             <div v-else class="beAbsolute centerInHeight" style="right:5%;width:20%">
-                                <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">done</i>
+                                <i class="material-icons displayBlock center" style="color:#9e9e9e;font-size:8vw">&#xe877</i>
                                 <p class="center noPadding noMargin">İletildi</p>
                             </div>
                             <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:98%;height:2px;backgroundColor:#cecece"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col s12 noPadding boldFont center beRelative" style="font-size:6vw;margin-top:5vh;height:60vh" v-else>
+                <div class="col s12 noPadding boldFont center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
                     Tabağınızda ürün yok
                         <img src="../assets/tabakIcon.png" alt="" class="beAbsolute centerInCenter">
                 </div>
@@ -154,6 +155,10 @@ export default {
       removeOrder(order){
           this.removeFromPlate(order)
       },
+      resize(){
+          this.arrangeOrdersHeight();
+          this.arrangeSuggestions();
+      },
       //helper functions
     hexToRgb(hex){
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -169,6 +174,60 @@ export default {
             b: parseInt(result[3], 16)
         } : null;
     },
+    //for styles
+    arrangeOrdersHeight(){
+        setTimeout(()=>{
+            var allOrders = document.getElementsByClassName("order")
+
+            for (let order of allOrders) {
+
+                 var text = order.getElementsByClassName("text")[0]
+
+
+                 if(text.offsetHeight > order.offsetHeight){
+
+                     var text_name = text.getElementsByClassName("text_name")[0]
+                     var text_extras = text.getElementsByClassName("text_extras")[0]
+                     
+                    order.style.height = text.offsetHeight + 8 + 'px'
+
+                 }
+            }
+        },0)
+
+    },
+
+    arrangeSuggestions(){
+        setTimeout(()=>{
+            var suggestions = document.getElementsByClassName("suggestion")
+
+            var wDh_ratio = (3/4)
+
+            for(let suggestion of suggestions){
+                console.log(suggestion.offsetWidth)
+                suggestion.style.height = (suggestion.offsetWidth * wDh_ratio) + 'px'                
+                var filterHeightRatio = 0.4
+                
+                var expectedFilterHeight = suggestion.offsetHeight * filterHeightRatio
+
+                var text = suggestion.getElementsByClassName("text")[0]
+                var filter = suggestion.getElementsByClassName("filter")[0]
+
+                var textSpacing = 6 //in px
+                var minimumNeededSpaceForText = text.offsetHeight + textSpacing
+
+                if(minimumNeededSpaceForText > expectedFilterHeight)
+                    filter.style.height = minimumNeededSpaceForText + 'px'
+                else
+                    filter.style.height = expectedFilterHeight + 'px'
+
+
+            }
+            
+        },0)
+
+    },
+
     ...mapMutations("modulePlate",["removeFromPlate"])
   },
   computed : {
@@ -186,7 +245,11 @@ export default {
           "subCategories"
       ]),
   },
+  created(){
+      window.addEventListener("resize",this.resize)
+  },
   mounted(){
+
     var el = document.querySelectorAll('.tabs');
     var instance = M.Tabs.init(el, {});
 
@@ -200,12 +263,22 @@ export default {
     new Glide('.glide',{
         type: 'carousel',
         startAt: 0,
-        perView: 2,
         swipeThreshold : 30,
         dragThreshold : 50,
+        perView : 2,
         touchAngle : 80,
-        autoplay: 4500
+        autoplay: 4000,
+        breakpoints : {
+              500 : {perView : 2},
+              900 : {perView : 3},
+              1200 : {perView : 4}
+        }
     }).mount()
+
+    this.arrangeOrdersHeight()
+
+    this.arrangeSuggestions();
+
 
   }
 }
@@ -222,9 +295,12 @@ export default {
 .glide__slide{
     background-color: black
 }
-.containerr {
-  width: 100%;
-  padding-top: 75%; /* 1:1 Aspect Ratio */
-  position: relative; /* If you want text inside of it */
+.orderBorder{
+    border-bottom : 1px solid #bdbdbd
+}
+.containerr{
+    width:100%;
+    padding-top:75%;
+    position : relative;
 }
 </style>

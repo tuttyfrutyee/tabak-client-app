@@ -12,13 +12,16 @@ import globalVariables from "./globalVariables.json"
 //importing materialize css and javascript
 import "materialize-css/dist/css/materialize.min.css"
 import "materialize-css/dist/js/materialize.min.js"
-//icons
-import "material-design-icons/iconfont/material-icons.css"
+
+//for modal
+import MicroModal from 'micromodal'
+
 //glider
-import Glide from "@glidejs/glide/dist/glide.min.js"
+import Glide from '@glidejs/glide/dist/glide.min.js'
 import "@glidejs/glide/dist/css/glide.core.min.css"
 
 window.Glide = Glide
+window.MicroModal = MicroModal
 
 //myAlert.css
 //attaching functions to window object --> hence reachable anywhere
@@ -40,6 +43,7 @@ Vue.mixin({
       //untrackedGlobalVariables
       uTGlobalVariables : untrackedGlobalVariables,
       globalVariables,
+      Vue
     }
   }
 })

@@ -16,6 +16,8 @@ import moduleSubCategories from "./modules/moduleSubCategories"
 import moduleProduct from "./modules/moduleProduct"
 import modulePlate from "./modules/modulePlate"
 
+import moduleAnimations from "./modules/moduleAnimations"
+
 export default new Vuex.Store({
     state : {
         //global variables
@@ -47,6 +49,8 @@ export default new Vuex.Store({
         moduleCategories,
         moduleSubCategories,
         moduleProduct,
-        modulePlate
+        modulePlate,
+
+        moduleAnimations,
     }
 })

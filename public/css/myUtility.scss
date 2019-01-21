@@ -176,6 +176,45 @@ $fontXXLarge_R : 2.5rem;
 .fontSXXLarge_R{
     font-size : $fontXXLarge_R !important;
 }
+//fluid fonts
+
+@function strip-unit($value) {
+    @return $value / ($value * 0 + 1);
+  }
+
+$min-font-size-S : 13px;
+$max-font-size-S : 18px;
+$min-font-size-M : 13px;
+$max-font-size-M : 22px;
+$min-font-size-L : 16px;
+$max-font-size-L : 28px;
+$min-font-size-LL : 18px;
+$max-font-size-LL : 35px;
+$min-font-size-XL : 21px;
+$max-font-size-XL : 44px;
+$min-font-size-XXL : 25px;
+$max-font-size-XXL : 40px;
+$max-vw : 800px;
+$min-vw : 250px;
+
+.fluidFont-S{
+    font-size: calc(#{$min-font-size-S} + #{strip-unit($max-font-size-S - $min-font-size-S)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) !important;
+}
+.fluidFont-M{
+    font-size: calc(#{$min-font-size-M} + #{strip-unit($max-font-size-M - $min-font-size-M)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) !important;
+}
+.fluidFont-L{
+    font-size: calc(#{$min-font-size-L} + #{strip-unit($max-font-size-L - $min-font-size-L)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) !important;
+}
+.fluidFont-LL{
+    font-size: calc(#{$min-font-size-LL} + #{strip-unit($max-font-size-LL - $min-font-size-LL)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) !important;
+}
+.fluidFont-XL{
+    font-size: calc(#{$min-font-size-XL} + #{strip-unit($max-font-size-XL - $min-font-size-XL)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) !important;
+}
+.fluidFont-XXL{
+    font-size: calc(#{$min-font-size-XXL} + #{strip-unit($max-font-size-XXL - $min-font-size-XXL)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})) !important;
+}
 //endOf fontS
 
 //beginning of addBorder Group
@@ -342,6 +381,10 @@ $paddingLarge : 40px;
     padding-bottom : $paddingLarge !important;
 }
 //addPaddingLAR
+.addPaddingLAR-VS{
+    padding-left : $paddingVSmall !important;
+    padding-right : $paddingVSmall !important;
+}
 .addPaddingLAR-S{
     padding-left : $paddingSmall !important;
     padding-right : $paddingSmall !important;
@@ -689,6 +732,9 @@ $maxHeightXL : 400px;
 .bColorGreen{
     background-color : #4db6ac !important
 }
+.bColorWhite{
+    background-color : #ffffff  !important
+}
 .tColorWhite{
     color : white !important
 }
@@ -741,3 +787,79 @@ $maxHeightXL : 400px;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
+
+//stuff for modal
+.modal {
+    font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
+  }
+  
+  .modal__overlay {
+    position: fixed;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal__container {
+    background-color: #fff;
+    border-radius: 4px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    transform: translateY(-7vh)
+  }
+  
+  @media only screen and (max-width: 550px){
+    .modal__container {
+        width: 85%;
+    }
+  }
+  @media only screen and (min-width: 550px){
+    .modal__container {
+        width: 75%;
+    }
+  }
+  @media only screen and (min-width: 700px){
+    .modal__container {
+        width: 70%;
+    }
+  }
+  
+  
+  @keyframes mmfadeIn {
+      from { opacity: 0; }
+        to { opacity: 1; }
+  }
+  
+  
+  @keyframes mmslideIn {
+    from { transform: translateY(0%); }
+      to { transform: translateY(-7vh); }
+  }
+  
+  
+  .micromodal-slide {
+    display: none;
+  }
+  
+  .micromodal-slide.is-open {
+    display: block;
+  }
+  
+  .micromodal-slide[aria-hidden="false"] .modal__overlay {
+    animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  }
+  
+  .micromodal-slide[aria-hidden="false"] .modal__container {
+    animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
+  }
+  
+  
+  .micromodal-slide .modal__container,
+  .micromodal-slide .modal__overlay {
+    will-change: transform;
+  }

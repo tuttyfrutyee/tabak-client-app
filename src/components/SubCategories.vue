@@ -3,24 +3,26 @@
   <div id="subCategories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
-      <div class="fullWidth" style="height:1vh" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" ></div>
+      <div class="fullWidth fluidFont-L boldFont" style="padding-top:1vmin;padding-bottom:1vmin" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+          {{selectedCategory.categoryTitle}}
+      </div>
     <ul class="collapsible noMargin noBorder">
-        <li @click="arrangeFiltersHeight()" class="active">
-            <div class="collapsible-header beRelative" style="height:3.8rem" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
-                <p class="beAbsolute centerInCenter noMargin noPadding boldFont tColorWhite">Tercih Edilenler</p>
-                <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin add noDisplay" style="right:5%">add</i>
-                <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin remove" style="right:5%">remove</i>
-                <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin" style="left:5%">star</i>
+        <li @click="arrangeProducts()" class="active">
+            <div class="collapsible-header beRelative z-depth-3" style="height:10vmin;min-height:3.8rem;background-color:#fafafa">
+                <p class="beAbsolute centerInCenter noMargin noPadding boldFont  fluidFont-M">Sıkça Tercih Edilenler</p>
+                <i class="material-icons beAbsolute centerInHeight  noMargin add noDisplay fluidFont-L" style="right:5%">&#xe145</i>
+                <i class="material-icons beAbsolute centerInHeight  noMargin remove fluidFont-L" style="right:5%">&#xe15b</i>
+                <i class="material-icons beAbsolute centerInHeight  noMargin fluidFont-L" style="left:5%">&#xe838</i>
             </div>
             <div class="collapsible-body noPadding">
                 <div class="row noMargin">
-                    <div @click="_selectProduct(product)" v-for="product in mostWanteds" class="col s6 noPadding">
-                        <div class="containerr" style="overflow:hidden">
+                    <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
+                        <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
-                            <div class="beAbsolute fullWidth filter" :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
+                            <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text" style="font-size:5.2vw">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text addPaddingLAR-VS fluidFont-L" style="">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
@@ -28,21 +30,21 @@
                 </div>
             </div>
         </li>
-        <li @click="arrangeFiltersHeight()" v-for="subCategory in subCategories">
-            <div class="collapsible-header beRelative" style="height:3.8rem" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
-                <p class="beAbsolute centerInCenter noMargin noPadding boldFont tColorWhite">{{subCategory.subCategoryName}}</p>
-                <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin add" style="right:5%">add</i>
-                <i class="material-icons beAbsolute centerInHeight tColorWhite noMargin remove noDisplay" style="right:5%">remove</i>
+        <li @click="arrangeProducts()" v-for="subCategory in subCategories">
+            <div class="collapsible-header beRelative" style="height:10vmin;min-height:3.8rem;background-color:#fafafa">
+                <p class="beAbsolute centerInCenter noMargin noPadding boldFont fluidFont-M">{{subCategory.subCategoryName}}</p>
+                <i class="material-icons beAbsolute centerInHeight noMargin add fluidFont-L" style="right:5%">&#xe145</i>
+                <i class="material-icons beAbsolute centerInHeight noMargin remove noDisplay fluidFont-L" style="right:5%">&#xe15b</i>
             </div>
             <div class="collapsible-body noPadding">
                 <div class="row noMargin">
-                    <div @click="_selectProduct(product)" v-for="product in subCategory.products" class="col s6 noPadding">
-                        <div class="containerr" style="overflow:hidden">
+                    <div :style="calculatePadding({realIndex:index,totalNumberOfItem:subCategory.products.length})" @click="_selectProduct(product)" v-for="(product,index) in subCategory.products" class="col s6 m4 borderBox product">
+                        <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
-                            <div class="beAbsolute fullWidth filter" :style="{backgroundColor:'rgba(243,128,0,0.7)'}" style="bottom:0;left:0;height:25%">
+                            <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text" style="font-size:1.3rem">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +72,7 @@ export default {
   },
   data(){
     return {
-
+        trigger : true
     }
   },
   methods : {
@@ -79,22 +81,92 @@ export default {
         this.$router.push("/product")
     },
     //styles
-    arrangeFiltersHeight(){
+    arrangeProducts(){
+        //evaluating height and filters height of the products
         setTimeout(()=>{
-            var allFilters = document.getElementsByClassName("filter")
+            var products = document.getElementsByClassName("product")
 
-            for (let filter of allFilters) {
-                 var text = filter.getElementsByClassName("text")[0]
+            var wDh_ratio = (3/4)
 
-                 if(text.offsetHeight > filter.offsetHeight){
-                     text.style.fontSize = "4.7vw"
-                    if(!(filter.parentNode.offsetHeight / 4 > (text.offsetHeight + 4)))
-                    filter.style.height = (text.offsetHeight + 4) + 'px'
-                    console.log(text.offsetHeight,filter.offsetHeight)
-                 }
+            for(let product of products){
+                product.style.height = (product.offsetWidth * wDh_ratio) + 'px'
+                
+                var filterHeightRatio = 0.4
+
+                var expectedFilterHeight = product.offsetHeight * filterHeightRatio
+
+                var text = product.getElementsByClassName("text")[0]
+                var filter = product.getElementsByClassName("filter")[0]
+
+                var textSpacing = 6 // in px
+                var minimumNeededSpaceForText = text.offsetHeight + textSpacing
+
+                if(minimumNeededSpaceForText > expectedFilterHeight)
+                    filter.style.height = minimumNeededSpaceForText + 'px'
+                else
+                    filter.style.height = expectedFilterHeight + 'px'
             }
         },0)
+    },
+    calculatePadding(details){
 
+
+        var realIndex = details.realIndex;
+        var totalNumberOfItem = details.totalNumberOfItem
+
+
+        var mode;
+
+        mode = this.trigger //dummy operation
+
+        var amount = 0.5
+        var unit = "vmin"
+        //the number are in terms of 'vmin'
+        var padding = {
+            leftPadding :  amount,
+            topPadding : amount,
+            rightPadding : amount,
+            bottomPadding  : amount
+        }
+        var width = window.innerWidth;
+        if(width <= 600){
+            mode = 2
+        }else if(width > 600 && width <= 992){
+            mode = 3
+        }else if(width > 992){
+            mode = 4
+        }
+
+        var totalNumberOfLines = Math.floor(totalNumberOfItem/mode) + ((totalNumberOfItem % mode === 0)?0:1);
+        var lineNumber = Math.floor(realIndex / mode)
+        var index = realIndex % mode;
+        
+        //care for bottom and top
+        if(lineNumber === 0)
+            padding.topPadding = 0
+       
+        if(lineNumber === totalNumberOfLines-1)
+            padding.bottomPadding = 0
+        
+        //care for left and right
+        if(index === 0)
+            padding.leftPadding = 0
+       
+        if(index === mode-1)
+            padding.rightPadding  = 0
+       
+        if(realIndex === totalNumberOfItem-1)
+            padding.rightPadding = 0
+
+        
+        return {
+            "padding" : padding.topPadding+unit + " " + padding.rightPadding+unit + " " + padding.bottomPadding+unit + " " + padding.leftPadding+unit,                                    
+            "backgroundColor" : "#fff"
+        }
+    },
+    resize(){
+        this.arrangeProducts();
+        this.trigger = !this.trigger
     },
     ...mapActions("moduleProduct",[
         "selectProduct"
@@ -116,7 +188,13 @@ export default {
     ...mapState("moduleSubCategories",[
         "subCategories"
     ]),
+    ...mapState("moduleCategories",[
+        "selectedCategory"
+    ])
 
+  },
+  created(){
+      window.addEventListener("resize",this.resize)
   },
   mounted(){
 
@@ -131,19 +209,16 @@ export default {
          element.getElementsByClassName("remove")[0].classList.toggle("noDisplay")
     }
     });
-    this.arrangeFiltersHeight()
+    this.arrangeProducts()
+  },
+  destroyed(){
+      window.removeEventListener("resize",this.resize)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.containerr {
-  width: 100%;
-  padding-top: 75%; /* 1:1 Aspect Ratio */
-  position: relative; /* If you want text inside of it */
-}
-
 
 .blurMe
 {

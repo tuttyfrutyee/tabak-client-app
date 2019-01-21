@@ -1,19 +1,19 @@
 <template>
-  <div id="product" class="beAbsolute fullWidth" style="top:0px;left:0px;height:112vh">
+  <div id="product" class="beAbsolute fullWidth" style="top:0px;left:0px;min-height:112vmax">
       <div id="background_subCategories" class="backgroundCard"></div>
       
       <div class="row noMargin">
 
-          <div class="col s12 beRelative noOverflow noPadding" style="height : 25vh">
+          <div class="col s12 beRelative noOverflow noPadding" style="height : 25vmax">
 
-                <div class="beAbsolute z-indexMedium" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="right:5%;top:8%;height:12vw;width:12vw;border-radius:50%;">
+                <div class="beAbsolute z-indexMedium" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="right:5%;top:8%;height:13vmin;width:13vmin;border-radius:50%;">
                     <div class="beRelative fullWidth fullHeight">
-                        <div class="beAbsolute" style="left:2.1vw;bottom:0.2vw">
-                            <i style="font-size:6.8vw" class="material-icons tColorWhite">alarm</i>
+                        <div class="beAbsolute" style="left:1.5vmin;bottom:0.9vmin">
+                            <i style="font-size:6.8vmin" class="material-icons tColorWhite">&#xe855</i>
                         </div>
-                        <div class="beAbsolute" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="width:5.1vw;height:5.1vw;border-radius:50%;right:1.8vw;top:1.5vw;font-size:4.3vw">
+                        <div class="beAbsolute" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="width:6.3vmin;height:6.3vmin;border-radius:50%;right:1.8vmin;top:1.5vmin;font-size:4.3vmin">
                             <div class="beRelative fullWidth fullHeight">
-                                <div class="beAbsolute centerInCenter tColorWhite">{{selectedProduct.productDeliveryTime}}</div>
+                                <div class="beAbsolute centerInCenter tColorWhite">{{selectedProduct.productDeliveryTime}}<span style="font-size:2vmin">dk</span></div>
                             </div>
                         </div>
                     </div>
@@ -25,111 +25,120 @@
 
 					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="selectedProduct.productImages.productIconImage" alt="">
 
-					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth"></div>
+					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth">
+                </div>
 
 		  </div>
 
-          <div class="col s12 beRelative" style="height:9vh">
-            <div class="beAbsolute centerInHeight" style="left:5%; width:95%">
-                <p :style="lenght_fontSizeMatch(selectedProduct)" style="width:70%" class="noPadding noMargin boldFont font_family1">{{selectedProduct.productName}}</p>
+          <div id="header" class="col s12 beRelative" style="height:10vmax">
+            <div class="beAbsolute centerInHeight" style="left:5%; width:95%;">
+                <p id="productName" style="width:70%" class="noPadding noMargin boldFont font_family1 fluidFont-XL">{{selectedProduct.productName}}</p>
             </div>
-            <div class="beAbsolute font_family1" style="right:10%;font-size:1.7rem;right:5%;bottom:0.6rem">
+            <div class="beAbsolute font_family1 fluidFont-XL" style="right:10%;right:5%;bottom:0.6rem">
                 {{selectedProduct.productCost}} ₺
             </div>
           </div>
           <div class="col s12 noPadding" style="margin-top:8px">
             <div class="_line"></div>
           </div>
-          <div id="mainPart" class="col s12 noPadding beRelative" style="max-height:18vh;min-height:13vh;margin-top:1vh">
+          <div id="mainPart" class="col s12 noPadding beRelative" style="max-height:18vmax;min-height:13vmax;margin-top:1.5vmax">
               <div :class="summaryClass()" class="beAbsolute" :style="summaryStyle()" style="width:48%;left:5%;">
-                  <p id="summaryParagraph" class="noMargin font_family1" style="color:#757575;font-size:1.1rem;max-height:17vh; overflow:scroll">
-                      {{selectedOption.productOptionSummary}}
+                  <p id="summaryParagraph" class="noMargin font_family1 fluidFont-M" style="color:#757575;max-height:17vmax; overflow:scroll">
+                      {{orders[0].selectedOption.productOptionSummary}}
                   </p>
                   
                   <div v-if="checkSummaryLength()" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" class="beAbsolute fullWidth" style="left:0;bottom:-3px;height:1px;"></div>
 
               </div>
-              <div class="beAbsolute centerInHeight" style="width:35%;right:5%;height:10vw">
-                  <div class="row fullHeight">
+              <div class="beAbsolute centerInHeight" style="width:35vmin;right:5%;height:10vmin">
+                  <div class="row fullHeight fluidFont-M">
                       <div @click="decrementOrderCount" class="col s4 fullHeight beRelative optionBorder waves-effect" style="border-radius:5px 0px 0px 5px">
                           <i class="material-icons beAbsolute centerInCenter">
-                              remove
+                              &#xe15b
                           </i>
                       </div>
                       <div class="col s4 fullHeight beRelative optionBorder">
-                          <p class="beAbsolute noPadding noMargin center centerInCenter boldFont">{{orderCount}}</p>
+                          <p class="beAbsolute noPadding noMargin center centerInCenter boldFont">{{orders.length}}</p>
                       </div>
                       <div @click="incrementOrderCount" class="col s4 fullHeight beRelative waves-effect waves-light addShadow_button" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:0px 5px 5px 0px">
                           <i class="material-icons beAbsolute centerInCenter tColorWhite">
-                              add
+                              &#xe145
                           </i>
                       </div>
                   </div>
               </div>
           </div>
-          <div class="col s12" style="margin-top:10vh;height:13vh">
-              <div class="row noMargin fullHeight">
-                  <div class="col s6 input-field fullHeight">
-                        <select v-model="selectedOption">
-                            <option v-for="option in selectedProduct.productOptions" class="tColorBlack bColorRed" :value="option">{{option.productOptionName}}</option>
+          <div class="col s12" style="margin-top:10vmax;margin-bottom:18vmax">
+              <div v-for="(order,index) in orders" style="height:13vmax;" class="row noMargin addPaddingL-S" :key="index">
+                  <div v-if="orders.length>1" class="col s12 beRelative noPadding" style="margin-bottom:1vmax">
+                      <div class="fluidFont-M"><span class="boldFont">{{index+1}}</span>. ürün</div>
+                      <div style="width:20%;height:1px;background-color:#424242"></div>
+                  </div>
+                  <div class="col s6 beRelative noPadding">
+                        <label class="fluidFont-S">Seçenekler</label>
+                        <select v-if="selectedProduct.productOptions.length<2" disabled class="fullWidth fluidFont-M browser-default noMargin" style="height:6vmax" v-model="order.selectedOption">
+                            <option v-for="option in selectedProduct.productOptions" :value="option" class="fluidFont-M" :key="option.optionName">{{option.productOptionName}}</option>
                         </select>
-                        <label>Seçenekler</label>
+                        <select v-else class="fullWidth fluidFont-M browser-default noMargin" style="height:6vmax" v-model="order.selectedOption">
+                            <option v-for="option in selectedProduct.productOptions" :value="option" class="fluidFont-M" :key="option.optionName">{{option.productOptionName}}</option>
+                        </select>
+                        <div v-if="selectedProduct.productOptions.length>1" class="beAbsolute fullWidth" style="bottom:-1px;height:2px;backgroundColor:#424242;"></div>
                   </div>
                   <div class="col s6 fullHeight beRelative">
 
                       <!-- Modal Trigger -->
-                      <div href="#modal1" :style="extrasStyle()"  class="eightWidth  beAbsolute centerInHeight modal-trigger" style="height:55%;border-radius:.3rem;right:3%">
-                          <div class="beAbsolute centerInCenter noMargin noPadding boldFont center" style="font-size:1.4rem">Ekstralar</div>
-                          <div v-if="selectedExtras.length>0" class="beAbsolute" style="width:8vw;height:8vw;right:-5%;top:-18%">
+                      <div :data-micromodal-trigger="'modal-'+index" :href="'#modal'+index" :style="extrasStyle()"  class="eightWidth  beAbsolute centerInHeight modal-trigger" style="height:55%;border-radius:.3rem;right:3%">
+                          <div class="beAbsolute centerInCenter noMargin noPadding boldFont center fluidFont-L">Ekstralar</div>
+                          <div v-if="order.selectedExtras.length>0" class="beAbsolute" style="width:8vmin;height:8vmin;right:-5%;top:-18%">
                               <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="border-radius:50%">
-                                  <div class="beAbsolute centerInCenter tColorWhite boldFont">{{selectedExtras.length}}</div>
+                                  <div class="beAbsolute centerInCenter tColorWhite boldFont fluidFont-M">{{order.selectedExtras.length}}</div>
                               </div>
                           </div>
-                      </div>
-                        <!-- Modal Structure -->
-                        <div id="modal1" class="modal" style="border-radius:7px">
-                            <div class="modal-content noPadding">
-                                <div class="row fullWidth noMargin">
-                                    <div class="col s12 beRelative" style="margin-bottom:1vh" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
-                                        <h5 style="font-size:1.5rem" class="center tColorWhite boldFont">Ekstralar</h5>
-                                        <i class="material-icons beAbsolute centerInHeight modal-close" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">close</i>
-                                    </div>
-                                    <div @click="toggleSelectedExtras(productExtra)" v-for="productExtra in selectedProduct.productExtras" class="col s12 beRelative noPadding waves-effect" style="height:11vh;border-top:1px solid #cecece;">
-                                        <div class="beAbsolute centerInCenter font-family1 boldFont center addPaddingTAB-S" style="font-size:1.3rem;line-height: normal">
-                                            {{productExtra.productExtraName}}
-                                        </div>
-                                        <div class="beAbsolute centerInHeight" style="left:5%">
-                                            <i v-if="!isInsideSelectedExtras(productExtra)" style="font-size:7vw" class="material-icons">check_box_outline_blank</i>
-                                            <i v-else class="material-icons" style="font-size:7vw">check_box</i>
-                                        </div>
-                                        <div class="beAbsolute centerInHeight font-family1" style="right:5%;font-size:1.1rem">+ {{productExtra.productExtraCost}} ₺</div>
-                                    </div>
-                                    <div class="col s12 beRelative" style="height:10vh" v-if="selectedProduct.productExtras.length===0">
-                                        <div class="beAbsolute centerInCenter center fullWidth">
-                                            Bu ürünün ekstrası bulunmamaktadır
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div :style="{backgroundColor:globalVariables.colors.helperThemeColor}"  class="modal-footer" style="height:1vh;margin-top:1vh">
+                      </div>  
 
+ 
+                    <!-- Modal Content -->
+                    <div class="modal micromodal-slide z-indexMedium" :id="'modal-'+index" aria-hidden="true">
+                        <div  style="z-index:2000;" class="modal__overlay" data-micromodal-close>
+                            <div class="modal__container" style="opacity : 1" aria-modal="true" >
+                                    <div class="row fullWidth noMargin">
+                                        <div class="col s12 beRelative" style="margin-bottom:1vmax" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
+                                            <div class="center tColorWhite boldFont fluidFont-XL">Ekstralar</div>
+                                            <i data-micromodal-close class="material-icons beAbsolute centerInHeight modal-close fluidFont-L" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
+                                        </div>
+                                        <div @click="toggleSelectedExtras({productExtra,order})" v-for="productExtra in selectedProduct.productExtras" class="col s12 beRelative noPadding waves-effect" style="height:11vmax;border-top:1px solid #cecece;" :key="productExtra.productExtraName">
+                                            <div class="beAbsolute centerInCenter font-family1 boldFont center addPaddingTAB-S fluidFont-L" style="line-height: normal">{{productExtra.productExtraName}}</div>
+                                            <div class="beAbsolute centerInHeight" style="left:5%">
+                                                <i v-if="!isInsideSelectedExtras({productExtra,order})" class="material-icons fluidFont-XL">&#xe835</i>
+                                                <i v-else class="material-icons fluidFont-XL">&#xe834</i>
+                                            </div>
+                                            <div class="beAbsolute centerInHeight font-family1 fluidFont-M" style="right:5%;">+ {{productExtra.productExtraCost}} ₺</div>
+                                        </div>
+                                        <div class="col s12 beRelative" style="height:10vmax" v-if="selectedProduct.productExtras.length===0">
+                                            <div class="beAbsolute centerInCenter center fullWidth">
+                                                Bu ürünün ekstrası bulunmamaktadır
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
+                    </div>
+
 
                   </div>
               </div>
           </div>
-            <div @click="_pushToPlate" class="fullWidth beFixed waves-effect" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="bottom:0;left:0;height:12vh;-webkit-transform: translateZ(0);">
+            <div @click="_pushToPlate" class="fullWidth beFixed waves-effect" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
                 <div class="beRelative fullWidth fullHeight">
-                    <div class="beAbsolute centerInCenter boldFont tColorWhite" style="font-size:1.5rem;">
+                    <div class="beAbsolute centerInCenter boldFont tColorWhite fluidFont-XL">
                         Tabağa Ekle
                     </div>
                     
                     <div class="beAbsolute centerInHeight" style="left:10%">
-                        <img id="tabakIcon" src="../assets/tabakIcon.png" style="height:3.3rem;">
-                        <div class="beAbsolute"  style="height:20px;width:20px;right:0%;top:0%">
+                        <img id="tabakIcon_product" src="../assets/tabakIcon.png" style="height:8.5vmax">
+                        <div class="beAbsolute"  style="height:3vmax;width:3vmax;right:0%;top:0%">
                             <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:50%">
-                                <i class="material-icons beAbsolute centerInCenter tColorWhite" style="font-size:1.5rem">add</i>
+                                <i class="material-icons beAbsolute centerInCenter tColorWhite fluidFont-L">&#xe145</i>
                             </div>
                         </div>
                     </div>
@@ -137,8 +146,6 @@
 
                 </div>
             </div>
-
-         
           </div>
       </div>
 </template>
@@ -147,47 +154,56 @@
 //For vuex store, mapState and mapActions   
 //Info : mapAction and mapMutations both inserted in methods block
 import { mapActions, mapMutations, mapState } from "vuex";
-import index from '../vuex_store';
 
 export default {
   name: 'product',
   data(){
     return {
-        selectedExtras : [],
-        selectedOption : null,
-        orderCount : 1,
+        orders : [],
         //for dummy
         paragraph : null,
         mainPart : null,
     }
   },
   methods : {
-      toggleSelectedExtras(extra){
-            var indexOfRemoval = this.selectedExtras.indexOf(extra)
+      toggleSelectedExtras(details){
+            var extra = details.productExtra;
+            var order = details.order;
+
+            var indexOfRemoval = order.selectedExtras.indexOf(extra)
             if(indexOfRemoval>-1)
-                this.selectedExtras.splice(indexOfRemoval,1)
+                order.selectedExtras.splice(indexOfRemoval,1)
             else
-                this.selectedExtras.push(extra)
+                order.selectedExtras.push(extra)
       },
-      isInsideSelectedExtras(extra){
-          return this.selectedExtras.find(_extra=>{return _extra.productExtraName=== extra.productExtraName})
+      isInsideSelectedExtras(details){
+          var order = details.order;
+          var extra = details.productExtra;
+          return order.selectedExtras.find(_extra=>{return _extra.productExtraName=== extra.productExtraName})
       },
       _pushToPlate(){
-          this.pushToPlate({
-              product : this.selectedProduct,
-              selectedExtras : this.selectedExtras,
-              selectedOption : this.selectedOption,
-              orderCount : this.orderCount
-          })
+          this.orders.forEach(order=>{this.pushToPlate(order)})
           this.$router.go(-1)
+          this.addTodoAnimation({type:'lazy',name:'icon'})
       },
       incrementOrderCount(){
-          this.orderCount++
+          this.orders.push({
+              product : this.selectedProduct,
+              selectedExtras : [],
+              selectedOption : this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'}),
+              orderCount : 1
+          })
+          setTimeout(()=>{
+              this.initModals();
+          },0)
       },
       decrementOrderCount(){
-          this.orderCount--
-          if(this.orderCount < 1 )
-            this.orderCount = 1
+          if(this.orders.length > 1){
+              this.orders.pop();
+          }
+          setTimeout(()=>{
+              this.initModals();
+          },0)
       },
       //view relateds
       checkSummaryLength(){
@@ -196,22 +212,24 @@ export default {
           }
           return false
       },
-      customizeSelectionElement(){
-          //not sure to finish
-          var selectWrapper = document.getElementsByClassName("select-wrapper")[0]
-          var input = selectWrapper.getElementsByClassName("select-dropdown")[0]
-      },
       //classes
       summaryClass(){
           return {"centerInHeight" : !this.checkSummaryLength()}
       },
       //styles
-      lenght_fontSizeMatch(product){
-          if(product.productName.length > 20)
-            return {"fontSize":"1.5rem"}
-          else if(product.productName.length > 15)
-            return {"fontSize" : "1.6rem"}
-          return {"fontSize":"2.1rem"}
+      setHeaderHeight(){
+
+            var header = document.getElementById("header")
+            var productName = document.getElementById("productName")
+            if(productName.offsetHeight > (header.offsetHeight * (0.8))){
+                header.style.height = productName.offsetHeight + 5 + 'px'
+            }else{
+                var fittedHeight = productName.offsetHeight + 5
+                header.style.height = '10vmax'
+                if(header.offsetHeight < fittedHeight)
+                    header.style.height = fittedHeight + 'px'
+            }
+
       },
       summaryStyle(){
           if(this.checkSummaryLength())
@@ -231,20 +249,26 @@ export default {
             "box-shadow": "0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)"
           }
       },
+      initModals(){
+          MicroModal.init({
+              disableScroll: true
+          });
+      },
+      resize(){
+          this.setHeaderHeight();
+      },
     //mapActions
     ...mapActions("moduleProduct",[
         "pushToPlate"
+    ]),
+    ...mapActions("moduleAnimations",[
+        "addTodoAnimation"
     ])
+
   },
   computed : {
 
-      selectedOptionContents(){
-          if(this.selectedOption.productOptionContents.length>0){
-            this.selectedOption.productOptionContents[0].charAt(0).toUpperCase();
-            return this.selectedOption.productOptionContents.join(", ")
-          }
-         return ""
-      },
+
       //mapState
       ...mapState("moduleProduct",[
           "selectedProduct"
@@ -252,9 +276,14 @@ export default {
   },
   created(){
 
-      this.selectedOption = this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'})
+      this.incrementOrderCount();
+
+      window.addEventListener('resize', this.resize);
 
 
+  },
+  destroyed(){
+      window.removeEventListener('resize',this.resize)
   },
   mounted(){
 
@@ -273,14 +302,13 @@ export default {
       previewImage.style.opacity = 0
     };
 
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, {});
-
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, {startingTop:'40%',endingTop:'18%'});
 
     this.paragraph = document.getElementById("summaryParagraph")
     this.mainPart = document.getElementById("mainPart")
+
+    this.setHeaderHeight();
+
+
 
   }
 }
@@ -332,7 +360,9 @@ export default {
   text-overflow: ellipsis !important;
   overflow: hidden !important; 
 }
-.modal{
-  width : 85% !important;
+
+select{
+    display: block !important;
 }
+
 </style>

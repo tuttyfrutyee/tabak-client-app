@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="minHeight_full">
-    <transition :name="calculatedTransition">
       <router-view></router-view>
-    </transition>
   </div>
 </template>
 
@@ -74,22 +72,19 @@ export default {
 
       //transitionTable is polarized, to access it transitionTable[to][from] --> FIRST refer to "to" then "from"
       var transitionTable = {
-        "login" : {
-          //no such operation occurs
-        },
+
         "categories" : {
-          "login" : "slideLeft"
         },
         "subCategories" : {
-          "categories" : "slideLeft",
-          "product" : "slideRight"
+         // "categories" : "slideLeft",
+         // "product" : "slideRight"
         },
         "product" : {
-          "subCategories" : "slideLeft"
+        //  "subCategories" : "slideLeft"
         },
         "plate" : {
-          "subCategories" : "slideDown",
-          "categories" : "slideDown"
+         // "subCategories" : "slideDown",
+         // "categories" : "slideDown"
         }
       }
 
