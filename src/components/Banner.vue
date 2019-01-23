@@ -1,14 +1,23 @@
 <template>
-  <div id="banner">
-      <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="row subwayGreen noMargin">
-        <div class="col s2">
+  <div id="banner" class="z-indexHigh">
+      <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="row subwayGreen noMargin" style="height:8vmax;min-height:56px" >
+
+        <div class="col s2 beRelative fullHeight">
+          <div v-if="isInSubCategories" @click="goBack()" class="beAbsolute centerInHeight" style="left:3vmin;max-width:38px;max-height:38px;width:8vmin;height:8vmin;border-radius:50%;background-color:#424242">
+            <div class="beRelative fullHeight fullWidth">
+              <i class="beAbsolute centerInCenter material-icons tColorWhite fluidFont-XL">chevron_left</i>
+            </div>
+          </div>
         </div>
-        <div style="height:8vmax;min-height:56px" class="col s8 beRelative">
-          <img class="centerInCenter beAbsolute" style="height:65%" src="../assets/bannerYusuf.png" alt="">
+
+        <div class="col s8 beRelative fullHeight">
+          <img class="centerInCenter beAbsolute" :style="{height:globalVariables.options.bannerImage.heightRatio + '%'}" style="z-index:2" src="../assets/burger-station.png" alt="">
+          <div v-if="globalVariables.options.bannerCover.exists" class="beAbsolute centerInCenter fullHeight" style="width:80%;z-index:1;border-radius:2px" :style="{backgroundColor:globalVariables.options.bannerCover.color,opacity:globalVariables.options.bannerCover.opacity}"></div>
+          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;right:0.3vmax;width:2px;opacity:0.8"></div>
         </div>
-        <div @click="navigateToPlate" class="col s2 beRelative overFlowVisible" style="height:8vmax;min-height:56px">
-          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;left:-0.7vmax;width:2px;opacity:0.8"></div>
-          <div style="height:76%" alt="" class="beAbsolute centerInCenter">
+        
+        <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="col s2 overFlowVisible z-indexHigh" style="right:0;top:0;height:8vmax;min-height:56px;border-radius:3px 0px 3px 10px">
+          <div style="height:76%"  class="beAbsolute centerInCenter">
             <img id="tabakIcon" class="fullHeight animated" src="../assets/tabakIcon.png" >
             <div v-if="plate.length>0" class="beAbsolute" style="right:15%;bottom:15%;height:3vmax;width:3vmax;min-height:20px;min-width:20px">
               <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="border-radius:50%">
@@ -16,7 +25,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
   </div>
@@ -38,6 +46,9 @@ export default {
     navigateToPlate(){
       this.$router.push("/plate")
     },
+    goBack(){
+      this.$router.go(-1)
+    },
     animatePlate(){
       var plate = document.getElementById("tabakIcon")
       plate.classList.remove("wiggle")
@@ -45,6 +56,8 @@ export default {
          plate.classList.add("wiggle")
       },0)
     },
+    //styles and classes
+    //mapActions
     ...mapActions("moduleAnimations",[
       "removeTodoAnimation"
     ])
@@ -52,6 +65,9 @@ export default {
   computed : {
     immediateIconAnimation_required(){
       return this.todo_animations.immediate.icon
+    },
+    isInSubCategories(){
+      return this.$route.path.includes("subCategories")
     },
     ...mapState("modulePlate",[
       "plate"

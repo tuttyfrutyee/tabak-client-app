@@ -53,6 +53,11 @@ export default {
     removeProcess(state){
         //decrease the count of process
         state.gadget_waitingScreen.onGoingProcessCount -= 1;
+        if(state.gadget_waitingScreen.onGoingProcessCount < 0)
+            state.gadget_waitingScreen.onGoingProcessCount =0
+
+        console.log(state.gadget_waitingScreen.onGoingProcessCount)    
+
         //if there is waiting screen and process count is 0 remove waiting screen
         if(state.gadget_waitingScreen.waitingScreen && state.gadget_waitingScreen.onGoingProcessCount === 0){
             removeWaitingScreen(state.gadget_waitingScreen.waitingScreen);

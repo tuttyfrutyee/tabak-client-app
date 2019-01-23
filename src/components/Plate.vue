@@ -3,9 +3,15 @@
     <div id="background_plate" class="backgroundCard"></div>
 
     <div class="row noMargin">
-        <div class="col s12 noPadding" style="height:15vmin;max-height:100px">
-            <ul :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="tabs fullHeight">
-                <li class="tab col s3 fullHeight">
+
+        <div class="col s12 noPadding" style="height:8vmax;min-height:56px">
+            <ul :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="tabs fullHeight beRelative">
+                <div @click="goBack()" class="beAbsolute centerInHeight z-indexMedium" style="left:3vmin;min-width:22px;min-height:22px;max-width:38px;max-height:38px;width:8vmin;height:8vmin;border-radius:50%;background-color:#424242">
+                    <div class="beRelative fullHeight fullWidth">
+                        <i class="beAbsolute centerInCenter material-icons tColorWhite fluidFont-XL">chevron_left</i>
+                    </div>
+                </div>
+                <li class="tab col s7 fullHeight">
                     <a href="#orders" class="tColorWhite beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fluidFont-M" style="top:55%">
                             Tabağınız
@@ -13,7 +19,7 @@
                         <div class="beAbsolute" style="bottom:1.3vh;right:0px;height:50%;border:0.5px solid #cecece;width:0px"></div>
                     </a>
                 </li>
-                <li class="tab col s3 fullHeight">
+                <li class="tab col s5 fullHeight">
                     <a href="#track" class="tColorWhite beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fluidFont-M" style="top:55%">Takip</div>
                     </a>
@@ -22,7 +28,7 @@
         </div>
         <div id="orders" class="col s12">
             <div class="row noMargin">
-                <div class="col s12 beRelative noPadding orderBorder" style="height:16vmin;max-height:90px">
+                <div class="col s12 beRelative noPadding orderBorder" style="height:13vmin;max-height:70px">
                     <div class="beAbsolute centerInHeight fluidFont-L" style="left:5%;">
                         Tabağınız
                     </div>
@@ -30,36 +36,76 @@
                 <!-- Orders here -->
                 <div class="col s12 noPadding" v-if="plate.length>0">
                     <div class="row noMargin">
-                        <div v-for="order in plate" class="col s12 beRelative noPadding order orderBorder" style="height:22vmin;max-height:100px">
+                        <div v-for="order in plate" class="col s12 beRelative noPadding order orderBorder" style="height:18vmin;max-height:100px!important">
 
-                            <div class="beAbsolute centerInHeight fluidFont-L boldFont" style="left:2%">x{{order.orderCount}}</div>
+                            <div class="beAbsolute centerInHeight fluidFont-L semiBold" style="left:2%">x{{order.orderCount}}</div>
 
                             <div class="beAbsolute centerInHeight fullHeight waves-effect z-indexLow" style="left:0;right:10%"></div>
                             
                             <div class="beAbsolute centerInHeight text" style="left:15%;width:70%">
-                                <div class="fluidFont-L boldFont">{{order.product.productName}}</div>
+                                <div class="fluidFont-L semiBold">{{order.product.productName}}</div>
                                 <div class="fluidFont-M"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
                             </div>
 
                             <div class="beAbsolute centerInHeight fullHeight" style="right:0;width:10%">
                                 <div class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInHeight" style="height:40%;width:1px;left:0;background-color:#cecece"></div>
-                                    <i class="material-icons beAbsolute centerInCenter tColorRed fluidFont-LL" style="left:60%">&#xe5cd</i>
+                                    <i @click="removeFromPlate(order)" class="material-icons beAbsolute centerInCenter tColorRed fluidFont-LL" style="left:60%">&#xe5cd</i>
                                 </div>
                             </div>
                             
                         </div>
+                        <div class="col s12">
+                            <div class="row" style="height:16vmin;max-height:100px;margin-top:4.5vmin;margin-bottom:2.5vmin">
+                                <div class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:4px">
+                                    <div class="beAbsolute centerInCenter fluidFont-L fullWidth center tColorWhite">
+                                        Siparişi Gönder
+                                    </div>
+                                </div>
+                                <div class="col s2 offset-s1 beRelative fullHeight">
+                                    <div class="beAbsolute centerInCenter">
+                                        <div class="beRelative">
+                                            <!-- Modal Trigger -->
+                                            <div data-micromodal-trigger="modal-1" class="beRelative fullWidth" style="height:5vmax">
+                                                <img src="../assets/categoryIcons_fordeveloping/note.png" class="beAbsolute centerInCenter" style="height:5vmax" alt="">
+                                                <i class="material-icons beAbsolute fluidFont-XL semiBold" style="color:green;top:-0.5vmax;right:-0.5vmax">check</i>
+                                            </div>                                                                                         
+                                            <div class="center fluidFont-S" style="line-height:1">Sipariş Notu</div>
+                                        </div>
+                                    </div>
+                                            <!-- Modal Structure -->
+                                            <div class="modal micromodal-slide z-indexMedium" id="modal-1" aria-hidden="true">
+                                                <div class="modal__overlay" data-micromodal-close>
+                                                <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
-                        <div class="col s10 offset-s1 noPadding beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="height:18vmin;max-height:120px;margin-top:2.5vh;border-radius:4px">
-                            <div class="beAbsolute centerInCenter fluidFont-L tColorWhite">
-                                Siparişi Gönder
+                                                    <div class="row noMargin">
+                                                        <div class="col s12 beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
+                                                        <h5 class="center tColorWhite semiBold fluidFont-M">Sipariş Notunuz</h5>
+                                                        <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
+                                                        </div>
+                                                        <div class="col s12">
+                                                        <textarea id="customOrderInput" style="min-height:70px" class="materialize-textarea semiBold fluidFont-L" placeholder="İletilmesini istediğiniz sipariş notunu yazın..."></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row noMargin" style="height:3rem">
+                                                        <div class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+                                                        <div class="beAbsolute centerInCenter center semiBold" :style="{color:globalVariables.colors.helperTextColor}" style="font-size:1.1rem">Tamam</div>
+                                                        </div>
+                                                    </div> 
+
+                                                </div>
+                                                </div>
+                                            </div>                                    
+                                </div> 
                             </div>
                         </div>
+                       
                     </div>
-                    <div style="height:2px;width:100%;background-color:#bdbdbd;margin-top:5vmin"></div>
-                    <div class="row noMargin" style="">
-                        <div class="col s12 boldFont fluidFont-LL" style="margin-top:7vmin;">
-                            Yanına yakışır...   
+                    <div style="height:2px;width:100%;background-color:#bdbdbd;margin-top:4vmin"></div>
+                    <div v-if="suggestedProducts().length>0" class="row noMargin" style="">
+                        <div class="col s12 semiBold fluidFont-LL" style="margin-top:7vmin;">
+                            Yanına yakışır...
                         </div>
                         <div class="col s12 noPadding">
 
@@ -70,10 +116,10 @@
 
                                             <div class="fullWidth beRelative suggestion" style="overflow:hidden">
                                                 <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                                                     <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
+                                                     <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
                                                     <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                                         <div class="beRelative fullWidth fullHeight">
-                                                            <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
+                                                            <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
                                                         </div>
                                                     </div>
                                             </div>                                         
@@ -87,7 +133,7 @@
                     </div>
                     <div style="margin-bottom:5vh"></div>
                 </div>
-                <div class="col s12 noPadding boldFont center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
+                <div class="col s12 noPadding semiBold center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
                     Tabağınızda ürün yok
                         <img src="../assets/tabakIcon.png" alt="" class="beAbsolute centerInCenter">
                 </div>
@@ -96,7 +142,7 @@
         <div id="track" class="col s12">
             <div class="row noMargin">
                 <div class="col s12 beRelative noPadding addMarginB-S" style="height:18vmin;">
-                    <div class="beAbsolute centerInHeight boldFont" style="left:5%;font-size:5.5vmin">Takip Listesi</div>
+                    <div class="beAbsolute centerInHeight semiBold" style="left:5%;font-size:5.5vmin">Takip Listesi</div>
                     <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:2px;backgroundColor:#cecece"></div>
                 </div>
                 <!-- Order List here -->
@@ -104,7 +150,7 @@
                     <div class="row noMargin">
                         <div v-for="(order,index) in plate" class="col s12 noPadding beRelative" style="height:12vh">
                             <div class="beAbsolute centerInHeight" style="left:5%">
-                              <span style="font-size:5vw" class="boldFont">x{{order.orderCount}} </span> <span class="boldFont" style="font-size:6vw">{{order.product.productName}}</span>
+                              <span style="font-size:5vw" class="semiBold">x{{order.orderCount}} </span> <span class="semiBold" style="font-size:6vw">{{order.product.productName}}</span>
                             </div>
                             <div v-if="index%2===0" class="beAbsolute centerInHeight" style="right:5%;width:20%">
                                 <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">&#xe877</i>
@@ -118,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 noPadding boldFont center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
+                <div class="col s12 noPadding semiBold center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
                     Tabağınızda ürün yok
                         <img src="../assets/tabakIcon.png" alt="" class="beAbsolute centerInCenter">
                 </div>
@@ -137,16 +183,17 @@ export default {
   name: 'plate',
   data(){
     return {
-
     }
   },
   methods : {
       suggestedProducts(){
         //for developing purposes
         var bag = []
-        this.subCategories.forEach(subCategory=>{
+
+        for(let subCategory of this.subCategories){
             subCategory.products.forEach(product=>{bag.push(product)})
-        })
+        }
+
         var wanteds = []
         for(var i = 0; i < 5 && bag[i]; i++)
             wanteds.push(bag[i])
@@ -155,10 +202,13 @@ export default {
       removeOrder(order){
           this.removeFromPlate(order)
       },
+      goBack(){
+         this.$router.go(-1)
+      },      
       resize(){
           this.arrangeOrdersHeight();
           this.arrangeSuggestions();
-      },
+          },
       //helper functions
     hexToRgb(hex){
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -191,12 +241,47 @@ export default {
                      
                     order.style.height = text.offsetHeight + 8 + 'px'
 
+                 }else{
+                     order.style.height = "18vmin"
                  }
             }
         },0)
 
     },
+    arrangeProductImage(event){
+    
+        var image = event.currentTarget
+        var cell_hDwRatio = 3/4
+        var image_hDwRatio = image.offsetHeight / image.offsetWidth
 
+        if(cell_hDwRatio < image_hDwRatio){
+            image.style.width = "100%" 
+            image.style.height = "auto"
+        }else{
+            image.style.height = "100%"
+            image.style.width = "auto"
+        }
+    },
+    //for if the images were already load
+    arrangeProductsImages(){
+        var images = document.getElementsByClassName("productImage")
+        for(let image of images){
+            //checking if image was loaded
+
+            if(image.offsetHeight>0){
+                var cell_hDwRatio = 3/4
+                var image_hDwRatio = image.offsetHeight / image.offsetWidth
+                
+                if(cell_hDwRatio < image_hDwRatio){
+                    image.style.width = "100%" 
+                    image.style.height = "auto"
+                }else{
+                    image.style.height = "100%"
+                    image.style.width = "auto"
+                }                
+            }
+        }
+    },    
     arrangeSuggestions(){
         setTimeout(()=>{
             var suggestions = document.getElementsByClassName("suggestion")
@@ -204,7 +289,7 @@ export default {
             var wDh_ratio = (3/4)
 
             for(let suggestion of suggestions){
-                console.log(suggestion.offsetWidth)
+
                 suggestion.style.height = (suggestion.offsetWidth * wDh_ratio) + 'px'                
                 var filterHeightRatio = 0.4
                 
@@ -227,7 +312,7 @@ export default {
         },0)
 
     },
-
+    //mapMutations and actions
     ...mapMutations("modulePlate",["removeFromPlate"])
   },
   computed : {
@@ -239,7 +324,8 @@ export default {
        },
       //mapState
       ...mapState("modulePlate",[
-          "plate"
+          "plate",
+          "orderNote"
       ]),
       ...mapState("moduleSubCategories",[
           "subCategories"
@@ -247,37 +333,49 @@ export default {
   },
   created(){
       window.addEventListener("resize",this.resize)
+      window.scroll(0,0)
+  },
+  destroyed(){
+      window.removeEventListener("resize",this.resize)
   },
   mounted(){
 
-    var el = document.querySelectorAll('.tabs');
-    var instance = M.Tabs.init(el, {});
+        var el = document.querySelectorAll('.tabs');
+        var instance = M.Tabs.init(el, {});
 
-    setTimeout(()=>{
-            //styling some stuff dynamically
-    var slideBar = document.getElementsByClassName("indicator")
-        slideBar[0].style.backgroundColor = this.globalVariables.colors.helperThemeColor
-        slideBar[0].style.height = "5px";
-    },0)
-    if(this.plate.length>0)
-    new Glide('.glide',{
-        type: 'carousel',
-        startAt: 0,
-        swipeThreshold : 30,
-        dragThreshold : 50,
-        perView : 2,
-        touchAngle : 80,
-        autoplay: 4000,
-        breakpoints : {
-              500 : {perView : 2},
-              900 : {perView : 3},
-              1200 : {perView : 4}
+        setTimeout(()=>{
+                //styling some stuff dynamically
+        var slideBar = document.getElementsByClassName("indicator")
+            slideBar[0].style.backgroundColor = this.globalVariables.colors.helperThemeColor
+            slideBar[0].style.height = "5px";
+        },0)
+
+
+        if(this.plate.length>0 && this.suggestedProducts().length>0){
+            new Glide('.glide',{
+                        type: 'carousel',
+                        startAt: 0,
+                        swipeThreshold : 30,
+                        dragThreshold : 50,
+                        perView : 2,
+                        touchAngle : 80,
+                        autoplay: 4000,
+                        breakpoints : {
+                            500 : {perView : 2},
+                            900 : {perView : 3},
+                            1200 : {perView : 4}
+                        }
+                    }).mount()
         }
-    }).mount()
+        
 
-    this.arrangeOrdersHeight()
+        this.arrangeOrdersHeight()
 
-    this.arrangeSuggestions();
+        this.arrangeSuggestions()
+
+        this.arrangeProductsImages()
+
+        MicroModal.init();
 
 
   }
@@ -292,15 +390,21 @@ export default {
 #background_plate{
     background-color : white;  
 }
-.glide__slide{
-    background-color: black
-}
+
 .orderBorder{
     border-bottom : 1px solid #bdbdbd
 }
-.containerr{
-    width:100%;
-    padding-top:75%;
-    position : relative;
+@media only screen and (max-width: 550px){
+  .modal {
+      width: 85%;
+  }
+}
+@media only screen and (min-width: 550px){
+  .modal {
+      width: 75%;
+  }
+}
+.modal{
+  max-height : 100% !important;
 }
 </style>

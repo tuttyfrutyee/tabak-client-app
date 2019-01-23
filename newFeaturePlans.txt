@@ -1,0 +1,5 @@
+- New Future Plans -
+[Version 1.0]
+
+1 - Navigasyonda sadece belirli tuşların bir yere gitmesine izin ver( geri tuşu istediği gibi her yere gidemesin ) // ama iphonelarda çok iyi durmayabilir -?-
+

@@ -94,7 +94,7 @@ export default {
     //mapMutations
     ...mapMutations([
       "update_http",
-      "updateCalculatedTransition"
+      "updateCalculatedTransition",
     ]),
     //mapActions
     ...mapActions([
@@ -119,6 +119,15 @@ export default {
     to = to.path.slice(1) //removes / from /routePath --> does not work for multiple depth
     from = from.path.slice(1)
 
+    var knownPaths = [
+      "categories",
+      "subCategories",
+      "plate",
+      "product"
+    ]
+    if(!knownPaths.includes(to))
+      return this.$router.push("/categories")
+    
     this.handleRouteChange(to,from)
   }
   },

@@ -5,7 +5,7 @@ export default {
     namespaced: true,
     state : {
         plate : [],
-        trackingOrders : [],
+        orderNote : ""
     },
     mutations:{
         pushToPlate(state,order){
@@ -13,39 +13,31 @@ export default {
             var didFind = false
             state.plate.forEach(_order=>{
                 //check product equality
-                if(_order.product.productUid === order.product.productUid){
-                    //check options
-                    if(_order.selectedOption.productOptionName === order.selectedOption.productOptionName){
-                        //check extras
-                        //check length
-                        if(_order.selectedExtras.length === order.selectedExtras.length){
-                            //check content
-                            var areEqual = true
-                            _order.selectedExtras.forEach(extra=>{
-                                var exists = order.selectedExtras.find(selectedExtra=>{return selectedExtra.productExtraName === extra.productExtraName})
-                                if(!exists)
-                                    areEqual = false
-                            })
-                            if(areEqual){
-                                //setting flag
-                                didFind = true
-                                //now increment the ordercount by 1
-                                _order.orderCount ++;
-                            }
-                        }
-                    }
+                if(areTwoOrdersEqual(_order,order)){
+                    //setting flag
+                    didFind = true
+                    //now increment the ordercount by 1
+                    _order.orderCount ++;
                 }
             })
             if(!didFind)
                 state.plate.push(order)
         },
         removeFromPlate(state,order){
-            var removalIndex = state.plate.indexOf(order)
-            state.plate.splice(removalIndex,1)
-            console.log(removalIndex)
+            var counter = 0;
+            for(let _order of state.plate){
+                if(areTwoOrdersEqual(_order,order)){
+                    state.plate.splice(counter,1)  
+                    return
+                }
+                counter++
+            }
         },
         clearPlate(state){
             state.plate = [];
+        },
+        updateOrderNote(state,newValue){
+            state.orderNote = newValue
         }
     },
     actions : {
@@ -54,3 +46,22 @@ export default {
 }
 
 //helper Functions
+function areTwoOrdersEqual(_order,order){
+    if(_order.product.productUid === order.product.productUid){
+        //check options
+        if(_order.selectedOption.productOptionName === order.selectedOption.productOptionName){
+            //check extras
+            //check length
+            if(_order.selectedExtras.length === order.selectedExtras.length){
+                //check content
+                var areEqual = true
+                _order.selectedExtras.forEach(extra=>{
+                    var exists = order.selectedExtras.find(selectedExtra=>{return selectedExtra.productExtraName === extra.productExtraName})
+                    if(!exists)
+                        areEqual = false
+                })
+                return areEqual
+            }
+        }
+    }
+}

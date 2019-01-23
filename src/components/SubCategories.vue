@@ -3,56 +3,59 @@
   <div id="subCategories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
-      <div class="fullWidth fluidFont-L boldFont" style="padding-top:1vmin;padding-bottom:1vmin" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+      <div class="fullWidth fluidFont-L semiBold beSticky z-indexMedium z-depth-1" style="padding-top:1vmin;padding-bottom:1vmin;top:0;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
           {{selectedCategory.categoryTitle}}
       </div>
-    <ul class="collapsible noMargin noBorder">
-        <li @click="arrangeProducts()" class="active">
-            <div class="collapsible-header beRelative z-depth-3" style="height:10vmin;min-height:3.8rem;background-color:#fafafa">
-                <p class="beAbsolute centerInCenter noMargin noPadding boldFont  fluidFont-M">Sıkça Tercih Edilenler</p>
-                <i class="material-icons beAbsolute centerInHeight  noMargin add noDisplay fluidFont-L" style="right:5%">&#xe145</i>
-                <i class="material-icons beAbsolute centerInHeight  noMargin remove fluidFont-L" style="right:5%">&#xe15b</i>
+          <!--Top best 4 -->
+            <div class=" beRelative z-depth-2" style="height:10vmin;min-height:3.8rem;background-color:#fafafa;border-bottom: 1px solid #ddd">
+                <p class="beAbsolute centerInCenter noMargin noPadding semiBold  fluidFont-M">Sıkça Tercih Edilenler</p>
                 <i class="material-icons beAbsolute centerInHeight  noMargin fluidFont-L" style="left:5%">&#xe838</i>
             </div>
-            <div class="collapsible-body noPadding">
+            <div class=" noPadding">
                 <div class="row noMargin">
                     <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
                         <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                            <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
+                            <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
                             <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text addPaddingLAR-VS fluidFont-L" style="">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </li>
-        <li @click="arrangeProducts()" v-for="subCategory in subCategories">
-            <div class="collapsible-header beRelative" style="height:10vmin;min-height:3.8rem;background-color:#fafafa">
-                <p class="beAbsolute centerInCenter noMargin noPadding boldFont fluidFont-M">{{subCategory.subCategoryName}}</p>
-                <i class="material-icons beAbsolute centerInHeight noMargin add fluidFont-L" style="right:5%">&#xe145</i>
-                <i class="material-icons beAbsolute centerInHeight noMargin remove noDisplay fluidFont-L" style="right:5%">&#xe15b</i>
+        <!-- End of Best 4-->
+
+        <!-- White Gap -->
+      <div class="fullWidth fluidFont-M semiBold z-depth-1" style="padding-top:1vmin;padding-bottom:1vmin;padding-left:1vmin">
+          -Diğerleri
+      </div>   
+        <!-- End of White Gap -->
+
+        <div v-for="subCategory in subCategories">
+            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative z-depth-1" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="height:8vmin;min-height:2.5rem;background-color:#fafafa">
+                <p class="beAbsolute centerInCenter noMargin noPadding semiBold fluidFont-M">{{subCategory.subCategoryName}}</p>
             </div>
-            <div class="collapsible-body noPadding">
+            <div class="noPadding">
                 <div class="row noMargin">
-                    <div :style="calculatePadding({realIndex:index,totalNumberOfItem:subCategory.products.length})" @click="_selectProduct(product)" v-for="(product,index) in subCategory.products" class="col s6 m4 borderBox product">
+                    <div :style="calculatePadding({realIndex:index,totalNumberOfItem:subCategory.products.length})" @click="_selectProduct(product)" v-for="(product,index) in subCategory.products" class="col s6 m4 l3 borderBox product">
                         <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                            <img :src="product.productImages.productIconImage" class="beAbsolute centerInWidth" style="height:100%;top:0%">
+                            <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
                             <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite boldFont center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </li>
-    </ul>
+        </div>
+
+        <div class="" style="height : 6vmin;border-top: 1px solid #ddd"></div>
 
   </div>
   
@@ -80,16 +83,31 @@ export default {
         this.selectProduct(product)
         this.$router.push("/product")
     },
-    //styles
+    executeAtNextTick(method){
+        setTimeout(()=>{
+            method();
+        },0)
+    },
     arrangeProducts(){
         //evaluating height and filters height of the products
-        setTimeout(()=>{
             var products = document.getElementsByClassName("product")
 
-            var wDh_ratio = (3/4)
+            var mode;
+
+            var width = window.innerWidth;
+            if(width <= 600){
+                mode = 2
+            }else if(width > 600 && width <= 992){
+                mode = 3
+            }else if(width > 992){
+                mode = 4
+            }
+
+
+            var wDh_ratio = (3/4.0)
 
             for(let product of products){
-                product.style.height = (product.offsetWidth * wDh_ratio) + 'px'
+                product.style.height = ((width/mode) * wDh_ratio) + 'px'
                 
                 var filterHeightRatio = 0.4
 
@@ -106,7 +124,39 @@ export default {
                 else
                     filter.style.height = expectedFilterHeight + 'px'
             }
-        },0)
+    },
+    arrangeProductImage(event){
+        var image = event.currentTarget
+        var cell_hDwRatio = 3/4
+        var image_hDwRatio = image.offsetHeight / image.offsetWidth
+        
+        if(cell_hDwRatio < image_hDwRatio){
+            image.style.width = "100%" 
+            image.style.height = "auto"
+        }else{
+            image.style.height = "100%"
+            image.style.width = "auto"
+        }
+    },
+    //for if the images were already load
+    arrangeProductsImages(){
+        var images = document.getElementsByClassName("productImage")
+        for(let image of images){
+
+            //checking if image was loaded
+            if(image.offsetHeight>0){
+                var cell_hDwRatio = 3/4
+                var image_hDwRatio = image.offsetHeight / image.offsetWidth
+                
+                if(cell_hDwRatio < image_hDwRatio){
+                    image.style.width = "100%" 
+                    image.style.height = "auto"
+                }else{
+                    image.style.height = "100%"
+                    image.style.width = "auto"
+                }                
+            }
+        }
     },
     calculatePadding(details){
 
@@ -165,9 +215,10 @@ export default {
         }
     },
     resize(){
-        this.arrangeProducts();
+        this.executeAtNextTick(this.arrangeProducts)
         this.trigger = !this.trigger
     },
+    //mapMutations and actions
     ...mapActions("moduleProduct",[
         "selectProduct"
     ])
@@ -196,20 +247,11 @@ export default {
   created(){
       window.addEventListener("resize",this.resize)
   },
+
   mounted(){
 
-   var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems,{accordion:true,
-    onOpenStart : (element)=>{
-         element.getElementsByClassName("add")[0].classList.toggle("noDisplay")
-         element.getElementsByClassName("remove")[0].classList.toggle("noDisplay")
-    },
-    onCloseStart : (element)=>{
-         element.getElementsByClassName("add")[0].classList.toggle("noDisplay")
-         element.getElementsByClassName("remove")[0].classList.toggle("noDisplay")
-    }
-    });
-    this.arrangeProducts()
+      this.arrangeProducts()
+      this.arrangeProductsImages()
   },
   destroyed(){
       window.removeEventListener("resize",this.resize)

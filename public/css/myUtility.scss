@@ -517,6 +517,18 @@ $widthXLarge : 400px;
 .fullHeight{
     height: 100% !important;
 }
+._fourHeight{
+    height : 40% 
+}
+._sixHeight{
+    height : 60% ;
+}
+._eightHeight{
+    height : 80% ;
+}
+._fullHeight{
+    height: 100% ;
+}
 //percentageFixWidth
 .fourWidth{
     width : 40% !important;
@@ -533,7 +545,21 @@ $widthXLarge : 400px;
 .fullWidth{
     width : 100% !important;
 }
-
+._fourWidth{
+    width : 40% ;
+}
+._sixWidth{
+    width : 60% ;
+}
+._sevenWidth{
+    width : 70% 
+}
+._eightWidth{
+    width : 80% ;
+}
+._fullWidth{
+    width : 100% ;
+}
 //maxHeight
 //maxHeight variables
 $maxHeightS-Screen : 10vh;
@@ -602,6 +628,9 @@ $maxHeightXL : 400px;
 .boldFont{
     font-weight: bold;
 }
+.semiBold{
+    font-weight: 500 !important;
+}
 .beRelative{
     position : relative;
 }
@@ -610,6 +639,10 @@ $maxHeightXL : 400px;
 }
 .beFixed{
     position : fixed !important;
+}
+.beSticky{
+    position: -webkit-sticky !important; // for safari
+    position: sticky !important;
 }
 .unSelectable{
     -moz-user-select: none;
@@ -697,13 +730,13 @@ $maxHeightXL : 400px;
     display : contents;
 }
 .z-indexLow{
-    z-index: 250;
+    z-index: 250 !important;
 }
 .z-indexMedium{
-    z-index : 500;
+    z-index : 500 !important;
 }
 .z-indexHigh{
-    z-index: 999;
+    z-index: 999 !important;
 }
 .overflowX-visible{
     overflow-x : visible !important;
@@ -786,6 +819,10 @@ $maxHeightXL : 400px;
 .addShadow_button{
     -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.beCircle{
+    border-radius : 50% !important;
 }
 
 //stuff for modal

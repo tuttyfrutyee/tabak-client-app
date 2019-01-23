@@ -104,6 +104,7 @@ export default {
   },
   mounted(){
 
+
     this.updateBackgroundCard({
       elementId : "background_categories",
       change : this.$store.state.globalVariables.colors.whiteyColor,

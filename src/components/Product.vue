@@ -6,14 +6,15 @@
 
           <div class="col s12 beRelative noOverflow noPadding" style="height : 25vmax">
 
-                <div class="beAbsolute z-indexMedium" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="right:5%;top:8%;height:13vmin;width:13vmin;border-radius:50%;">
+                <div class="beAbsolute z-indexMedium" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" style="right:5%;top:8%;height:13vmin;width:13vmin;border-radius:50%;">
                     <div class="beRelative fullWidth fullHeight">
-                        <div class="beAbsolute" style="left:1.5vmin;bottom:0.9vmin">
+                        <div class="beAbsolute" style="z-index:-1;left:1.5vmin;bottom:0.9vmin">
                             <i style="font-size:6.8vmin" class="material-icons tColorWhite">&#xe855</i>
                         </div>
-                        <div class="beAbsolute" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="width:6.3vmin;height:6.3vmin;border-radius:50%;right:1.8vmin;top:1.5vmin;font-size:4.3vmin">
+                        <div class="beAbsolute" style="z-index:1;right:1.8vmin;top:1.8vmin;width:6vmin;height:6vmin;border-radius:50%;font-size:4.3vmin">
                             <div class="beRelative fullWidth fullHeight">
-                                <div class="beAbsolute centerInCenter tColorWhite">{{selectedProduct.productDeliveryTime}}<span style="font-size:2vmin">dk</span></div>
+                                <div class="beAbsolute centerInCenter tColorWhite">{{selectedProduct.productDeliveryTime}}<span style="font-size:2vmin;z-index:2">dk</span></div>
+                                <div class="beAbsolute" style="bottom:0;left:-0.8vmin;width:4.6vmin;height:4.6vmin;border-radius:50%;z-index:-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" ></div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +61,7 @@
                       <div class="col s4 fullHeight beRelative optionBorder">
                           <p class="beAbsolute noPadding noMargin center centerInCenter boldFont">{{orders.length}}</p>
                       </div>
-                      <div @click="incrementOrderCount" class="col s4 fullHeight beRelative waves-effect waves-light addShadow_button" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:0px 5px 5px 0px">
+                      <div @click="incrementOrderCount" class="col s4 fullHeight beRelative waves-effect waves-light addShadow_button" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" style="border-radius:0px 5px 5px 0px">
                           <i class="material-icons beAbsolute centerInCenter tColorWhite">
                               &#xe145
                           </i>
@@ -102,7 +103,7 @@
                         <div  style="z-index:2000;" class="modal__overlay" data-micromodal-close>
                             <div class="modal__container" style="opacity : 1" aria-modal="true" >
                                     <div class="row fullWidth noMargin">
-                                        <div class="col s12 beRelative" style="margin-bottom:1vmax" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
+                                        <div class="col s12 beRelative" style="margin-bottom:1vmax" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}">
                                             <div class="center tColorWhite boldFont fluidFont-XL">Ekstralar</div>
                                             <i data-micromodal-close class="material-icons beAbsolute centerInHeight modal-close fluidFont-L" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
                                         </div>
@@ -128,7 +129,7 @@
                   </div>
               </div>
           </div>
-            <div @click="_pushToPlate" class="fullWidth beFixed waves-effect" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+            <div @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
                 <div class="beRelative fullWidth fullHeight">
                     <div class="beAbsolute centerInCenter boldFont tColorWhite fluidFont-XL">
                         Tabağa Ekle
@@ -137,7 +138,7 @@
                     <div class="beAbsolute centerInHeight" style="left:10%">
                         <img id="tabakIcon_product" src="../assets/tabakIcon.png" style="height:8.5vmax">
                         <div class="beAbsolute"  style="height:3vmax;width:3vmax;right:0%;top:0%">
-                            <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:50%">
+                            <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" style="border-radius:50%">
                                 <i class="material-icons beAbsolute centerInCenter tColorWhite fluidFont-L">&#xe145</i>
                             </div>
                         </div>
@@ -243,7 +244,7 @@ export default {
                 "color" : "#9e9e9e"
             }
           return {
-              "backgroundColor" : this.globalVariables.colors.mainThemeColor,
+              "backgroundColor" : this.globalVariables.colors.fixedAppColor_1,
               "color" : this.globalVariables.colors.mainTextColor,
             "-webkit-box-shadow": "0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)",
             "box-shadow": "0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)"
@@ -257,7 +258,7 @@ export default {
       resize(){
           this.setHeaderHeight();
       },
-    //mapActions
+    //mapActions and mutations
     ...mapActions("moduleProduct",[
         "pushToPlate"
     ]),
@@ -267,7 +268,6 @@ export default {
 
   },
   computed : {
-
 
       //mapState
       ...mapState("moduleProduct",[
@@ -279,7 +279,8 @@ export default {
       this.incrementOrderCount();
 
       window.addEventListener('resize', this.resize);
-
+      
+      window.scroll(0,0)
 
   },
   destroyed(){

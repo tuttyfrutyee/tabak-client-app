@@ -13,12 +13,23 @@
         "mainThemeColor" : "#000",
         "helperThemeColor" : "#F38000",
         "mainTextColor" : "#fff",
-        "helperTextColor" : "#000"
+        "helperTextColor" : "#000",
+        "fixedAppColor_1" : "#000"
     },
     "pictures" : [
         "dessert.png",
         "fastfood.png",
         "spagetti.png"
-    ]
+    ],
+    "options" : {
+        "bannerCover" : {
+            "exists" : true,
+            "color" : "#fff",
+            "opacity" : 0.5
+        },
+        "bannerImage" : {
+            "heightRatio" : 85
+        }
+    }
 
 }
