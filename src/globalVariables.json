@@ -14,7 +14,8 @@
         "helperThemeColor" : "#F38000",
         "mainTextColor" : "#fff",
         "helperTextColor" : "#000",
-        "fixedAppColor_1" : "#000"
+        "fixedAppColor_1" : "#000",
+        "fixedAppColor_2" : "#4caf50"
     },
     "pictures" : [
         "dessert.png",

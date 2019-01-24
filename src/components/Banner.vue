@@ -52,7 +52,7 @@ export default {
     animatePlate(){
       var plate = document.getElementById("tabakIcon")
       plate.classList.remove("wiggle")
-      setTimeout(()=>{
+      this.Vue.nextTick(()=>{
          plate.classList.add("wiggle")
       },0)
     },

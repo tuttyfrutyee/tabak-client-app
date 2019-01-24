@@ -6,6 +6,18 @@
 
           <div class="col s12 beRelative noOverflow noPadding" style="height : 25vmax">
 
+              <div class="beAbsolute z-indexHigh" style="height:8vmax;min-height:56px;left:0;top:0">
+                  <div class="beRelative fullWidth fullHeight">
+                    <div @click="goBack()" class="beAbsolute  centerInHeight" style="left:3vmin;max-width:38px;max-height:38px;width:8vmin;height:8vmin;border-radius:50%;background-color:#424242">
+                        <div class="beRelative fullHeight fullWidth">
+                        <i class="beAbsolute centerInCenter material-icons tColorWhite fluidFont-XL">chevron_left</i>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+
+
                 <div class="beAbsolute z-indexMedium" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" style="right:5%;top:8%;height:13vmin;width:13vmin;border-radius:50%;">
                     <div class="beRelative fullWidth fullHeight">
                         <div class="beAbsolute" style="z-index:-1;left:1.5vmin;bottom:0.9vmin">
@@ -13,7 +25,7 @@
                         </div>
                         <div class="beAbsolute" style="z-index:1;right:1.8vmin;top:1.8vmin;width:6vmin;height:6vmin;border-radius:50%;font-size:4.3vmin">
                             <div class="beRelative fullWidth fullHeight">
-                                <div class="beAbsolute centerInCenter tColorWhite">{{selectedProduct.productDeliveryTime}}<span style="font-size:2vmin;z-index:2">dk</span></div>
+                                <div class="beAbsolute centerInCenter tColorWhite">{{productDeliveryTime}}<span style="font-size:2vmin;z-index:2">dk</span></div>
                                 <div class="beAbsolute" style="bottom:0;left:-0.8vmin;width:4.6vmin;height:4.6vmin;border-radius:50%;z-index:-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" ></div>
                             </div>
                         </div>
@@ -99,8 +111,8 @@
 
  
                     <!-- Modal Content -->
-                    <div class="modal micromodal-slide z-indexMedium" :id="'modal-'+index" aria-hidden="true">
-                        <div  style="z-index:2000;" class="modal__overlay" data-micromodal-close>
+                    <div class="_modal micromodal-slide z-indexHigh" :id="'modal-'+index" aria-hidden="true">
+                        <div  class="modal__overlay" data-micromodal-close>
                             <div class="modal__container" style="opacity : 1" aria-modal="true" >
                                     <div class="row fullWidth noMargin">
                                         <div class="col s12 beRelative" style="margin-bottom:1vmax" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}">
@@ -191,20 +203,24 @@ export default {
           this.orders.push({
               product : this.selectedProduct,
               selectedExtras : [],
-              selectedOption : this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'}),
+              selectedOption : this.normalOption,
               orderCount : 1
           })
-          setTimeout(()=>{
+          this.Vue.nextTick(()=>{
               this.initModals();
-          },0)
+          })
       },
       decrementOrderCount(){
           if(this.orders.length > 1){
               this.orders.pop();
           }
-          setTimeout(()=>{
+          this.Vue.nextTick(()=>{
               this.initModals();
-          },0)
+          })
+      },
+      goBack(){
+          this.$router.go(-1)
+          console.log("hello")
       },
       //view relateds
       checkSummaryLength(){
@@ -268,6 +284,19 @@ export default {
 
   },
   computed : {
+
+      normalOption(){
+          if(this.selectedProduct)
+            return this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'})
+      },
+      productDeliveryTime(){
+          if(this.selectedProduct)
+            return this.selectedProduct.productDeliveryTime
+      },
+      productImages(){
+          if(this.selectedProduct)
+            return this.selectedProduct.productImages
+      },
 
       //mapState
       ...mapState("moduleProduct",[
@@ -365,5 +394,6 @@ export default {
 select{
     display: block !important;
 }
+
 
 </style>

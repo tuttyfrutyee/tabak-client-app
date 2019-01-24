@@ -12,14 +12,14 @@
                     </div>
                 </div>
                 <li class="tab col s7 fullHeight">
-                    <a href="#orders" class="tColorWhite beRelative fullHeight">
+                    <a @click="arrangeOrdersHeight()" href="#orders" class="tColorWhite beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fluidFont-M" style="top:55%">
                             Tabağınız
                         </div>
-                        <div class="beAbsolute" style="bottom:1.3vh;right:0px;height:50%;border:0.5px solid #cecece;width:0px"></div>
+                        <div class="beAbsolute centerInHeight" style="right:0px;height:60%;border:0.5px solid #cecece;width:0px"></div>
                     </a>
                 </li>
-                <li class="tab col s5 fullHeight">
+                <li @click="arrangeOrdersHeight()" class="tab col s5 fullHeight">
                     <a href="#track" class="tColorWhite beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fluidFont-M" style="top:55%">Takip</div>
                     </a>
@@ -50,7 +50,7 @@
                             <div class="beAbsolute centerInHeight fullHeight" style="right:0;width:10%">
                                 <div class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInHeight" style="height:40%;width:1px;left:0;background-color:#cecece"></div>
-                                    <i @click="removeFromPlate(order)" class="material-icons beAbsolute centerInCenter tColorRed fluidFont-LL" style="left:60%">&#xe5cd</i>
+                                    <i @click="removeFromPlate(order)" class="material-icons beAbsolute centerInCenter tColorRed fluidFont-XL" style="left:60%">&#xe5cd</i>
                                 </div>
                             </div>
                             
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                             <!-- Modal Structure -->
-                                            <div class="modal micromodal-slide z-indexMedium" id="modal-1" aria-hidden="true">
+                                            <div class="_modal micromodal-slide z-indexMedium" id="modal-1" aria-hidden="true">
                                                 <div class="modal__overlay" data-micromodal-close>
                                                 <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
@@ -84,7 +84,7 @@
                                                         <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
                                                         </div>
                                                         <div class="col s12">
-                                                        <textarea id="customOrderInput" style="min-height:70px" class="materialize-textarea semiBold fluidFont-L" placeholder="İletilmesini istediğiniz sipariş notunu yazın..."></textarea>
+                                                        <textarea id="customOrderInput" style="min-height:70px;height:10vmin" class="materialize-textarea semiBold fluidFont-L" placeholder="İletilmesini istediğiniz sipariş notunu yazın..."></textarea>
                                                         </div>
                                                     </div>
 
@@ -141,26 +141,41 @@
         </div>
         <div id="track" class="col s12">
             <div class="row noMargin">
-                <div class="col s12 beRelative noPadding addMarginB-S" style="height:18vmin;">
-                    <div class="beAbsolute centerInHeight semiBold" style="left:5%;font-size:5.5vmin">Takip Listesi</div>
-                    <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:94%;height:2px;backgroundColor:#cecece"></div>
+                <div class="col s12 beRelative noPadding orderBorder" style="height:13vmin;max-height:70px">
+                    <div class="beAbsolute centerInHeight fluidFont-L" style="left:5%;">
+                        Takip
+                    </div>
                 </div>
                 <!-- Order List here -->
                 <div v-if="true" class="col s12 noPadding">
                     <div class="row noMargin">
-                        <div v-for="(order,index) in plate" class="col s12 noPadding beRelative" style="height:12vh">
-                            <div class="beAbsolute centerInHeight" style="left:5%">
-                              <span style="font-size:5vw" class="semiBold">x{{order.orderCount}} </span> <span class="semiBold" style="font-size:6vw">{{order.product.productName}}</span>
+                        <div v-for="(order,index) in plate" class="col s12 noPadding beRelative order orderBorder" style="height:18vmin;max-height:100px!important">
+
+                            <div class="beAbsolute centerInHeight fluidFont-L semiBold" style="left:2%">x{{order.orderCount}}</div>
+
+                            <div class="beAbsolute centerInHeight text" style="left:15%;width:58%">
+                                <div class="fluidFont-L semiBold">{{order.product.productName}}</div>
+                                <div class="fluidFont-M"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
+                            </div>                            
+
+                            <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:5%;width:20%">
+                                <i class="material-icons displayBlock center fluidFont-L" style="color:#34b7f1;">&#xe877</i>
+                                <p class="center noPadding noMargin fluidFont-M">Hazırlanıyor</p>
                             </div>
-                            <div v-if="index%2===0" class="beAbsolute centerInHeight" style="right:5%;width:20%">
-                                <i class="material-icons displayBlock center" style="color:#34b7f1;font-size:8vw">&#xe877</i>
-                                <p class="center noPadding noMargin">Hazırlanıyor</p>
+
+                            <div v-else class="beAbsolute centerInHeight text" style="right:5%;width:20%">
+                                <i class="material-icons displayBlock center fluidFont-L" style="color:#9e9e9e;">&#xe877</i>
+                                <p class="center noPadding noMargin fluidFont-M">İletildi</p>
                             </div>
-                            <div v-else class="beAbsolute centerInHeight" style="right:5%;width:20%">
-                                <i class="material-icons displayBlock center" style="color:#9e9e9e;font-size:8vw">&#xe877</i>
-                                <p class="center noPadding noMargin">İletildi</p>
+
+                        </div>
+                    </div>
+                    <div  class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+                        <div class="beRelative fullWidth fullHeight">
+                            <div style="line-height:0.8" class="beAbsolute centerInCenter center boldFont tColorWhite fluidFont-XL fullWidth">
+                                Hesap İste<br><span class="fluidFont-M"> (Garson Çağırır)</span>
                             </div>
-                            <div class="beAbsolute centerInWidth z-indexMedium" style="bottom:5px;width:98%;height:2px;backgroundColor:#cecece"></div>
+
                         </div>
                     </div>
                 </div>
@@ -226,7 +241,7 @@ export default {
     },
     //for styles
     arrangeOrdersHeight(){
-        setTimeout(()=>{
+        this.Vue.nextTick(()=>{
             var allOrders = document.getElementsByClassName("order")
 
             for (let order of allOrders) {
@@ -283,7 +298,7 @@ export default {
         }
     },    
     arrangeSuggestions(){
-        setTimeout(()=>{
+        this.Vue.nextTick(()=>{
             var suggestions = document.getElementsByClassName("suggestion")
 
             var wDh_ratio = (3/4)
@@ -343,7 +358,7 @@ export default {
         var el = document.querySelectorAll('.tabs');
         var instance = M.Tabs.init(el, {});
 
-        setTimeout(()=>{
+        this.Vue.nextTick(()=>{
                 //styling some stuff dynamically
         var slideBar = document.getElementsByClassName("indicator")
             slideBar[0].style.backgroundColor = this.globalVariables.colors.helperThemeColor

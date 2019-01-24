@@ -2,6 +2,7 @@
   <div id="categories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_categories" class="backgroundCard"></div>
       <banner></banner>
+      
       <div class="container" style="margin-top:3vh">
         <div class="row">
 
@@ -18,7 +19,7 @@
           </div>
 
           <!-- Modal Structure -->
-          <div class="modal micromodal-slide z-indexMedium" id="modal-1" aria-hidden="true">
+          <div class="_modal micromodal-slide z-indexHigh" id="modal-1" aria-hidden="true">
             <div class="modal__overlay" data-micromodal-close>
               <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
@@ -129,19 +130,5 @@ export default {
 .waves-effect{
   display : block;
 }
-@media only screen and (max-width: 550px){
-  .modal {
-      width: 85%;
-  }
-}
-@media only screen and (min-width: 550px){
-  .modal {
-      width: 75%;
-  }
-}
-.modal{
-  max-height : 100% !important;
-}
-
 
 </style>

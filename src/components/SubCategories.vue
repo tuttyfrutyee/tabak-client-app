@@ -3,8 +3,8 @@
   <div id="subCategories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
-      <div class="fullWidth fluidFont-L semiBold beSticky z-indexMedium z-depth-1" style="padding-top:1vmin;padding-bottom:1vmin;top:0;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
-          {{selectedCategory.categoryTitle}}
+      <div class="fullWidth fluidFont-L semiBold beSticky z-indexMedium z-depth-1" style="padding-left:5px;padding-top:1vmin;padding-bottom:1vmin;top:0;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+          {{_categoryTitle}}
       </div>
           <!--Top best 4 -->
             <div class=" beRelative z-depth-2" style="height:10vmin;min-height:3.8rem;background-color:#fafafa;border-bottom: 1px solid #ddd">
@@ -34,8 +34,8 @@
       </div>   
         <!-- End of White Gap -->
 
-        <div v-for="subCategory in subCategories">
-            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative z-depth-1" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="height:8vmin;min-height:2.5rem;background-color:#fafafa">
+        <div v-for="subCategory in subCategories" :key="subCategory.categoryTitle">
+            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative z-depth-1" :style="{backgroundColor:'rgb(245,153,51)'}" style="height:8vmin;min-height:2.5rem;background-color:#fafafa">
                 <p class="beAbsolute centerInCenter noMargin noPadding semiBold fluidFont-M">{{subCategory.subCategoryName}}</p>
             </div>
             <div class="noPadding">
@@ -84,7 +84,7 @@ export default {
         this.$router.push("/product")
     },
     executeAtNextTick(method){
-        setTimeout(()=>{
+        this.Vue.nextTick(()=>{
             method();
         },0)
     },
@@ -224,6 +224,10 @@ export default {
     ])
   },
   computed : {
+      _categoryTitle(){
+          if(this.selectedCategory)
+            return this.selectedCategory.categoryTitle
+      },
     mostWanteds(){
         //for developing purposes
         var bag = []

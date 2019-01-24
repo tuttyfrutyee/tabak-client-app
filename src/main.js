@@ -25,7 +25,9 @@ window.MicroModal = MicroModal
 
 //myAlert.css
 //attaching functions to window object --> hence reachable anywhere
-import myPreloader from "../public/js/myPreloader.js"
+import "../public/js/myPreloader.js"
+//color blending function
+import "../public/js/myColor.js"
 
 //myUtility.scss
 import "../public/css/myUtility.scss"
