@@ -40,7 +40,7 @@
 
                             <div class="beAbsolute centerInHeight fluidFont-L semiBold" style="left:2%">x{{order.orderCount}}</div>
 
-                            <div class="beAbsolute centerInHeight fullHeight waves-effect z-indexLow" style="left:0;right:10%"></div>
+                            <div @click="navigateToOrderSettings(order)" class="beAbsolute centerInHeight fullHeight waves-effect z-indexLow" style="left:0;right:10%"></div>
                             
                             <div class="beAbsolute centerInHeight text" style="left:15%;width:70%">
                                 <div class="fluidFont-L semiBold">{{order.product.productName}}</div>
@@ -103,34 +103,35 @@
                        
                     </div>
                     <div style="height:2px;width:100%;background-color:#bdbdbd;margin-top:4vmin"></div>
-                    <div v-if="suggestedProducts().length>0" class="row noMargin" style="">
-                        <div class="col s12 semiBold fluidFont-LL" style="margin-top:7vmin;">
+
+                    <div v-if="suggestedProducts().length>0" class="row noMargin">
+                        <div class="col s12 semiBold fluidFont-LL" style="margin-top:7vmin">
                             Yanına yakışır...
                         </div>
-                        <div class="col s12 noPadding">
+                        <div class="col s12 noPadding" style="margin-top:5vmin">
+                            <!-- Swiper -->
+                            <div class="swiper-container overFlowVisible">
+                                <div class="swiper-wrapper">
 
-                            <div class="glide">
-                                <div class="glide__track" data-glide-el="track">
-                                    <ul class="glide__slides">
-                                        <li v-for="product in suggestedProducts()" class="glide__slide">
-
-                                            <div class="fullWidth beRelative suggestion" style="overflow:hidden">
-                                                <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                                                     <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                                                    <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
-                                                        <div class="beRelative fullWidth fullHeight">
-                                                            <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
-                                                        </div>
+                                    <div v-for="product in suggestedProducts()" class="swiper-slide" :key="product.productUid">
+                                        <div @click="navigateToProduct(product)" class="fullWidth beRelative suggestion" style="overflow:hidden; border-radius:2px">
+                                            <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
+                                                    <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
+                                                <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
+                                                    <div class="beRelative fullWidth fullHeight">
+                                                        <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
                                                     </div>
-                                            </div>                                         
+                                                </div>
+                                        </div>                                         
 
-                                        </li>                                                                      
-                                    </ul>
+                                    </div> 
                                 </div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination centerInWidth" style="bottom:-30px"></div>
                             </div>
-
                         </div>
                     </div>
+
                     <div style="margin-bottom:5vh"></div>
                 </div>
                 <div class="col s12 noPadding semiBold center beRelative fluidFont-LL" style="margin-top:5vh;height:60vmax" v-else>
@@ -219,10 +220,18 @@ export default {
       },
       goBack(){
          this.$router.go(-1)
-      },      
+      },
+      navigateToProduct(product){
+          this.selectProduct(product)
+          this.$router.push("/product")
+      },
+      navigateToOrderSettings(order){
+          this.selectProduct(order.product)
+          this.$router.push("/orderSettings")
+      }   ,   
       resize(){
-          this.arrangeOrdersHeight();
-          this.arrangeSuggestions();
+            this.arrangeOrdersHeight();
+            this.arrangeSuggestions(); 
           },
       //helper functions
     hexToRgb(hex){
@@ -328,7 +337,10 @@ export default {
 
     },
     //mapMutations and actions
-    ...mapMutations("modulePlate",["removeFromPlate"])
+    ...mapMutations("modulePlate",["removeFromPlate"]),
+    ...mapActions("moduleProduct",[
+        "selectProduct"
+    ])
   },
   computed : {
        dilutedHelperThemeColor(){
@@ -366,29 +378,41 @@ export default {
         },0)
 
 
-        if(this.plate.length>0 && this.suggestedProducts().length>0){
-            new Glide('.glide',{
-                        type: 'carousel',
-                        startAt: 0,
-                        swipeThreshold : 30,
-                        dragThreshold : 50,
-                        perView : 2,
-                        touchAngle : 80,
-                        autoplay: 4000,
-                        breakpoints : {
-                            500 : {perView : 2},
-                            900 : {perView : 3},
-                            1200 : {perView : 4}
-                        }
-                    }).mount()
-        }
-        
+        if(this.plate.length>0 && this.suggestedProducts().length>0)
+            var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                1024: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+                },
+                768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+                },
+                550: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+                },
+            },
+            autoplay: {
+                delay: 5000,
+            },
+            loop: true,
+            on: {
+                    resize : this.arrangeSuggestions,
+                    slideChangeTransitionStart	 : this.arrangeProductsImages
+                },
+            });
 
         this.arrangeOrdersHeight()
 
         this.arrangeSuggestions()
-
-        this.arrangeProductsImages()
 
         MicroModal.init();
 
@@ -409,17 +433,26 @@ export default {
 .orderBorder{
     border-bottom : 1px solid #bdbdbd
 }
-@media only screen and (max-width: 550px){
-  .modal {
-      width: 85%;
-  }
-}
-@media only screen and (min-width: 550px){
-  .modal {
-      width: 75%;
-  }
-}
-.modal{
-  max-height : 100% !important;
-}
+
+    .swiper-container {
+      width: 100%;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
 </style>

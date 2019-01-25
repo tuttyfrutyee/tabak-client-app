@@ -16,11 +16,12 @@ import "materialize-css/dist/js/materialize.min.js"
 //for modal
 import MicroModal from 'micromodal'
 
-//glider
-import Glide from '@glidejs/glide/dist/glide.min.js'
-import "@glidejs/glide/dist/css/glide.core.min.css"
+//swiper
+import Swiper from "swiper"
+import "swiper/dist/css/swiper.min.css"
 
-window.Glide = Glide
+window.Swiper = Swiper
+
 window.MicroModal = MicroModal
 
 //myAlert.css

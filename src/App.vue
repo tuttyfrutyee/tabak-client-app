@@ -41,6 +41,10 @@ const routes = [
     component : Product
   },
   {
+    path : "/orderSettings",
+    component : Product
+  },
+  {
     path : "/plate",
     component : Plate
   }
@@ -81,6 +85,9 @@ export default {
         },
         "product" : {
         //  "subCategories" : "slideLeft"
+        },
+        "orderSettings" : {
+
         },
         "plate" : {
          // "subCategories" : "slideDown",
@@ -123,7 +130,8 @@ export default {
       "categories",
       "subCategories",
       "plate",
-      "product"
+      "product",
+      "orderSettings"
     ]
     if(!knownPaths.includes(to))
       return this.$router.push("/categories")

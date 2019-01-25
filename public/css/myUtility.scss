@@ -608,17 +608,17 @@ $maxHeightXL : 400px;
     margin : 0px auto !important;
 }
 .centerInHeight{
-    top : 50%;
+    top : 50% !important;
     transform: translateY(-50%) !important;
 }
 .centerInWidth{
-    left : 50%;
-    transform : translateX(-50%);
+    left : 50% !important;
+    transform : translateX(-50%) !important;
 }
 .centerInCenter{
-    top : 50%;
-    left : 50%;
-    transform : translate(-50%,-50%)
+    top : 50% !important;
+    left : 50% !important;
+    transform : translate(-50%,-50%) !important;
 }
 .hideMe{
     width: 0px !important;
