@@ -3,13 +3,13 @@
   <div id="subCategories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
-      <div class="fullWidth fluidFont-L semiBold beSticky z-indexMedium z-depth-1" style="padding-left:5px;padding-top:1vmin;padding-bottom:1vmin;top:0;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+      <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
           {{_categoryTitle}}
       </div>
           <!--Top best 4 -->
-            <div class=" beRelative z-depth-2" style="height:10vmin;min-height:3.8rem;background-color:#fafafa;border-bottom: 1px solid #ddd">
-                <p class="beAbsolute centerInCenter noMargin noPadding semiBold  fluidFont-M">Sıkça Tercih Edilenler</p>
-                <i class="material-icons beAbsolute centerInHeight  noMargin fluidFont-L" style="left:5%">&#xe838</i>
+            <div class=" beRelative z-depth-2" style="height:2.7rem;background-color:#fafafa;border-bottom: 1px solid #ddd">
+                <p class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">Sıkça Tercih Edilenler</p>
+                <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1rem;left:5%;">&#xe838</i>
             </div>
             <div class=" noPadding">
                 <div class="row noMargin">
@@ -19,7 +19,7 @@
                             <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
                             <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
@@ -29,14 +29,14 @@
         <!-- End of Best 4-->
 
         <!-- White Gap -->
-      <div class="fullWidth fluidFont-M semiBold z-depth-1" style="padding-top:1vmin;padding-bottom:1vmin;padding-left:1vmin">
+      <div class="fullWidth fontSVSmall_R semiBold z-depth-1" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.2rem">
           -Diğerleri
       </div>   
         <!-- End of White Gap -->
 
         <div v-for="subCategory in subCategories" :key="subCategory.categoryTitle">
-            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative z-depth-1" :style="{backgroundColor:'rgb(245,153,51)'}" style="height:8vmin;min-height:2.5rem;background-color:#fafafa">
-                <p class="beAbsolute centerInCenter noMargin noPadding semiBold fluidFont-M">{{subCategory.subCategoryName}}</p>
+            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative z-depth-1" :style="{backgroundColor:'rgb(245,153,51)'}" style="height:2.2rem;background-color:#fafafa">
+                <p class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">{{subCategory.subCategoryName}}</p>
             </div>
             <div class="noPadding">
                 <div class="row noMargin">
@@ -46,7 +46,7 @@
                             <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
                             <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fluidFont-L">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div class="" style="height : 6vmin;border-top: 1px solid #ddd"></div>
+        <div style="height : 0.5rem;border-top: 1px solid #ddd"></div>
 
   </div>
   
@@ -231,6 +231,7 @@ export default {
     mostWanteds(){
         //for developing purposes
         var bag = []
+        if(this.subCategories)
         this.subCategories.forEach(subCategory=>{
             subCategory.products.forEach(product=>{bag.push(product)})
         })
@@ -253,7 +254,6 @@ export default {
   },
 
   mounted(){
-
       this.arrangeProducts()
       this.arrangeProductsImages()
   },

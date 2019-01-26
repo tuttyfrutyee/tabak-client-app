@@ -98,6 +98,41 @@ export default {
       this.updateCalculatedTransition( transitionTable[to][from] )
 
     },
+    calculateRootFontSize(){
+
+      var developingMode = false
+      
+      var width
+
+      if(!developingMode)
+        if(window.screen.width < window.screen.height)
+          width = window.screen.width
+        else
+          width = window.screen.height
+      else{
+        if(window.innerWidth < window.innerHeight)
+          width = window.innerWidth
+        else
+          width = window.innerHeight
+      }
+
+      console.log(width)
+
+      var minFontSize = 12;
+      var maxFontSize = 26;
+
+      var maxSupportedWidthSize = 1000
+
+      var calculatedFontSize = minFontSize + (maxFontSize - minFontSize) * (width / maxSupportedWidthSize)
+      if(width > maxSupportedWidthSize)
+        calculatedFontSize = maxFontSize
+
+      var html = document.documentElement 
+
+      html.style.fontSize = calculatedFontSize + 'px'
+
+      console.log(window.getComputedStyle(html).fontSize)
+    },
     //mapMutations
     ...mapMutations([
       "update_http",
@@ -112,6 +147,7 @@ export default {
     ])
   },
   created(){
+    this.calculateRootFontSize()
     //connect to firestore
     this.getFirestoreClientPowers().then(()=>{
       this.watchCategories();
@@ -140,6 +176,7 @@ export default {
   }
   },
   mounted(){
+    
     this.$router.push("/categories")
 
 /*     console.log(screen.height,window.height,document.documentElement.clientHeight)

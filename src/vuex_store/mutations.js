@@ -95,7 +95,7 @@ function createScreen() {
     var allScreen = document.createElement("div");
     allScreen.style.width = "100vw";
     allScreen.style.height = "100vh";
-    allScreen.style.position = "absolute";
+    allScreen.style.position = "fixed";
     allScreen.style.top = "0px";
     allScreen.style.zIndex = 1000;
     return allScreen;

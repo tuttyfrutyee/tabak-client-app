@@ -1,19 +1,19 @@
 <template>
-  <div id="categories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
+  <div id="categories" class="beAbsolute fullWidth minHeight_full fontF_Viga" style="top:0px;left:0px">
       <div id="background_categories" class="backgroundCard"></div>
       <banner></banner>
       
-      <div class="container" style="margin-top:3vh">
+      <div class="container" style="margin-top:1rem">
         <div class="row">
 
           <!-- Modal Trigger -->
-          <div data-micromodal-trigger="modal-1" class="col10 offset-s1 categoryBorder waves-effect" style="height:60px;margin-bottom:20px">
+          <div data-micromodal-trigger="modal-1" class="col10 offset-s1 categoryBorder waves-effect" style="height:3.1rem;margin-bottom:1rem">
             <div class="row noMargin fullHeight">
               <div class="col s6 valign-wrapper fullHeight">
-                <p class="center noMargin" style="font-size:20px;margin-left:20px!important">Özel İstek</p>
+                <p class="center noMargin fontSSmall_R" style="margin-left:20px!important">Özel İstek</p>
               </div>
               <div class="col s3 offset-s3 beRelative fullHeight">
-                <img src="../assets/categoryIcons_fordeveloping/note.png" style="height:35px" class="centerInCenter beAbsolute" alt="">
+                <img src="../assets/categoryIcons_fordeveloping/note.png" style="height:2rem" class="centerInCenter beAbsolute" alt="">
               </div>
             </div>
           </div>
@@ -25,17 +25,17 @@
 
                   <div class="row noMargin">
                     <div class="col s12 beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
-                      <h5 class="center tColorWhite boldFont fluidFont-L">Özel İstek</h5>
+                      <div class="center tColorWhite boldFont fontSSmall_R" style="padding:0.3rem">Özel İstek</div>
                       <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
                     </div>
                     <div class="col s12">
-                      <textarea id="customOrderInput" style="min-height:60px" class="materialize-textarea boldFont fluidFont-L" placeholder="İsteğinizi yazın (Peçete, buz, çatal...)"></textarea>
+                      <textarea id="customOrderInput" style="min-height:60px" class="materialize-textarea boldFont fontSVSmall_R" placeholder="İsteğinizi yazın (Peçete, buz, çatal...)"></textarea>
                     </div>
                   </div>
 
-                  <div class="row noMargin" style="height:3rem">
+                  <div class="row noMargin" style="height:2.3rem">
                     <div class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
-                      <div class="beAbsolute centerInCenter center boldFont" :style="{color:globalVariables.colors.helperTextColor}" style="font-size:1.1rem">Gönder</div>
+                      <div class="beAbsolute centerInCenter center boldFont" :style="{color:globalVariables.colors.helperTextColor}" style="font-size:1rem">Gönder</div>
                     </div>
                   </div> 
 
@@ -43,13 +43,13 @@
             </div>
           </div>          
 
-          <div @click="_selectCategory(category)" v-for="(category,index) in categories" class="col10 offset-s1 categoryBorder addMarginT-S waves-effect" style="height:80px" :key="category.categoryUid">
+          <div @click="_selectCategory(category)" v-for="(category,index) in categories" class="col10 offset-s1 categoryBorder addMarginT-S waves-effect" style="height:4rem" :key="category.categoryUid">
             <div class="row noMargin fullHeight">
-              <div class="col s7 valign-wrapper fullHeight">
-                <p class="center noMargin" style="font-size:21px;margin-left:20px!important">{{category.categoryTitle}}</p>
+              <div class="col s8 valign-wrapper fullHeight">
+                <p class="noMargin " style="font-size:1.1rem;margin-left:15px!important">{{category.categoryTitle}}</p>
               </div>
-              <div class="col s3 offset-s2 beRelative fullHeight">
-                <img src="../assets/categoryIcons_fordeveloping/dessert.png" style="height:60px" class="centerInCenter beAbsolute" alt="">
+              <div class="col s3 offset-s1 beRelative fullHeight">
+                <img src="../assets/categoryIcons_fordeveloping/dessert.png" style="height:3.2rem" class="centerInCenter beAbsolute" alt="">
               </div>
             </div>
           </div>
@@ -113,7 +113,6 @@ export default {
     })
 
     MicroModal.init();
-
 
   },
 }
