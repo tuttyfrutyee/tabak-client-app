@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 //untracked global variables that changes machine to machine(developing period)
 import untrackedGlobalVariables from "../untrackedGlobalVariables.json"
-import globalVariables from "../globalVariables.json"
+import globalVariables from "../globalVariables.js"
 
 //modules
 import moduleCategories from "./modules/moduleCategories"

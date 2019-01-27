@@ -7,9 +7,11 @@
         <div class="col s12 noPadding" style="height:3.2rem;min-height:56px">
             <ul :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="tabs fullHeight beRelative">
 
-                <div @click="goBack()" class="beAbsolute centerInHeight z-indexMedium" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
-                    <div class="beRelative fullHeight fullWidth">
-                    <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">chevron_left</i>
+                <div @click="goBack()" class="beAbsolute centerInHeight z-indexMedium" style="width:2.8rem;height:3.2rem;">
+                    <div class="beAbsolute centerInHeight z-indexMedium" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
+                        <div class="beRelative fullHeight fullWidth">
+                            <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">chevron_left</i>
+                        </div>
                     </div>
                 </div>
 
@@ -21,14 +23,14 @@
                         <div class="beAbsolute centerInHeight" style="right:0px;height:60%;border:0.5px solid #cecece;width:0px"></div>
                     </a>
                 </li>
-                <li @click="arrangeOrdersHeight()" class="tab col s5 fullHeight">
+                <li @click="handleTrackingOrdersTabTap()" class="tab col s5 fullHeight">
                     <a href="#track" class="tColorWhite beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fontSVSmall_R">Takip</div>
                     </a>
                 </li>
             </ul>
         </div>
-        <div id="orders" class="col s12">
+        <div id="orders" class="col s12 noOverflow">
             <div class="row noMargin">
                 <div class="col s12 beRelative noPadding orderBorder" style="height:3rem">
                     <div class="beAbsolute centerInHeight fontSSmall_R" style="left:5%;">
@@ -49,17 +51,17 @@
                                 <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
                             </div>
 
-                            <div class="beAbsolute centerInHeight fullHeight" style="right:0;width:10%">
-                                <div class="beRelative fullWidth fullHeight">
+                            <div class="beAbsolute centerInHeight fullHeight" style="right:-0.50rem;width:15%">
+                                <div @click="removeFromPlate(order)" class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInHeight" style="height:40%;width:1px;left:0;background-color:#cecece"></div>
-                                    <i @click="removeFromPlate(order)" class="material-icons beAbsolute centerInCenter tColorRed fontSLarge_R" style="left:60%">&#xe5cd</i>
+                                     <i class="material-icons beAbsolute centerInCenter tColorRed fontSLarge_R" style="left:60%">&#xe5cd</i>
                                 </div>
                             </div>
                             
                         </div>
                         <div class="col s12">
                             <div class="row" style="height:3.5rem;max-height:100px;margin-top:1rem;margin-bottom:0.5rem">
-                                <div class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:4px">
+                                <div data-micromodal-trigger="modal-3" class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:4px">
                                     <div class="beAbsolute centerInCenter fontSSmall_R fullWidth center tColorWhite">
                                         Siparişi Gönder
                                     </div>
@@ -72,11 +74,12 @@
                                                 <span class="beAbsolute centerInCenter" style="height:2rem;width:2rem">
                                                     <div class="beRelative fullWidth fullHeight">
                                                         <img src="../assets/categoryIcons_fordeveloping/note.png" class="beAbsolute centerInCenter fullWidth">
-                                                        <i class="material-icons beAbsolute fontSLarge_R boldFont" style="color:green;top:0.5rem;left:5px;transform:translate(50%,-50%)">check</i>
+                                                        <i v-if="orderNote.length>0" class="material-icons beAbsolute fontSLarge_R boldFont" style="color:green;top:0.5rem;left:5px;transform:translate(50%,-50%)">check</i>
+                                                        <div v-if="orderNote.length>0" class="beAbsolute" style="font-size:0.8rem;color:green;top:1.5rem;left:5px;transform:translate(40%,-70%)">Eklendi</div>                                                        
                                                     </div>
                                                 </span>
                                             </div>                                                                                         
-                                            <div class="center fontSVSmall_R" style="line-height:1">Sipariş Notu</div>
+                                            <div data-micromodal-trigger="modal-1" class="center fontSVSmall_R" style="line-height:1">Sipariş Notu</div>
                                         </div>
                                     </div>
                                             <!-- Modal Structure -->
@@ -90,15 +93,10 @@
                                                         <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
                                                         </div>
                                                         <div class="col s12">
-                                                          <textarea id="customOrderInput" style="min-height:60px;" class="materialize-textarea semiBold fontSVSmall_R" placeholder="İletilmesini istediğiniz sipariş notunu yazın..."></textarea>
+                                                          <textarea v-model="l_orderNote" id="customOrderInput" style="min-height:60px;" class="materialize-textarea semiBold fontSVSmall_R" placeholder="İletilmesini istediğiniz sipariş notunu yazın..."></textarea>
                                                         </div>
                                                     </div>
 
-                                                    <div class="row noMargin" style="height:2.3rem">
-                                                        <div class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
-                                                        <div class="beAbsolute centerInCenter center semiBold" :style="{color:globalVariables.colors.helperTextColor}" style="font-size:1rem">Tamam</div>
-                                                        </div>
-                                                    </div> 
 
                                                 </div>
                                                 </div>
@@ -114,14 +112,14 @@
                         <div class="col s12 semiBold fontSMedium_R" style="margin-top:1rem">
                             Yanına yakışır...
                         </div>
-                        <div class="col s12 noPadding" style="margin-top:1rem">
+                        <div class="col s12 noPadding" style="margin-top:1rem;margin-bottom:2rem">
                             <!-- Swiper -->
                             <div class="swiper-container overFlowVisible">
                                 <div class="swiper-wrapper">
 
                                     <div v-for="product in suggestedProducts()" class="swiper-slide" :key="product.productUid">
-                                        <div @click="navigateToProduct(product)" class="fullWidth beRelative suggestion" style="overflow:hidden; border-radius:2px">
-                                            <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
+                                        <div class="fullWidth beRelative suggestion" style="overflow:hidden; border-radius:2px">
+                                            <div :id="product.productUid" class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                                                     <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
                                                 <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
                                                     <div class="beRelative fullWidth fullHeight">
@@ -154,9 +152,9 @@
                     </div>
                 </div>
                 <!-- Order List here -->
-                <div v-if="true" class="col s12 noPadding" style="margin-bottom:20vmax">
+                <div v-if="trackingOrders.length>0" class="col s12 noPadding" style="margin-bottom:20vmax">
                     <div class="row noMargin">
-                        <div v-for="(order,index) in plate" class="col s12 noPadding beRelative order orderBorder" style="height:3.5rem">
+                        <div v-for="(order,index) in trackingOrders" class="col s12 noPadding beRelative order orderBorder" style="height:3.5rem">
 
                             <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
 
@@ -186,13 +184,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 noPadding semiBold center beRelative fontSMedium_R" style="margin-top:1.5rem;height:20vmax" v-else>
-                    Tabağınızda ürün yok
-                        <img src="../assets/tabakIcon.png" class="beAbsolute centerInCenter">
+                <div class="col s12 noPadding semiBold center beRelative fontSMedium_R" style="margin-top:1.5rem;height:20rem" v-else>
+                    Takip edilicek bir ürün yok
+                        <img src="../assets/binocularIcon.png" style="width:7rem;"  class="beAbsolute centerInCenter">
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal Structure(Order Delivered Notification) -->
+    <div class="_modal micromodal-slide z-indexMedium" id="modal-2" aria-hidden="true">
+        <div class="modal__overlay" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
+            <div class="addPadding-M fontSVSmall_R center">
+                <div class="center fontSMedium_R semiBold"> Siparişiniz alındı. <i class="material-icons fontSLarge_R" style="color:green">check_circle</i></div>
+                <div class="fullWidth" style="height:1px;backgroundColor:#cecece;margin-top:0.5rem;margin-bottom:1rem"></div>
+                <span class="semiBold">Takip</span> sekmesinden sipariş durumunu kontrol edebilirsiniz.
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Structure(Send Order Verification) -->
+    <div class="_modal micromodal-slide z-indexMedium" id="modal-3" aria-hidden="true">
+        <div class="modal__overlay" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-3-title">
+            <div class="fullWidth beRelative addPadding-S">
+                <div class="center fontSMedium_R">Sipariş gönderme işlemini onaylıyor musunuz?</div>
+                <div class="fullWidth" style="height:1px;backgroundColor:#cecece;margin-top:0.5rem;margin-bottom:1rem"></div>
+                <div class="row noMargin fullWidth tColorWhite" style="height:2.5rem">
+                    <div data-micromodal-close class="col s5 fullHeight noPadding center beRelative" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}">
+                        <div data-micromodal-close class="beAbsolute centerInCenter">Vazgeç</div>
+                    </div>
+                    <div @click="_sendOrders($event)" class="col s7 fullHeight noPadding center beRelative semiBold waves-effect" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}">
+                        <div class="beAbsolute centerInCenter fullWidth">Evet, onayla!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
   </div>
 </template>
 
@@ -205,40 +236,61 @@ export default {
   name: 'plate',
   data(){
     return {
+        l_orderNote : ""
     }
   },
   methods : {
-      suggestedProducts(){
-        //for developing purposes
-        var bag = []
+    suggestedProducts(){
+    //for developing purposes
+    var bag = []
 
-        for(let subCategory of this.subCategories){
-            subCategory.products.forEach(product=>{bag.push(product)})
+    for(let subCategory of this.subCategories){
+        subCategory.products.forEach(product=>{bag.push(product)})
+    }
+
+    var wanteds = []
+    for(var i = 0; i < 5 && bag[i]; i++)
+        wanteds.push(bag[i])
+    return wanteds        
+    },
+    removeOrder(order){
+        this.removeFromPlate(order)
+    },
+    goBack(){
+        this.$router.go(-1)
+    },
+    navigateToProduct(productUid){
+        var product = this.findProductWithUid(productUid)
+        if(product){
+        this.selectProduct(product)
+        this.$router.push("/product")
         }
+    },
+    navigateToOrderSettings(order){
+        this.selectProduct(order.product)
+        this.updateOrderSelectedToBeChanged(order)
+        this.$router.push("/orderSettings")
+    },   
+    resize(){
+        this.arrangeOrdersHeight();
+        this.arrangeSuggestions(); 
+        },
+    _sendOrders(event){
+        
+        var modal = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+        //fucking micromodal is broken with close rjrjrj
+        //closing it manually
+        modal.classList.remove("is-open")
+        modal.setAttribute('aria-hidden', 'true');
 
-        var wanteds = []
-        for(var i = 0; i < 5 && bag[i]; i++)
-            wanteds.push(bag[i])
-        return wanteds        
-      },
-      removeOrder(order){
-          this.removeFromPlate(order)
-      },
-      goBack(){
-         this.$router.go(-1)
-      },
-      navigateToProduct(product){
-          this.selectProduct(product)
-          this.$router.push("/product")
-      },
-      navigateToOrderSettings(order){
-          this.selectProduct(order.product)
-          this.$router.push("/orderSettings")
-      }   ,   
-      resize(){
-            this.arrangeOrdersHeight();
-            this.arrangeSuggestions(); 
-          },
+        this.sendOrders().then(()=>{
+            MicroModal.show("modal-2")
+        })
+    }, 
+    handleTrackingOrdersTabTap(){
+        this.arrangeOrdersHeight()
+        this.markTrackingOrdersSeen()
+    },
       //helper functions
     hexToRgb(hex){
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -253,6 +305,17 @@ export default {
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16)
         } : null;
+    },
+    findProductWithUid(productUid){
+
+        for(let category of this.categories)
+            for(let subCategory of category.subCategories)
+                for(let product of subCategory.products)
+                    if(product.productUid === productUid)
+                        return product                   
+    
+        return null
+        
     },
     //for styles
     arrangeOrdersHeight(){
@@ -343,9 +406,23 @@ export default {
 
     },
     //mapMutations and actions
-    ...mapMutations("modulePlate",["removeFromPlate"]),
+    ...mapMutations([
+        "addProcess",
+        "removeProcess"
+    ]),
+    ...mapMutations("moduleProduct",[
+        "updateOrderSelectedToBeChanged"
+    ]),
+    ...mapMutations("modulePlate",[
+        "removeFromPlate",
+        "updateOrderNote",
+        "markTrackingOrdersSeen"
+        ]),
     ...mapActions("moduleProduct",[
         "selectProduct"
+    ]),
+    ...mapActions("modulePlate",[
+        "sendOrders"
     ])
   },
   computed : {
@@ -355,14 +432,31 @@ export default {
            var neww = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity +')'
            return neww
        },
+       unSeenTrackingOrdersCount(){
+           var counter = 0
+           this.trackingOrders.forEach(trackingOrder=>{
+               if(!trackingOrder.isSeen)
+                counter++
+           })
+           return counter
+       },
       //mapState
       ...mapState("modulePlate",[
           "plate",
-          "orderNote"
+          "orderNote",
+          "trackingOrders"
+      ]),
+      ...mapState("moduleCategories",[
+          "categories"
       ]),
       ...mapState("moduleSubCategories",[
           "subCategories"
       ]),
+  },
+  watch : {
+      l_orderNote(newValue){
+          this.updateOrderNote(newValue)
+      }
   },
   created(){
       window.addEventListener("resize",this.resize)
@@ -407,12 +501,13 @@ export default {
                 },
             },
             autoplay: {
-                delay: 5000,
+                delay: 500000,
             },
             loop: true,
             on: {
                     resize : this.arrangeSuggestions,
-                    slideChangeTransitionStart	 : this.arrangeProductsImages
+                    slideChangeTransitionStart	 : this.arrangeProductsImages,
+                    tap : (event)=>{this.navigateToProduct(event.srcElement.id) }
                 },
             });
 
@@ -421,6 +516,9 @@ export default {
         this.arrangeSuggestions()
 
         MicroModal.init();
+
+        this.l_orderNote = this.orderNote
+
 
 
   }

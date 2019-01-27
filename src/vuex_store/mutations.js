@@ -100,6 +100,7 @@ function createScreen() {
     allScreen.style.zIndex = 1000;
     return allScreen;
   }
+
   function addWaitingScreen() {
     var screen = createScreen();
     document.body.appendChild(screen);

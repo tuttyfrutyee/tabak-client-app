@@ -7,13 +7,13 @@ const uuid = require("uuid/v4")
 
 //untracked global variables that changes machine to machine(developing period)
 import untrackedGlobalVariables from "./untrackedGlobalVariables.json"
-import globalVariables from "./globalVariables.json"
+import globalVariables from "./globalVariables.js"
 
 //importing materialize css and javascript
 import "materialize-css/dist/css/materialize.min.css"
 import "materialize-css/dist/js/materialize.min.js"
 
-//for modal
+//for modals
 import MicroModal from 'micromodal'
 
 //swiper

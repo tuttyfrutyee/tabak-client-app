@@ -1,12 +1,12 @@
 <template>
-  <div id="product" class="beAbsolute fullWidth" style="top:0px;left:0px;">
+  <div v-if="selectedProduct" id="product" class="beAbsolute fullWidth" style="top:0px;left:0px;">
       <div id="background_subCategories" class="backgroundCard"></div>
       
       <div class="row noMargin beRelative">
 
-              <div class="beAbsolute z-indexHigh" style="height:3.2rem;min-height:56px;left:0;top:0">
+              <div v-if="!orderSettingsMode"  @click="goBack()" class="beAbsolute z-indexHigh" style="height:3.2rem;width:3.2rem;min-height:56px;left:0;top:0">
                   <div class="beRelative fullWidth fullHeight">
-                    <div @click="goBack()" class="beAbsolute centerInHeight" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
+                    <div class="beAbsolute centerInHeight" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
                         <div class="beRelative fullHeight fullWidth">
                             <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">chevron_left</i>
                         </div>
@@ -21,7 +21,7 @@
                         </div>
                         <div class="beAbsolute" style="z-index:1;right:1.8vmin;top:1.8vmin;width:6vmin;height:6vmin;border-radius:50%;font-size:4.3vmin">
                             <div class="beRelative fullWidth fullHeight">
-                                <div class="beAbsolute centerInCenter tColorWhite">{{productDeliveryTime}}<span style="font-size:2vmin;z-index:2">dk</span></div>
+                                <div class="beAbsolute centerInCenter tColorWhite">{{selectedProduct.productDeliveryTime}}<span style="font-size:2vmin;z-index:2">dk</span></div>
                                 <div class="beAbsolute" style="bottom:0;left:-0.8vmin;width:4.6vmin;height:4.6vmin;border-radius:50%;z-index:-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_1}" ></div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
 
 				<div class="progressive-image beRelative fullWidth fullHeight">
 
-					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="productImages.productIconImage" alt="">
+					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="selectedProduct.productImages.productIconImage" alt="">
 
 					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth">
                 </div>
@@ -58,7 +58,7 @@
           <div id="mainPart" class="col s12 noPadding beRelative" style="height:5rem;margin-top:0.8rem">
               <div :class="summaryClass()" class="beAbsolute" :style="summaryStyle()" style="width:48%;left:5%;">
                   <p id="summaryParagraph" class="noMargin font_family1" style="font-size:0.8rem;color:#757575;max-height:6rem; overflow:scroll">
-                      {{orders[0].selectedOption.productOptionSummary}}
+                      {{selectedProduct.productOptions[0].productOptionSummary}}
                   </p>
                   
                   <div v-if="checkSummaryLength()" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" class="beAbsolute fullWidth" style="left:0;bottom:-3px;height:1px;"></div>
@@ -148,7 +148,7 @@
                   </div>
               </div>
           </div>
-            <div @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+            <div v-if="!orderSettingsMode" @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
                 <div class="beRelative fullWidth fullHeight">
                     <div class="beAbsolute centerInCenter boldFont tColorWhite fontSLarge_R">
                         Tabağa Ekle
@@ -166,6 +166,20 @@
 
                 </div>
             </div>
+            <div v-else class="fullWidth beFixed waves-effect z-depth-4" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+                <div class="row noMargin fullHeight fullWidth noPadding">
+                    <div @click="cancelOrderSettingsChanges()" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}" class="col s4 noPadding fullHeight beRelative waves-effect">
+                        <div class="beAbsolute centerInCenter fullWidth center fontSSmall_R tColorWhite">
+                            Vazgeç 
+                        </div>
+                    </div>
+                    <div @click="applyOrderSettingsChanges()" :style="{backgroundColor:globalVariables.colors.fixedAppColor_5}" class="col s8 noPadding fullHeight beRelative center waves-effect">
+                        <div class="beAbsolute centerInCenter fullWidth fontSMedium_R tColorWhite">
+                            Değişikliği Kaydet
+                        </div>
+                    </div>
+                </div>
+            </div>            
           </div>
       </div>
 </template>
@@ -180,10 +194,14 @@ export default {
   data(){
     return {
         orders : [],
+        //for orderSettingsMode
+        orderSettingsMode : false,
+        initialOrders : [],
         //for dummy
         paragraph : null,
         mainPart : null,
         trigger : false,
+
     }
   },
   methods : {
@@ -228,7 +246,23 @@ export default {
       },
       goBack(){
           this.$router.go(-1)
-          console.log("hello")
+      },
+      //for order settings
+      cancelOrderSettingsChanges(){
+          this.$router.go(-1)
+      },
+      applyOrderSettingsChanges(){
+
+          this.kickAndReplaceOrder({
+              order_willBeKicked : this.initialOrders,
+              orders_willReplace : this.orders
+          })
+
+          this.$router.go(-1)
+      },
+      //helper functions
+      deepCopyArray(targetArray) {
+        return JSON.parse(JSON.stringify(targetArray));
       },
       //view relateds
       checkSummaryLength(){
@@ -294,6 +328,12 @@ export default {
           this.trigger = !this.trigger
       },
     //mapActions and mutations
+    ...mapMutations("moduleProduct",[
+        "updateOrderSelectedToBeChanged"
+    ]),
+    ...mapActions("modulePlate",[
+        "kickAndReplaceOrder"
+    ]),
     ...mapActions("moduleProduct",[
         "pushToPlate"
     ]),
@@ -308,27 +348,51 @@ export default {
           if(this.selectedProduct)
             return this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'})
       },
-      productDeliveryTime(){
-          if(this.selectedProduct)
-            return this.selectedProduct.productDeliveryTime
-      },
-      productImages(){
-          if(this.selectedProduct)
-            return this.selectedProduct.productImages
-      },
-
       //mapState
       ...mapState("moduleProduct",[
-          "selectedProduct"
+          "selectedProduct",
+          //for orderSettings mode
+          "orderSelectedToBeChanged"
       ])
   },
   created(){
 
-      this.incrementOrderCount();
-
-      window.addEventListener('resize', this.resize);
+        window.addEventListener('resize', this.resize);
+        
+        window.scroll(0,0)
       
-      window.scroll(0,0)
+      if(this.selectedProduct){
+        
+        //check if we are in settings mode and set off the orderSettingsMode
+        this.orderSettingsMode = this.$route.path.includes("orderSettings")
+        if(this.orderSettingsMode){    
+            
+            for(var i = 0; i < this.orderSelectedToBeChanged.orderCount; i++){
+                
+                this.orders.push({
+                    orderCount : 1,
+                    product : this.orderSelectedToBeChanged.product,
+                    selectedExtras : this.deepCopyArray(this.orderSelectedToBeChanged.selectedExtras),
+                    selectedOption : this.deepCopyArray(this.orderSelectedToBeChanged.selectedOption),
+                })
+
+                this.initialOrders.push({
+                    orderCount : 1,
+                    product : this.orderSelectedToBeChanged.product,
+                    selectedExtras : this.deepCopyArray(this.orderSelectedToBeChanged.selectedExtras),
+                    selectedOption : this.deepCopyArray(this.orderSelectedToBeChanged.selectedOption),                    
+                })
+            }
+
+            this.updateOrderSelectedToBeChanged(null)
+        }
+        else{
+            //initial order count setting
+            this.incrementOrderCount();
+        }
+      }
+      else console.log("no product has been chosen")
+
 
   },
   destroyed(){
@@ -336,28 +400,31 @@ export default {
   },
   mounted(){
 
+    if(this.selectedProduct){
 
-    var image = new Image();
-    image.src = this.selectedProduct.productImages.productRepresentImage
+        var image = new Image();
+        image.src = this.selectedProduct.productImages.productRepresentImage
 
-    var previewImage = document.getElementById("placeHolderImage")
-    var newImage = document.getElementById("representImage")
-    var imageFilter = document.getElementById("imageFilter")
+        var previewImage = document.getElementById("placeHolderImage")
+        var newImage = document.getElementById("representImage")
+        var imageFilter = document.getElementById("imageFilter")
 
-    image.onload = function(){
-      newImage.src = image.src
-      newImage.style.opacity = 1
-      imageFilter.style.opacity = 1
-      previewImage.style.opacity = 0
-    };
+        image.onload = function(){
+        newImage.src = image.src
+        newImage.style.opacity = 1
+        imageFilter.style.opacity = 1
+        previewImage.style.opacity = 0
+        };
 
 
-    this.paragraph = document.getElementById("summaryParagraph")
-    this.mainPart = document.getElementById("mainPart")
+        this.paragraph = document.getElementById("summaryParagraph")
+        this.mainPart = document.getElementById("mainPart")
 
-    this.setHeaderHeight();
+        this.setHeaderHeight();
 
-    this.Vue.nextTick(()=>{this.initModals()})
+        this.Vue.nextTick(()=>{this.initModals()})
+    }
+
 
 
 

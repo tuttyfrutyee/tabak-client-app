@@ -1,6 +1,6 @@
 <template>
 
-  <div id="subCategories" class="beAbsolute fullWidth minHeight_full" style="top:0px;left:0px">
+  <div id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
       <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
@@ -17,7 +17,7 @@
                         <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                            <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
+                            <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.6)">
                                 <div class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
                                 </div>
@@ -44,7 +44,7 @@
                         <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                            <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
+                            <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.6)">
                                 <div class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
                                 </div>

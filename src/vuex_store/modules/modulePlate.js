@@ -4,11 +4,17 @@
 export default {
     namespaced: true,
     state : {
+        //plate part
         plate : [],
-        orderNote : ""
+        orderNote : "",
+        //tracking part
+        trackingOrders : [],
     },
     mutations:{
-        pushToPlate(state,order){
+        //plate part
+        pushToPlate(state,details){
+            var order = details.order
+            var insertionIndex = details.insertionIndex
             //first check if the same kind does exists
             var didFind = false
             state.plate.forEach(_order=>{
@@ -20,8 +26,12 @@ export default {
                     _order.orderCount ++;
                 }
             })
-            if(!didFind)
-                state.plate.push(order)
+            if(!didFind){
+                if(insertionIndex)
+                    state.plate.splice(insertionIndex, 0, order);
+                else
+                    state.plate.push(order)
+            }
         },
         removeFromPlate(state,order){
             var counter = 0;
@@ -38,10 +48,65 @@ export default {
         },
         updateOrderNote(state,newValue){
             state.orderNote = newValue
+        },
+        //tracking part
+        pushToTrackingOrders(state,order){
+            state.trackingOrders.push(order)
+        },
+        removeFromTrackingOrders(state,order){
+            var counter = 0;
+            for(let _order of state.trackingOrders){
+                if(areTwoOrdersEqual(_order,order)){
+                    state.trackingOrders.splice(counter,1)  
+                    return
+                }
+                counter++
+            }
+        },
+        markTrackingOrdersSeen(state){
+            state.trackingOrders.forEach(trackingOrder=>{
+                trackingOrder.isSeen = true
+            })
         }
+
     },
     actions : {
 
+        kickAndReplaceOrder(context,details){
+            var order_willBeKicked = details.order_willBeKicked
+            var orders_willReplace = details.orders_willReplace
+
+
+            var indexOfTarget = context.state.plate.indexOf(order_willBeKicked)
+
+            for(let order of order_willBeKicked){
+                context.commit("removeFromPlate",order)
+            }            
+            for(let order of orders_willReplace){
+                console.log(order)
+                context.commit("pushToPlate",{order,insertionIndex : indexOfTarget})
+            }
+
+        },
+
+        sendOrders(context){
+            context.commit("addProcess",null,{root:true})
+
+            return new Promise((res,rej)=>{
+                //for developing purposes 
+                setTimeout(()=>{
+                    for(let order of context.state.plate){
+                        //for notification stuff
+                        order.isSeen = false
+                        context.commit("pushToTrackingOrders",order)
+                    }
+                    context.commit("clearPlate")
+
+                    context.commit("removeProcess",null,{root:true})
+                    res()
+                },1000)
+            })
+        }
     }
 }
 

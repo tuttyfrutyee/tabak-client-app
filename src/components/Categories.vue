@@ -1,5 +1,5 @@
 <template>
-  <div id="categories" class="beAbsolute fullWidth minHeight_full fontF_Viga" style="top:0px;left:0px">
+  <div id="categories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
       <div id="background_categories" class="backgroundCard"></div>
       <banner></banner>
       

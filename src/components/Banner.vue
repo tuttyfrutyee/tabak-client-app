@@ -2,8 +2,8 @@
   <div id="banner" class="z-indexHigh">
       <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="row subwayGreen noMargin" style="height:3.2rem;min-height:56px" >
 
-        <div class="col s2 beRelative fullHeight">
-          <div v-if="isInSubCategories" @click="goBack()" class="beAbsolute centerInHeight" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
+        <div @click="goBack()" class="col s2 beRelative fullHeight">
+          <div v-if="isInSubCategories"  class="beAbsolute centerInHeight" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
             <div class="beRelative fullHeight fullWidth">
               <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">chevron_left</i>
             </div>
