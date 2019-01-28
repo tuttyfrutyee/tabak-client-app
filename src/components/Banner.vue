@@ -119,7 +119,7 @@ export default {
     }
   },
   created(){
-    window.addEventListener("scroll",this.setPlateHeight_whenScroll)
+   // window.addEventListener("scroll",this.setPlateHeight_whenScroll)
   },
   mounted(){
     //check for immediate animation duties

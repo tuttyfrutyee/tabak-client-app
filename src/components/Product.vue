@@ -459,14 +459,14 @@ export default {
 
 #representImage {
 	opacity: 0;
-	transition: opacity 200ms ease-in;
+	transition: opacity 100ms ease-in;
 }
 #imageFilter{
 	opacity: 0;
-	transition: opacity 200ms ease-in;
+	transition: opacity 100ms ease-in;
 }
 #previewImage{
-	transition: opacity 200ms ease-in;
+	transition: opacity 100ms ease-in;
 }
 ._line{
     width: 90%;
