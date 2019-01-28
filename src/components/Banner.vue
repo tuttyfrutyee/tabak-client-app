@@ -16,7 +16,7 @@
           <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;right:0;width:2px;opacity:0.8"></div>
         </div>
         
-        <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="col s2 overFlowVisible z-indexHigh" style="right:0;top:0;height:3.2rem;min-height:56px;border-radius:3px 0px 3px 10px">
+        <div id="plate" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh" style="right:0;top:0;height:3.2rem;width:3.2rem;border-radius:50%">
           <div style="height:76%"  class="beAbsolute centerInCenter">
             <img id="tabakIcon" class="fullHeight animated" src="../assets/tabakIcon.png" >
             <div v-if="plate.length>0" class="beAbsolute" style="right:15%;bottom:15%;height:1.1rem;width:1.1rem">
@@ -56,6 +56,37 @@ export default {
          plate.classList.add("wiggle")
       },0)
     },
+    setPlateHeight_whenScroll(){
+
+      if(!this.isInSubCategories) //only for subCategories
+        return 
+
+      var scrollAmount = window.scrollY
+
+      var minPlateHeight = 3.2 //in rem
+      var maxPlateHeight = 4 // in rem
+
+      var startPoint = 2 // in rem
+      var limitScroll = 5 //rem //for performance
+
+      //check if limit has been reached and did not passed lots( to enhance performance )
+      if((scrollAmount > (limitScroll * this.remSize )))
+          return
+                   
+      var plate = document.getElementById("plate")
+
+      if(!plate) return
+
+      if(scrollAmount > startPoint * this.remSize){
+        plate.classList.add("getBig")
+      }else{
+        plate.classList.remove("getBig")       
+      }
+
+
+      
+    },
+    
     //styles and classes
     //mapActions
     ...mapActions("moduleAnimations",[
@@ -69,6 +100,9 @@ export default {
     isInSubCategories(){
       return this.$route.path.includes("subCategories")
     },
+    ...mapState([
+      "remSize"
+    ]),
     ...mapState("modulePlate",[
       "plate"
     ]),
@@ -85,6 +119,7 @@ export default {
     }
   },
   created(){
+    window.addEventListener("scroll",this.setPlateHeight_whenScroll)
   },
   mounted(){
     //check for immediate animation duties
@@ -161,4 +196,63 @@ box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
   -webkit-animation-duration: 0.95s;
   animation-duration: 0.95s;
 }
+
+ @-webkit-keyframes getBig {
+   from{
+      -webkit-transform: scale(1,1) translate3d(0,0,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+          -ms-transform: scale(1,1) translate3d(0,0,0); /* IE 9 */
+              transform: scale(1,1) translate3d(0,0,0); /* IE 10, Fx 16+, Op 12.1+ */   
+
+      }
+   to{
+      -webkit-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+          -ms-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 9 */
+              transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 10, Fx 16+, Op 12.1+ */ 
+  
+   }
+
+}
+
+@keyframes getBig {
+   from{
+      -webkit-transform: scale(1,1) translate3d(0,0,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+          -ms-transform: scale(1,1) translate3d(0,0,0); /* IE 9 */
+              transform: scale(1,1) translate3d(0,0,0); /* IE 10, Fx 16+, Op 12.1+ */   
+
+      }
+   to{
+      -webkit-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+          -ms-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 9 */
+              transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 10, Fx 16+, Op 12.1+ */ 
+  
+   }
+}
+
+
+
+
+.getBig{  
+    animation-name : getBig ;
+    -webkit-animation-duration: 0.15s;
+    animation-duration: 0.15s;
+    -webkit-animation-fill-mode: both;
+     animation-fill-mode: both; 
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out        
+  }
+
+  #tabak{
+   -webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+   -ms-backface-visibility: hidden;
+   backface-visibility: hidden;
+
+   -webkit-perspective: 1000;
+   -moz-perspective: 1000;
+   -ms-perspective: 1000;
+   perspective: 1000;    
+  }
+
+
+
 </style>

@@ -20,6 +20,7 @@ import moduleAnimations from "./modules/moduleAnimations"
 
 export default new Vuex.Store({
     state : {
+        Vue,
         //global variables
         uTGlobalVariables : untrackedGlobalVariables,
         globalVariables,
@@ -42,6 +43,8 @@ export default new Vuex.Store({
 
         //animation tracker
         calculatedTransition : "nothing",
+        //the calculated remsize for the device
+        remSize : null,
     },
     mutations : main_mutations,
     actions :   main_actions,

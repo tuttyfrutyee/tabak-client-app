@@ -3,7 +3,7 @@
   <div id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
       <div id="background_subCategories" class="backgroundCard"></div>
       <banner></banner>
-      <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
+      <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;color:#313131" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
           {{_categoryTitle}}
       </div>
           <!--Top best 4 -->
@@ -35,8 +35,8 @@
         <!-- End of White Gap -->
 
         <div v-for="subCategory in subCategories" :key="subCategory.categoryTitle">
-            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative z-depth-1" :style="{backgroundColor:'rgb(245,153,51)'}" style="height:2.2rem;background-color:#fafafa">
-                <p class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">{{subCategory.subCategoryName}}</p>
+            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative" :style="{backgroundColor:'#fafafa'}" style="height:1.5rem;">
+                <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem;color:#616161">{{subCategory.subCategoryName}}</p>
             </div>
             <div class="noPadding">
                 <div class="row noMargin">

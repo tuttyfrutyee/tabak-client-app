@@ -35,10 +35,12 @@ export default {
     update_http(state,http){
         state.http = http
     },
-
-    updateUUIDGenerator(state,generator){
-        state.uuid = generator;
+    updateUIDGenerator(state,generator){
+        state.uid = generator;
     },
+    updateRemSizeInPx(state,remSize){
+        state.remSize = remSize
+    },    
 
     //waiting screen --> process changers
 

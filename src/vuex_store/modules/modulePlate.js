@@ -7,6 +7,7 @@ export default {
         //plate part
         plate : [],
         orderNote : "",
+        plateHashCode : null,
         //tracking part
         trackingOrders : [],
     },
@@ -63,10 +64,10 @@ export default {
                 counter++
             }
         },
-        markTrackingOrdersSeen(state){
+        markTrackingOrdersSeen(state,stuff){
             state.trackingOrders.forEach(trackingOrder=>{
                 trackingOrder.isSeen = true
-            })
+           })
         }
 
     },
@@ -83,7 +84,6 @@ export default {
                 context.commit("removeFromPlate",order)
             }            
             for(let order of orders_willReplace){
-                console.log(order)
                 context.commit("pushToPlate",{order,insertionIndex : indexOfTarget})
             }
 
@@ -94,11 +94,11 @@ export default {
 
             return new Promise((res,rej)=>{
                 //for developing purposes 
+                var orderPackUid = context.rootState.uid()
                 setTimeout(()=>{
                     for(let order of context.state.plate){
                         //for notification stuff
-                        order.isSeen = false
-                        context.commit("pushToTrackingOrders",order)
+                        context.commit("pushToTrackingOrders",Object.assign({},order,{isSeen:false,orderPackUid}))
                     }
                     context.commit("clearPlate")
 

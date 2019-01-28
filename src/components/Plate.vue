@@ -26,6 +26,9 @@
                 <li @click="handleTrackingOrdersTabTap()" class="tab col s5 fullHeight">
                     <a href="#track" class="tColorWhite beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fontSVSmall_R">Takip</div>
+                        <div v-if="unSeenTrackingOrdersCount>0" class="beAbsolute centerInHeight center semiBold fontSVSmall_R" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="right:1rem;padding : 0.2rem 0.2rem 0.2rem 0.2rem;border-radius:50% ;line-height:1">
+                            {{unSeenTrackingOrdersCount}}       
+                        </div>
                     </a>
                 </li>
             </ul>
@@ -131,7 +134,7 @@
                                     </div> 
                                 </div>
                                 <!-- Add Pagination -->
-                                <div class="swiper-pagination centerInWidth" style="bottom:-30px"></div>
+                                <div class="swiper-pagination centerInWidth" style="bottom:-2rem"></div>
                             </div>
                         </div>
                     </div>
@@ -146,7 +149,7 @@
         </div>
         <div id="track" class="col s12">
             <div class="row noMargin">
-                <div class="col s12 beRelative noPadding orderBorder" style="height:3rem">
+                <div v-if="trackingOrders.length>0" class="col s12 beRelative noPadding" :class="{orderBorder:trackingOrdersInOrder.length===1,orderBorderDark:trackingOrdersInOrder.length>1}" style="height:3rem">
                     <div class="beAbsolute centerInHeight fontSSmall_R" style="left:5%;">
                         Takip
                     </div>
@@ -154,7 +157,7 @@
                 <!-- Order List here -->
                 <div v-if="trackingOrders.length>0" class="col s12 noPadding" style="margin-bottom:20vmax">
                     <div class="row noMargin">
-                        <div v-for="(order,index) in trackingOrders" class="col s12 noPadding beRelative order orderBorder" style="height:3.5rem">
+<!--                         <div v-for="(order,index) in trackingOrders" class="col s12 noPadding beRelative order orderBorder" style="height:3.5rem">
 
                             <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
 
@@ -173,14 +176,26 @@
                                 <p class="center noPadding noMargin fontSVSmall_R">İletildi</p>
                             </div>
 
-                        </div>
-                    </div>
-                    <div  class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
-                        <div class="beRelative fullWidth fullHeight">
-                            <div style="line-height:1" class="beAbsolute centerInCenter center boldFont tColorWhite fontSLarge_R fullWidth">
-                                Hesap İste<br><span class="fontSSmall_R"> (Garson Çağırır)</span>
-                            </div>
+                        </div> -->
+                        <div v-for="(orderPack,index) in trackingOrdersInOrder" class="row noMargin" :class="{orderBorderDark:trackingOrdersInOrder.length!==1}">
+                            <div v-for="(order,_index) in orderPack" class="col s12 noPadding beRelative order" :class="{orderBorder:(_index!==(orderPack.length-1))||trackingOrdersInOrder.length===1}" style="height:3.5rem">
+                                <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
 
+                                <div class="beAbsolute centerInHeight text" style="left:15%;width:58%">
+                                    <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
+                                    <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
+                                </div>                            
+
+                                <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:5%;width:20%">
+                                    <i class="material-icons displayBlock center fontSSmall_R" style="color:#34b7f1;">&#xe877</i>
+                                    <p class="center noPadding noMargin fontSVSmall_R">Hazırlanıyor</p>
+                                </div>
+
+                                <div v-else class="beAbsolute centerInHeight text" style="right:5%;width:20%">
+                                    <i class="material-icons displayBlock center fontSSmall_R" style="color:#9e9e9e;">&#xe877</i>
+                                    <p class="center noPadding noMargin fontSVSmall_R">İletildi</p>
+                                </div>                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,6 +203,14 @@
                     Takip edilicek bir ürün yok
                         <img src="../assets/binocularIcon.png" style="width:7rem;"  class="beAbsolute centerInCenter">
                 </div>
+                    <div  class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+                        <div class="beRelative fullWidth fullHeight">
+                            <div style="line-height:1" class="beAbsolute centerInCenter center boldFont tColorWhite fontSLarge_R fullWidth">
+                                Hesap İste<br><span class="fontSSmall_R"> (Garson Çağırır)</span>
+                            </div>
+
+                        </div>
+                    </div>                
             </div>
         </div>
     </div>
@@ -277,7 +300,9 @@ export default {
         },
     _sendOrders(event){
         
-        var modal = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+        var modal = event.target.parentElement.parentElement.parentElement.parentElement.parentElement
+        if(!modal.id.includes("modal"))
+            modal = modal.parentElement
         //fucking micromodal is broken with close rjrjrj
         //closing it manually
         modal.classList.remove("is-open")
@@ -440,6 +465,44 @@ export default {
            })
            return counter
        },
+       trackingOrdersInOrder(){
+           var orderPackBag = []
+
+           var currentOrderPackUid = null
+           var targetOrderPack_leftIndex = -1
+           var targetOrderPack_rightIndex 
+
+           for(var i = targetOrderPack_leftIndex; i < this.trackingOrders.length;){
+
+               targetOrderPack_leftIndex = i;
+
+               for(var j = targetOrderPack_leftIndex+1; j < this.trackingOrders.length; j++){
+                   if(!(this.trackingOrders[j].orderPackUid === currentOrderPackUid))
+                    {
+                        targetOrderPack_rightIndex = j-1;
+                        currentOrderPackUid = this.trackingOrders[j].orderPackUid
+                        break;
+                    }else if(this.trackingOrders.length === j+1){
+                        targetOrderPack_rightIndex = j
+                    }
+               }
+
+                if(targetOrderPack_leftIndex > targetOrderPack_rightIndex)
+                    targetOrderPack_rightIndex = targetOrderPack_leftIndex
+
+               var tempOrderPack = []
+
+               for(var k = targetOrderPack_leftIndex; k <= targetOrderPack_rightIndex && k > -1 ; k++)
+                   tempOrderPack.push(this.trackingOrders[k])
+                
+               if(tempOrderPack.length > 0)
+                    orderPackBag.push(tempOrderPack)
+               
+               i = targetOrderPack_rightIndex + 1
+           }
+
+           return orderPackBag
+       },
       //mapState
       ...mapState("modulePlate",[
           "plate",
@@ -460,7 +523,7 @@ export default {
   },
   created(){
       window.addEventListener("resize",this.resize)
-      window.scroll(0,0)
+      window.scroll(0,-100)
   },
   destroyed(){
       window.removeEventListener("resize",this.resize)
@@ -487,11 +550,7 @@ export default {
                 clickable: true,
             },
             breakpoints: {
-                1024: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-                },
-                768: {
+                769: {
                 slidesPerView: 3,
                 spaceBetween: 20,
                 },
@@ -501,7 +560,7 @@ export default {
                 },
             },
             autoplay: {
-                delay: 500000,
+                delay: 5000,
             },
             loop: true,
             on: {
@@ -536,6 +595,9 @@ export default {
 
 .orderBorder{
     border-bottom : 1px solid #bdbdbd
+}
+.orderBorderDark{
+    border-bottom : 2px solid #757575
 }
 
     .swiper-container {

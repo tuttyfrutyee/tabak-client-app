@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import VueResource from 'vue-resource'
 
-const uuid = require("uuid/v4")
+const uid = require("uuid/v4")
 
 //untracked global variables that changes machine to machine(developing period)
 import untrackedGlobalVariables from "./untrackedGlobalVariables.json"
@@ -42,7 +42,7 @@ Vue.mixin({
   data : function() {
     return {
       //uuid
-      uuid,
+      uid,
       //untrackedGlobalVariables
       uTGlobalVariables : untrackedGlobalVariables,
       globalVariables,

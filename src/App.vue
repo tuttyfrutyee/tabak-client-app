@@ -131,12 +131,16 @@ export default {
 
       html.style.fontSize = calculatedFontSize + 'px'
 
-      console.log(window.getComputedStyle(html).fontSize)
+      //registering it into store
+      this.updateRemSizeInPx(calculatedFontSize)
+
     },
     //mapMutations
     ...mapMutations([
       "update_http",
       "updateCalculatedTransition",
+      "updateUIDGenerator",
+      "updateRemSizeInPx"
     ]),
     //mapActions
     ...mapActions([
@@ -154,6 +158,7 @@ export default {
     })
 
     this.update_http(this.$http)
+    this.updateUIDGenerator(this.uid)
 
   },
   watch : {

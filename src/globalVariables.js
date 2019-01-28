@@ -17,9 +17,9 @@ export default
         helperTextColor : "#000",
         fixedAppColor_1 : "#000", //black - buttons and stuff
         fixedAppColor_2 : "#4caf50", //green light - for sending check request and stuff
-        fixedAppColor_3 : "#c62828", //red - for cancelling and stuff
+        fixedAppColor_3 : "#e53935", //red - for cancelling and stuff
         fixedAppColor_4 : "#000", // white - for text color on colory things
-        fixedAppColor_5 : "#43a047", //dark green
+        fixedAppColor_5 : "#4caf50", //dark green
     },
     "pictures" : [
         "dessert.png",

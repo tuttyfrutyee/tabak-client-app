@@ -11,20 +11,25 @@ activatePreloaderAt(element,size){
     var logo = createLogo();
 
     preLoader.classList.add("beFixed","z-indexMedium");
-    logo.classList.add("beFixed","z-indexHigh")
+    logo.classList.add("z-indexHigh")
 
     switch(size){
         case "big":
         preLoader.style.top = "calc(55% - 32px)"
         preLoader.style.left = "calc(50% - 32px)"
+        logo.style.top = "calc(55% - 32px - 5rem)"
         break;
         case "":
         preLoader.style.top = "calc(55% - 25px)"
         preLoader.style.left = "calc(50% - 25px)"
+        logo.style.top = "calc(55% - 25px - 5rem)"
+
         break;
         case "small":
         preLoader.style.top = "calc(55% - 18px)"
         preLoader.style.left = "calc(50% - 18px)"
+        logo.style.top = "calc(55% - 18px -5rem)"
+
         break;
     }
     element.appendChild(darkness);
@@ -57,19 +62,14 @@ function createPreloader(size){
     return template.content.firstChild;
 }
 function createLogo(){
-    var logoFrame = document.createElement("div")
-        logoFrame.classList.add("fullWidth")
-        logoFrame.style.height = "70vh"
-        logoFrame.style.top = 0
-        logoFrame.style.left = 0
+
     var logoName = document.createElement("div")
-        logoName.classList.add("beAbsolute","centerInCenter","fontF_OpenSans")
+        logoName.classList.add("beAbsolute","centerInWidth","fontF_OpenSans")
         logoName.style.fontSize = "2.5rem"
         logoName.style.color = "white"
         logoName.innerText = "Tabak"
 
-    logoFrame.appendChild(logoName)
-    return logoFrame
+    return logoName
 }
 function createDarkness(){
     var darkness = document.createElement("div");

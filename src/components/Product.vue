@@ -166,7 +166,7 @@
 
                 </div>
             </div>
-            <div v-else class="fullWidth beFixed waves-effect z-depth-4" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+            <div v-else class="fullWidth beFixed waves-effect z-depth-4" style="bottom:0;left:0;height:9vmax;-webkit-transform: translateZ(0);">
                 <div class="row noMargin fullHeight fullWidth noPadding">
                     <div @click="cancelOrderSettingsChanges()" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}" class="col s4 noPadding fullHeight beRelative waves-effect">
                         <div class="beAbsolute centerInCenter fullWidth center fontSSmall_R tColorWhite">
@@ -174,7 +174,7 @@
                         </div>
                     </div>
                     <div @click="applyOrderSettingsChanges()" :style="{backgroundColor:globalVariables.colors.fixedAppColor_5}" class="col s8 noPadding fullHeight beRelative center waves-effect">
-                        <div class="beAbsolute centerInCenter fullWidth fontSMedium_R tColorWhite">
+                        <div class="beAbsolute centerInCenter fullWidth fontSSmall_R tColorWhite">
                             Değişikliği Kaydet
                         </div>
                     </div>
@@ -209,7 +209,14 @@ export default {
             var extra = details.productExtra;
             var order = details.order;
 
-            var indexOfRemoval = order.selectedExtras.indexOf(extra)
+            var indexOfRemoval = -1
+            var counter = 0
+            for(let _extra of order.selectedExtras){
+                if(_extra.productExtraName === extra.productExtraName)
+                    indexOfRemoval = counter
+                counter++
+            }
+
             if(indexOfRemoval>-1)
                 order.selectedExtras.splice(indexOfRemoval,1)
             else
@@ -359,7 +366,7 @@ export default {
 
         window.addEventListener('resize', this.resize);
         
-        window.scroll(0,0)
+        window.scroll(0,-100)
       
       if(this.selectedProduct){
         
