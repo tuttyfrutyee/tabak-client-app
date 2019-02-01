@@ -856,10 +856,14 @@ $maxHeightXL : 400px;
     background-color: #fff;
     padding : 0px !important;
     border-radius: 4px;
-    overflow-y: auto;
     box-sizing: border-box;
     transform: translateY(-7vh) !important;
   }
+
+  .borderRadius_toTop{
+      border-radius : 4px 4px 0 0
+  }
+
   
   @media only screen and (max-width: 550px){
     .modal__container {

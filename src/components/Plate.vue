@@ -5,45 +5,44 @@
     <div class="row noMargin">
 
         <div class="col s12 noPadding" style="height:3.2rem;min-height:56px">
-            <ul :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="tabs fullHeight beRelative">
+            <ul :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}" class="tabs fullHeight beRelative">
 
                 <div @click="goBack()" class="beAbsolute centerInHeight z-indexMedium" style="width:2.8rem;height:3.2rem;">
                     <div class="beAbsolute centerInHeight z-indexMedium" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
                         <div class="beRelative fullHeight fullWidth">
-                            <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">chevron_left</i>
+                            <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">&#xe5cb</i>
                         </div>
                     </div>
                 </div>
 
                 <li class="tab col s7 fullHeight">
-                    <a @click="arrangeOrdersHeight()" href="#orders" class="tColorWhite beRelative fullHeight">
-                        <div class="beAbsolute centerInCenter fontSVSmall_R">
-                            Tabağınız
-                        </div>
+                    <a :style="{color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" @click="arrangeOrdersHeight()" href="#orders" class="beRelative fullHeight">
+                        <div class="beAbsolute centerInCenter fontSVSmall_R">{{preferredLanguage.plate.plate.title}}</div>
                         <div class="beAbsolute centerInHeight" style="right:0px;height:60%;border:0.5px solid #cecece;width:0px"></div>
                     </a>
                 </li>
                 <li @click="handleTrackingOrdersTabTap()" class="tab col s5 fullHeight">
-                    <a href="#track" class="tColorWhite beRelative fullHeight">
-                        <div class="beAbsolute centerInCenter fontSVSmall_R">Takip</div>
-                        <div v-if="unSeenTrackingOrdersCount>0" class="beAbsolute centerInHeight center semiBold fontSVSmall_R" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="right:1rem;padding : 0.2rem 0.2rem 0.2rem 0.2rem;border-radius:50% ;line-height:1">
-                            {{unSeenTrackingOrdersCount}}       
-                        </div>
+                    <a :style="{color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" href="#track" class="beRelative fullHeight">
+                        <div class="beAbsolute centerInCenter fontSVSmall_R">{{preferredLanguage.plate.track.title}}</div>
+                        <div v-if="unSeenTrackingOrdersCount>0" class="beAbsolute centerInHeight" style="right:10%;height:1.4rem;width:1.4rem">
+                            <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor,color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" style="border-radius:50%">
+                                <div class="beAbsolute centerInCenter boldFont fontSVSmall_R noPadding" style="line-height:normal">{{unSeenTrackingOrdersCount}}</div>
+                            </div>
+                        </div>                        
                     </a>
                 </li>
             </ul>
         </div>
         <div id="orders" class="col s12 noOverflow">
             <div class="row noMargin">
-                <div class="col s12 beRelative noPadding orderBorder" style="height:3rem">
-                    <div class="beAbsolute centerInHeight fontSSmall_R" style="left:5%;">
-                        Tabağınız
-                    </div>
+                <div class="col s12 beRelative noPadding tabBorder" style="height:3rem">
+                    <div class="beAbsolute centerInHeight fontSSmall_R" style="left:5%;">{{preferredLanguage.plate.plate.titles.plate}}</div>
                 </div>
                 <!-- Orders here -->
                 <div class="col s12 noPadding" v-if="plate.length>0">
                     <div class="row noMargin">
                         <div v-for="order in plate" class="col s12 beRelative noPadding order orderBorder" style="height:3.5rem">
+                            
 
                             <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
 
@@ -51,23 +50,21 @@
                             
                             <div class="beAbsolute centerInHeight text" style="left:15%;width:70%">
                                 <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
-                                <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
+                                <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} {{preferredLanguage.plate.plate.titles.extra}}</span></div>
                             </div>
 
                             <div class="beAbsolute centerInHeight fullHeight" style="right:-0.50rem;width:15%">
                                 <div @click="removeFromPlate(order)" class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInHeight" style="height:40%;width:1px;left:0;background-color:#cecece"></div>
-                                     <i class="material-icons beAbsolute centerInCenter tColorRed fontSLarge_R" style="left:60%">&#xe5cd</i>
+                                     <i class="tColorRed material-icons beAbsolute centerInCenter fontSLarge_R" style="left:60%">&#xe5cd</i>
                                 </div>
                             </div>
                             
                         </div>
                         <div class="col s12">
                             <div class="row" style="height:3.5rem;max-height:100px;margin-top:1rem;margin-bottom:0.5rem">
-                                <div data-micromodal-trigger="modal-3" class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" style="border-radius:4px">
-                                    <div class="beAbsolute centerInCenter fontSSmall_R fullWidth center tColorWhite">
-                                        Siparişi Gönder
-                                    </div>
+                                <div data-micromodal-trigger="modal-3" class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor,color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" style="border-radius:4px">
+                                    <div class="beAbsolute centerInCenter fontSSmall_R fullWidth center">{{preferredLanguage.plate.plate.titles.sendOrder}}</div>
                                 </div>
                                 <div class="col s2 offset-s1 beRelative fullHeight">
                                     <div class="beAbsolute centerInCenter">
@@ -77,12 +74,12 @@
                                                 <span class="beAbsolute centerInCenter" style="height:2rem;width:2rem">
                                                     <div class="beRelative fullWidth fullHeight">
                                                         <img src="../assets/categoryIcons_fordeveloping/note.png" class="beAbsolute centerInCenter fullWidth">
-                                                        <i v-if="orderNote.length>0" class="material-icons beAbsolute fontSLarge_R boldFont" style="color:green;top:0.5rem;left:5px;transform:translate(50%,-50%)">check</i>
-                                                        <div v-if="orderNote.length>0" class="beAbsolute" style="font-size:0.8rem;color:green;top:1.5rem;left:5px;transform:translate(40%,-70%)">Eklendi</div>                                                        
+                                                        <i v-if="orderNote.length>0" class="material-icons beAbsolute fontSLarge_R boldFont" style="color:green;top:0.5rem;left:5px;transform:translate(50%,-50%)">&#xe5ca</i>
+                                                        <div v-if="orderNote.length>0" class="beAbsolute" style="font-size:0.8rem;color:green;top:1.5rem;left:5px;transform:translate(40%,-70%)">{{preferredLanguage.plate.plate.orderNote.verifyingTitle}}</div>                                                        
                                                     </div>
                                                 </span>
                                             </div>                                                                                         
-                                            <div data-micromodal-trigger="modal-1" class="center fontSVSmall_R" style="line-height:1">Sipariş Notu</div>
+                                            <div data-micromodal-trigger="modal-1" class="center fontSVSmall_R" style="line-height:1">{{preferredLanguage.plate.plate.orderNote.title}}</div>
                                         </div>
                                     </div>
                                             <!-- Modal Structure -->
@@ -90,13 +87,13 @@
                                                 <div class="modal__overlay" data-micromodal-close>
                                                 <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
-                                                    <div class="row noMargin">
-                                                        <div class="col s12 beRelative" :style="{backgroundColor:globalVariables.colors.mainThemeColor}">
-                                                        <h5 class="center tColorWhite semiBold fontSVSmall_R">Sipariş Notunuz</h5>
-                                                        <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
+                                                    <div class="row noMargin borderRadius_toTop">
+                                                        <div class="col s12 beRelative borderRadius_toTop" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor,color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}">
+                                                             <h5 class="center semiBold fontSVSmall_R">{{preferredLanguage.plate.plate.orderNote.dialogTitle}}</h5>
+                                                             <i data-micromodal-close class="material-icons beAbsolute centerInHeight" style="right:8px">&#xe5cd</i>
                                                         </div>
                                                         <div class="col s12">
-                                                          <textarea v-model="l_orderNote" id="customOrderInput" style="min-height:60px;" class="materialize-textarea semiBold fontSVSmall_R" placeholder="İletilmesini istediğiniz sipariş notunu yazın..."></textarea>
+                                                          <textarea v-model="l_orderNote" id="customOrderInput" class="materialize-textarea semiBold fontSVSmall_R" :placeholder="preferredLanguage.plate.plate.orderNote.placeholder"></textarea>
                                                         </div>
                                                     </div>
 
@@ -112,19 +109,17 @@
                     <div style="height:2px;width:100%;background-color:#bdbdbd;margin-top:0.8rem"></div>
 
                     <div v-if="suggestedProducts().length>0" class="row noMargin">
-                        <div class="col s12 semiBold fontSMedium_R" style="margin-top:1rem">
-                            Yanına yakışır...
-                        </div>
+                        <div class="col s12 semiBold fontSSmall_R" style="margin-top:1rem">{{preferredLanguage.plate.plate.titles.goesWellWith}}</div>
                         <div class="col s12 noPadding" style="margin-top:1rem;margin-bottom:2rem">
                             <!-- Swiper -->
                             <div class="swiper-container overFlowVisible">
                                 <div class="swiper-wrapper">
 
                                     <div v-for="product in suggestedProducts()" class="swiper-slide" :key="product.productUid">
-                                        <div class="fullWidth beRelative suggestion" style="overflow:hidden; border-radius:2px">
+                                        <div class="fullWidth beRelative suggestion borderBox" style="overflow:hidden; border-radius:2px">
                                             <div :id="product.productUid" class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                                                     <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                                                <div class="beAbsolute fullWidth filter" style="bottom:0;left:0;height:40%;background-color:rgba(0,0,0,0.5)">
+                                                <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
                                                     <div class="beRelative fullWidth fullHeight">
                                                         <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fontSSmall_R">{{product.productName}}</div>
                                                     </div>
@@ -134,81 +129,103 @@
                                     </div> 
                                 </div>
                                 <!-- Add Pagination -->
-                                <div class="swiper-pagination centerInWidth" style="bottom:-2rem"></div>
+                                <div class="swiper-pagination centerInWidth" style="bottom:-2rem;color:red"></div>
                             </div>
                         </div>
                     </div>
 
                     <div style="margin-bottom:5vh"></div>
                 </div>
-                <div class="col s12 noPadding semiBold center beRelative fontSMedium_R" style="margin-top:1.5rem;height:20rem" v-else>
-                    Tabağınızda ürün yok
-                        <img src="../assets/tabakIcon.png"  class="beAbsolute centerInCenter">
-                </div>
+                <div class="col s12 noPadding semiBold center beRelative fontSMedium_R" style="margin-top:1.5rem;height:20rem" v-else>{{preferredLanguage.plate.plate.empty.content}}
+                    <img src="../assets/tabakIcon.png"  class="beAbsolute centerInCenter"></div>
             </div>
         </div>
         <div id="track" class="col s12">
             <div class="row noMargin">
-                <div v-if="trackingOrders.length>0" class="col s12 beRelative noPadding" :class="{orderBorder:trackingOrdersInOrder.length===1,orderBorderDark:trackingOrdersInOrder.length>1}" style="height:3rem">
-                    <div class="beAbsolute centerInHeight fontSSmall_R" style="left:5%;">
-                        Takip
-                    </div>
-                </div>
+
                 <!-- Order List here -->
                 <div v-if="trackingOrders.length>0" class="col s12 noPadding" style="margin-bottom:20vmax">
-                    <div class="row noMargin">
-<!--                         <div v-for="(order,index) in trackingOrders" class="col s12 noPadding beRelative order orderBorder" style="height:3.5rem">
+                    
+                        <div v-for="(orderPack,index) in trackingOrdersInOrder.slice().reverse()" class="row noMargin" style="margin-top:1rem !important">
 
-                            <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
+                            <div class="right fontSVSmall_R" style="border:2px solid #78909c;border-radius:4px 4px 0 0;padding:2px">{{convertMstoDate(orderPack[0].orderDate)}}</div>
 
-                            <div class="beAbsolute centerInHeight text" style="left:15%;width:58%">
-                                <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
-                                <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
-                            </div>                            
+                            <div  class="col s12" style="height:2px;background-color:#78909c;margin-bottom:0.1rem"></div>
 
-                            <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:5%;width:20%">
-                                <i class="material-icons displayBlock center fontSSmall_R" style="color:#34b7f1;">&#xe877</i>
-                                <p class="center noPadding noMargin fontSVSmall_R">Hazırlanıyor</p>
-                            </div>
+                            <div v-for="(order,_index) in orderPack" class="col s12 noPadding beRelative order orderBorder" style="height:3.5rem">
+                                
+                                <div v-if="order.orderType==='productRequest'" style="display:contents">
+                                        <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
 
-                            <div v-else class="beAbsolute centerInHeight text" style="right:5%;width:20%">
-                                <i class="material-icons displayBlock center fontSSmall_R" style="color:#9e9e9e;">&#xe877</i>
-                                <p class="center noPadding noMargin fontSVSmall_R">İletildi</p>
-                            </div>
+                                        <div class="beAbsolute centerInHeight text" style="left:15%;width:58%">
+                                            <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
+                                            <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} {{preferredLanguage.plate.plate.titles.extra}}</span></div>
+                                        </div>                            
 
-                        </div> -->
-                        <div v-for="(orderPack,index) in trackingOrdersInOrder" class="row noMargin" :class="{orderBorderDark:trackingOrdersInOrder.length!==1}">
-                            <div v-for="(order,_index) in orderPack" class="col s12 noPadding beRelative order" :class="{orderBorder:(_index!==(orderPack.length-1))||trackingOrdersInOrder.length===1}" style="height:3.5rem">
-                                <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
+                                        <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:2%;width:20%">
+                                            <i class="material-icons displayBlock center fontSSmall_R" style="color:#34b7f1;">&#xe877</i>
+                                            <p class="center noPadding noMargin" style="font-size:0.8rem">{{preferredLanguage.plate.track.orderStates.preparing}}</p>
+                                        </div>
 
-                                <div class="beAbsolute centerInHeight text" style="left:15%;width:58%">
-                                    <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
-                                    <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} Ekstra</span></div>
-                                </div>                            
-
-                                <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:5%;width:20%">
-                                    <i class="material-icons displayBlock center fontSSmall_R" style="color:#34b7f1;">&#xe877</i>
-                                    <p class="center noPadding noMargin fontSVSmall_R">Hazırlanıyor</p>
+                                        <div v-else class="beAbsolute centerInHeight text" style="right:2%;width:20%">
+                                            <i class="material-icons displayBlock center fontSSmall_R" style="color:#9e9e9e;">&#xe877</i>
+                                            <p class="center noPadding noMargin fontSVSmall_R">{{preferredLanguage.plate.track.orderStates.delivered}}</p>
+                                        </div>                                     
                                 </div>
 
-                                <div v-else class="beAbsolute centerInHeight text" style="right:5%;width:20%">
-                                    <i class="material-icons displayBlock center fontSSmall_R" style="color:#9e9e9e;">&#xe877</i>
-                                    <p class="center noPadding noMargin fontSVSmall_R">İletildi</p>
-                                </div>                                
+                                <div v-else-if="order.orderType==='specialRequest'" style="display:contents">
+
+                                        <div class="beAbsolute centerInHeight fontSVSmall_R boldFont center" style="left:2%;width:15%">{{preferredLanguage.plate.track.orderTypes.specialRequest}}</div>
+                                        
+                                        <div class="beAbsolute centerInHeight" style="height:70%;width:1px;background-color:#cecece;left: 25%"></div>
+
+                                        <div class="beAbsolute centerInHeight text" style="left:30%;width:45%">
+                                            <div class="fontSVSmall_R semiBold">{{order.specialRequestContent}}</div>
+                                        </div>
+                                        <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:2%;width:20%">
+                                            <i class="material-icons displayBlock center fontSSmall_R" style="color:#34b7f1;">&#xe877</i>
+                                            <p class="center noPadding noMargin" style="font-size:0.8rem">{{preferredLanguage.plate.track.orderStates.preparing}}</p>
+                                        </div>
+
+                                        <div v-else class="beAbsolute centerInHeight text" style="right:2%;width:20%">
+                                            <i class="material-icons displayBlock center fontSSmall_R" style="color:#9e9e9e;">&#xe877</i>
+                                            <p class="center noPadding noMargin fontSVSmall_R">{{preferredLanguage.plate.track.orderStates.delivered}}</p>
+                                        </div>                                           
+                                </div>
+
+                                <div v-else-if="order.orderType==='orderNote'" style="display:contents;">
+                                        <div class="beAbsolute fullWidth fullHeight" style="background-color:#fff3e0;top:0;left:0"></div>
+                                        <div class="beAbsolute centerInHeight fontSVSmall_R semiBold  center" style="left:2%;width:20%">{{preferredLanguage.plate.track.orderTypes.orderNote}}</div>
+                                        <div class="beAbsolute centerInHeight" style="height:70%;width:1px;background-color:#cecece;left:24%"></div>
+                                        <div class="beAbsolute centerInHeight text" style="left:30%;width:70%">
+                                            <div class="fontSVSmall_R semiBold">{{order.orderNote}}</div>
+                                        </div>                            
+                                </div>
+
+                                <!--Check Request-->
+                                <div v-else style="display:contents">
+                                        <div class="beAbsolute fullWidth fullHeight" style="background-color:#e8f5e9;top:0;left:0"></div>
+
+                                        <div class="beAbsolute centerInHeight fontSMedium_R semiBold  center" style="left:2%;width:70%">{{preferredLanguage.plate.track.orderTypes.checkRequest}}</div>
+
+                                        <div class="beAbsolute centerInHeight text" style="right:2%;width:20%">
+                                            <i class="material-icons displayBlock center fontSSmall_R" style="color:#9e9e9e;">&#xe877</i>
+                                            <p class="center noPadding noMargin fontSVSmall_R">{{preferredLanguage.plate.track.orderStates.delivered}}</p>
+                                        </div>                                         
+                                </div>
+
+
+                               
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class="col s12 noPadding semiBold center beRelative fontSMedium_R" style="margin-top:1.5rem;height:20rem" v-else>
-                    Takip edilicek bir ürün yok
+                <div class="col s12 noPadding semiBold center beRelative fontSMedium_R" style="margin-top:1.5rem;height:20rem" v-else>{{preferredLanguage.plate.track.empty.content}}
                         <img src="../assets/binocularIcon.png" style="width:7rem;"  class="beAbsolute centerInCenter">
                 </div>
-                    <div  class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+                    <div @click="__sendCheckRequest()" class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
                         <div class="beRelative fullWidth fullHeight">
-                            <div style="line-height:1" class="beAbsolute centerInCenter center boldFont tColorWhite fontSLarge_R fullWidth">
-                                Hesap İste<br><span class="fontSSmall_R"> (Garson Çağırır)</span>
+                            <div style="line-height:1" class="beAbsolute centerInCenter center boldFont tColorWhite fontSLarge_R fullWidth">{{preferredLanguage.plate.track.checkRequest.title}}<br><span class="fontSSmall_R">{{preferredLanguage.plate.track.checkRequest.titleExp}}</span>
                             </div>
-
                         </div>
                     </div>                
             </div>
@@ -218,10 +235,11 @@
     <div class="_modal micromodal-slide z-indexMedium" id="modal-2" aria-hidden="true">
         <div class="modal__overlay" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
-            <div class="addPadding-M fontSVSmall_R center">
-                <div class="center fontSMedium_R semiBold"> Siparişiniz alındı. <i class="material-icons fontSLarge_R" style="color:green">check_circle</i></div>
+            <div class="fontSVSmall_R center beRelative" style="padding:35px 25px 25px 25px">
+                <div class="center fontSMedium_R semiBold"> {{preferredLanguage.plate.plate.orderVerification.dialogTitle}}</div>
+                <i class="material-icons fontSLLarge_R beAbsolute" style="right:7px;top:7px;color:green">&#xe86c</i>
                 <div class="fullWidth" style="height:1px;backgroundColor:#cecece;margin-top:0.5rem;margin-bottom:1rem"></div>
-                <span class="semiBold">Takip</span> sekmesinden sipariş durumunu kontrol edebilirsiniz.
+                {{preferredLanguage.plate.plate.orderVerification.dialogContent}}
             </div>
         </div>
         </div>
@@ -232,20 +250,41 @@
         <div class="modal__overlay" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-3-title">
             <div class="fullWidth beRelative addPadding-S">
-                <div class="center fontSMedium_R">Sipariş gönderme işlemini onaylıyor musunuz?</div>
+                <div class="center fontSMedium_R">{{preferredLanguage.plate.plate.orderValidation.message}}</div>
                 <div class="fullWidth" style="height:1px;backgroundColor:#cecece;margin-top:0.5rem;margin-bottom:1rem"></div>
                 <div class="row noMargin fullWidth tColorWhite" style="height:2.5rem">
                     <div data-micromodal-close class="col s5 fullHeight noPadding center beRelative" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}">
-                        <div data-micromodal-close class="beAbsolute centerInCenter">Vazgeç</div>
+                        <div data-micromodal-close class="beAbsolute centerInCenter">{{preferredLanguage.plate.plate.orderValidation.buttons.cancel}}</div>
                     </div>
                     <div @click="_sendOrders($event)" class="col s7 fullHeight noPadding center beRelative semiBold waves-effect" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}">
-                        <div class="beAbsolute centerInCenter fullWidth">Evet, onayla!</div>
+                        <div class="beAbsolute centerInCenter fullWidth">{{preferredLanguage.plate.plate.orderValidation.buttons.confirm}}</div>
                     </div>
                 </div>
             </div>
         </div>
         </div>
     </div>
+
+    <!-- Modal Structure(Send Check Request Verification) -->
+    <div class="_modal micromodal-slide z-indexMedium" id="modal-checkVerification" aria-hidden="true">
+        <div class="modal__overlay" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-3-title">
+            <div class="fullWidth beRelative addPadding-S">
+                <div class="center fontSMedium_R">{{preferredLanguage.plate.track.checkRequest.verification.message}}</div>
+                <div class="fullWidth" style="height:1px;backgroundColor:#cecece;margin-top:0.5rem;margin-bottom:1rem"></div>
+                <div class="row noMargin fullWidth tColorWhite" style="height:2.5rem">
+                    <div data-micromodal-close class="col s5 fullHeight noPadding center beRelative" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}">
+                        <div data-micromodal-close class="beAbsolute centerInCenter">{{preferredLanguage.plate.track.checkRequest.verification.buttons.cancel}}</div>
+                    </div>
+                    <div @click="_sendCheckRequest($event)" class="col s7 fullHeight noPadding center beRelative semiBold waves-effect" :style="{backgroundColor:globalVariables.colors.fixedAppColor_2}">
+                        <div class="beAbsolute centerInCenter fullWidth">{{preferredLanguage.plate.track.checkRequest.verification.buttons.accept}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>   
+
 
   </div>
 </template>
@@ -312,11 +351,36 @@ export default {
             MicroModal.show("modal-2")
         })
     }, 
+    __sendCheckRequest(){
+        MicroModal.show("modal-checkVerification")
+    },
+    _sendCheckRequest(){
+
+        var modal = document.getElementById("modal-checkVerification")
+        //fucking micromodal is broken with close rjrjrj
+        //closing it manually
+        modal.classList.remove("is-open")
+        modal.setAttribute('aria-hidden', 'true');  
+
+        this.sendCheckRequest()
+    },
     handleTrackingOrdersTabTap(){
         this.arrangeOrdersHeight()
         this.markTrackingOrdersSeen()
     },
       //helper functions
+    convertMstoDate(miliseconds){
+        var date = new Date(miliseconds)
+        var hour = date.getHours()
+        var minute = date.getMinutes()
+
+        if(hour < 10)
+            hour = '0' + hour
+        if(minute < 10)
+            minute = '0' + minute
+            
+        return hour + ":" + minute
+    },
     hexToRgb(hex){
         // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
         var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -350,7 +414,6 @@ export default {
             for (let order of allOrders) {
 
                  var text = order.getElementsByClassName("text")[0]
-
 
                  if(text.offsetHeight > order.offsetHeight){
 
@@ -409,7 +472,7 @@ export default {
             for(let suggestion of suggestions){
 
                 suggestion.style.height = (suggestion.offsetWidth * wDh_ratio) + 'px'                
-                var filterHeightRatio = 0.4
+                var filterHeightRatio = 0.3
                 
                 var expectedFilterHeight = suggestion.offsetHeight * filterHeightRatio
 
@@ -447,7 +510,8 @@ export default {
         "selectProduct"
     ]),
     ...mapActions("modulePlate",[
-        "sendOrders"
+        "sendOrders",
+        "sendCheckRequest"
     ])
   },
   computed : {
@@ -504,6 +568,9 @@ export default {
            return orderPackBag
        },
       //mapState
+      ...mapState([
+          "preferredLanguage",
+      ]),
       ...mapState("modulePlate",[
           "plate",
           "orderNote",
@@ -536,7 +603,7 @@ export default {
         this.Vue.nextTick(()=>{
                 //styling some stuff dynamically
         var slideBar = document.getElementsByClassName("indicator")
-            slideBar[0].style.backgroundColor = this.globalVariables.colors.helperThemeColor
+            slideBar[0].style.backgroundColor = this.globalVariables.options.colors.dynamicAppColor_helperThemeColor
             slideBar[0].style.height = "5px";
         },0)
 
@@ -547,7 +614,7 @@ export default {
             spaceBetween: 30,
             pagination: {
                 el: '.swiper-pagination',
-                clickable: true,
+                clickable: false,
             },
             breakpoints: {
                 769: {
@@ -560,7 +627,8 @@ export default {
                 },
             },
             autoplay: {
-                delay: 5000,
+                delay: 5000000,
+                disableOnInteraction: false                
             },
             loop: true,
             on: {
@@ -592,7 +660,9 @@ export default {
 #background_plate{
     background-color : white;  
 }
-
+.tabBorder{
+    border-bottom : 1px solid #bdbdbd
+}
 .orderBorder{
     border-bottom : 1px solid #bdbdbd
 }

@@ -3,3 +3,8 @@
 
 1 - Navigasyonda sadece belirli tuşların bir yere gitmesine izin ver( geri tuşu istediği gibi her yere gidemesin ) // ama iphonelarda çok iyi durmayabilir -?-
 
+7 - Hesap isteme butonu çalışsın
+
+
+6 - Bütün modalları @click ile yap, diğer türlüsü iosda sıkıntı çıkarıyor
+

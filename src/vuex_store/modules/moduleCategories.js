@@ -17,7 +17,7 @@ export default {
         },
         updateSelectedCategory(state,category){
             state.selectedCategory = category
-        }
+        },
 
     },
     actions : {

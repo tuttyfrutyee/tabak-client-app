@@ -1,32 +1,83 @@
 <template>
   <div id="banner" class="z-indexHigh">
-      <div :style="{backgroundColor:globalVariables.colors.mainThemeColor}" class="row subwayGreen noMargin" style="height:3.2rem;min-height:56px" >
+      <div :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}" class="row noMargin" style="height:3.4rem;" >
 
-        <div @click="goBack()" class="col s2 beRelative fullHeight">
-          <div v-if="isInSubCategories"  class="beAbsolute centerInHeight" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
+
+        <div v-if="isInSubCategories" @click="goBack()" class="col s2 beRelative fullHeight">
+          <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_background_2}" class="beAbsolute centerInHeight" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%">
             <div class="beRelative fullHeight fullWidth">
-              <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">chevron_left</i>
+              <i class="beAbsolute centerInCenter material-icons tColorWhite fontSMedium_R">&#xe5cb</i>
             </div>
           </div>
         </div>
 
+        <div v-if="globalVariables.options.languages.length>1&&!isInSubCategories" data-micromodal-trigger="modal-language" class="col s2 beRelative fullHeight noPadding">
+          <!--Language Flag-->
+          <div v-for="language in languages.supportedLanguages" style="display:contents" :key="language.name">
+              <div v-if="preferredLanguage_asString===language.name" :style="{backgroundColor:language.backgroundColor}" class="beAbsolute fullWidth fullHeight" style="right:0;top:0"></div>
+              <img v-if="preferredLanguage_asString===language.name" :src="getImg(language.flagImageUrl)" class="beAbsolute centerInCenter z-indexLow" style="max-height:70%;max-width:70%">
+          </div>
+        </div>
+
+        <!--For placeholder-->
+        <div v-if="(globalVariables.options.languages.length===1&&!isInSubCategories)" class="col s2"></div>
+
         <div class="col s8 beRelative fullHeight">
           <img class="centerInCenter beAbsolute" :style="{height:globalVariables.options.bannerImage.heightRatio + '%'}" style="z-index:2" src="../assets/burger-station.png" alt="">
           <div v-if="globalVariables.options.bannerCover.exists" class="beAbsolute centerInCenter fullHeight" style="width:80%;z-index:1;border-radius:2px" :style="{backgroundColor:globalVariables.options.bannerCover.color,opacity:globalVariables.options.bannerCover.opacity}"></div>
-          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;right:0;width:2px;opacity:0.8"></div>
+          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;right:0.1rem;width:2px;opacity:0.8"></div>
         </div>
-        
-        <div id="plate" :style="{backgroundColor:globalVariables.colors.mainThemeColor}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh" style="right:0;top:0;height:3.2rem;width:3.2rem;border-radius:50%">
+
+        <div id="plate" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh" style="right:0.1rem;top:0.1rem;height:3.2rem;width:3.2rem;border-radius:50%">
           <div style="height:76%"  class="beAbsolute centerInCenter">
             <img id="tabakIcon" class="fullHeight animated" src="../assets/tabakIcon.png" >
-            <div v-if="plate.length>0" class="beAbsolute" style="right:15%;bottom:15%;height:1.1rem;width:1.1rem">
-              <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.colors.helperThemeColor}" style="border-radius:50%">
-                  <div class="beAbsolute centerInCenter tColorBlack boldFont fontSVSmall_R noPadding" style="line-height:normal">{{plate.length}}</div>
+            <div v-if="plate.length>0" class="beAbsolute" style="right:15%;bottom:15%;height:1.2rem;width:1.2rem">
+              <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor}" style="border-radius:50%">
+                  <div :style="{color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" class="beAbsolute centerInCenter boldFont fontSVSmall_R noPadding" style="line-height:normal">{{plate.length}}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Modal Structure -->
+      <div class="_modal micromodal-slide z-indexHigh" id="modal-language" aria-hidden="true">
+        <div class="modal__overlay" data-micromodal-close>
+          <div class="modal__container noPadding" aria-modal="true" aria-labelledby="modal-language-title">
+
+
+              <div class="fullWidth borderBox borderRadius_toTop beRelative" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}">
+                <div :style="{color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" class="center semiBold fontSSmall_R" style="padding:0.3rem">{{preferredLanguage.banner.languagePreference.title}}</div>
+                <i data-micromodal-close class="material-icons beAbsolute centerInHeight tColorWhite" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
+              </div>
+
+              <div class="row noMargin">
+
+                <div v-for="(availableLanguage,index) in availableLanguages" @click="updatePreferredLanguage(availableLanguage.name)" :class="{borderToRight:index%2===0}" class="col s6" style="height : 17vmax">
+                  <div class="fullWidth beRelative">
+
+                     <img :src="getImg(availableLanguage.flagImageUrl)" class="beAbsolute centerInWidth z-indexLow" style="top:1vmax;max-height:6vmax;max-width:70%">
+
+                  </div>
+                  <div class="fullWidth beRelative" style="height : 10vmax">
+                      
+                      <div class="beAbsolute centerInWidth semiBold fontSSmall_R" style="bottom:-1vmax">{{availableLanguage.localName}}</div>
+
+                  </div>
+                  <div class="fullWidth beRelative" style="height: 6vmax">
+
+                    <i v-if="preferredLanguage_asString===availableLanguage.name" class="material-icons beAbsolute centerInCenter fontSLarge_R">radio_button_checked</i>
+                    <i v-else class="material-icons beAbsolute centerInCenter fontSLarge_R">radio_button_unchecked</i>
+
+                  </div>
+                </div>
+
+              </div>
+
+          </div>
+        </div>
+      </div>        
+
   </div>
 </template>
 
@@ -34,6 +85,7 @@
 //For vuex store, mapState and mapActions
 //Info : mapAction and mapMutations both inserted in methods block
 import { mapActions, mapMutations, mapState } from "vuex";
+import languages from '../languages';
 
 export default {
   name: 'banner',
@@ -86,9 +138,17 @@ export default {
 
       
     },
+    getImg(pic){
+      //for developing purposes
+      var images = require.context('../assets/', false, /\.png$/)
+      return images('./' + pic)      
+    },
     
     //styles and classes
-    //mapActions
+    //mapMutations and mapActions
+    ...mapMutations([
+      "updatePreferredLanguage"
+    ]),
     ...mapActions("moduleAnimations",[
       "removeTodoAnimation"
     ])
@@ -100,8 +160,17 @@ export default {
     isInSubCategories(){
       return this.$route.path.includes("subCategories")
     },
+    availableLanguages(){
+      return this.languages.supportedLanguages.filter(language => {
+        return this.globalVariables.options.languages.includes(language.name)
+      })
+    },
+
     ...mapState([
-      "remSize"
+      "remSize",
+      "languages", //supported languages by tabak app
+      "preferredLanguage",
+      "preferredLanguage_asString"
     ]),
     ...mapState("modulePlate",[
       "plate"
@@ -132,16 +201,19 @@ export default {
       this.removeTodoAnimation({type:'lazy',name:'icon'});
     }
 
+
+    MicroModal.init();
+
+
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.subwayGreen{
-  background-color : rgb(0,90,71)
+.borderToRight{
+  border-right: 2px solid #cecece
 }
-
 #tabakIcon
 {
 border-width : 0px;
@@ -196,63 +268,4 @@ box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
   -webkit-animation-duration: 0.95s;
   animation-duration: 0.95s;
 }
-
- @-webkit-keyframes getBig {
-   from{
-      -webkit-transform: scale(1,1) translate3d(0,0,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
-          -ms-transform: scale(1,1) translate3d(0,0,0); /* IE 9 */
-              transform: scale(1,1) translate3d(0,0,0); /* IE 10, Fx 16+, Op 12.1+ */   
-
-      }
-   to{
-      -webkit-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
-          -ms-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 9 */
-              transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 10, Fx 16+, Op 12.1+ */ 
-  
-   }
-
-}
-
-@keyframes getBig {
-   from{
-      -webkit-transform: scale(1,1) translate3d(0,0,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
-          -ms-transform: scale(1,1) translate3d(0,0,0); /* IE 9 */
-              transform: scale(1,1) translate3d(0,0,0); /* IE 10, Fx 16+, Op 12.1+ */   
-
-      }
-   to{
-      -webkit-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
-          -ms-transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 9 */
-              transform: scale(1.15,1.15) translate3d(-0.4rem,0.4rem,0); /* IE 10, Fx 16+, Op 12.1+ */ 
-  
-   }
-}
-
-
-
-
-.getBig{  
-    animation-name : getBig ;
-    -webkit-animation-duration: 0.15s;
-    animation-duration: 0.15s;
-    -webkit-animation-fill-mode: both;
-     animation-fill-mode: both; 
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out        
-  }
-
-  #tabak{
-   -webkit-backface-visibility: hidden;
-   -moz-backface-visibility: hidden;
-   -ms-backface-visibility: hidden;
-   backface-visibility: hidden;
-
-   -webkit-perspective: 1000;
-   -moz-perspective: 1000;
-   -ms-perspective: 1000;
-   perspective: 1000;    
-  }
-
-
-
 </style>

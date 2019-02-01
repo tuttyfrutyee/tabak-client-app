@@ -1,42 +1,40 @@
 <template>
 
-  <div id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
-      <div id="background_subCategories" class="backgroundCard"></div>
-      <banner></banner>
-      <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;color:#313131" :style="{backgroundColor:globalVariables.colors.helperThemeColor}">
-          {{_categoryTitle}}
-      </div>
-          <!--Top best 4 -->
-            <div class=" beRelative z-depth-2" style="height:2.7rem;background-color:#fafafa;border-bottom: 1px solid #ddd">
-                <p class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">Sıkça Tercih Edilenler</p>
-                <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1rem;left:5%;">&#xe838</i>
-            </div>
-            <div class=" noPadding">
-                <div class="row noMargin">
-                    <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
-                        <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
-                            <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                            <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                            <div class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%;background-color:rgba(0,0,0,0.6)">
-                                <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
-                                </div>
+  <div :style="{color:globalVariables.colors.fixedAppColor_text_1}" id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
+        <div id="background_subCategories" class="backgroundCard"></div>
+        <banner></banner>
+        <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor,color:globalVariables.colors.fixedAppColor_text_2}">
+             {{_categoryTitle}}
+        </div>
+        <!--Top best 4 -->
+        <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5}" class=" beRelative z-depth-2" style="height:2.7rem;border-bottom: 1px solid #ddd">
+            <div class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">{{preferredLanguage.subCategories.titles.frequentlyOrdered}}</div>
+            <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1rem;left:5%;">&#xe838</i>
+        </div>
+        <div class=" noPadding">
+            <div class="row noMargin">
+                <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
+                    <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
+                        <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
+                        <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
+                        <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
+                            <div class="beRelative fullWidth fullHeight">
+                                <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <!-- End of Best 4-->
 
         <!-- White Gap -->
-      <div class="fullWidth fontSVSmall_R semiBold z-depth-1" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.2rem">
-          -Diğerleri
-      </div>   
+        <div :style="{color:globalVariables.colors.fixedAppColor_text_2}" class="fullWidth fontSVSmall_R semiBold z-depth-1" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.4rem">-{{preferredLanguage.subCategories.titles.others}}</div>   
         <!-- End of White Gap -->
 
         <div v-for="subCategory in subCategories" :key="subCategory.categoryTitle">
-            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative" :style="{backgroundColor:'#fafafa'}" style="height:1.5rem;">
-                <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem;color:#616161">{{subCategory.subCategoryName}}</p>
+            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="height:1.5rem;">
+                <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem">{{subCategory.subCategoryName}}</p>
             </div>
             <div class="noPadding">
                 <div class="row noMargin">
@@ -44,7 +42,7 @@
                         <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
                             <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                            <div class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%;background-color:rgba(0,0,0,0.6)">
+                            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
                                 <div class="beRelative fullWidth fullHeight">
                                     <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
                                 </div>
@@ -55,7 +53,7 @@
             </div>
         </div>
 
-        <div style="height : 0.5rem;border-top: 1px solid #ddd"></div>
+        <div style="height : 0.5rem"></div>
 
   </div>
   
@@ -241,6 +239,9 @@ export default {
         return wanteds
     },
     //mapState
+    ...mapState([
+        "preferredLanguage"
+    ]),
     ...mapState("moduleSubCategories",[
         "subCategories"
     ]),

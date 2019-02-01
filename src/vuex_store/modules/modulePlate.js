@@ -91,6 +91,7 @@ export default {
 
         sendOrders(context){
             context.commit("addProcess",null,{root:true})
+            var orderDate = Date.now();
 
             return new Promise((res,rej)=>{
                 //for developing purposes 
@@ -98,11 +99,86 @@ export default {
                 setTimeout(()=>{
                     for(let order of context.state.plate){
                         //for notification stuff
-                        context.commit("pushToTrackingOrders",Object.assign({},order,{isSeen:false,orderPackUid}))
+                        context.commit("pushToTrackingOrders",Object.assign({},
+                                order,
+                                {
+                                    orderType : "productRequest",
+                                    isSeen:false,
+                                    orderPackUid,
+                                    orderDate,
+                                    orderUid : context.rootState.uid(),                            
+                                }
+                            
+                            )
+                        )
                     }
+
+                    //for ordernote
+                    if(context.state.orderNote !== ""){
+                        context.commit("pushToTrackingOrders",{
+                            orderType : "orderNote",
+                            orderNote : context.state.orderNote,
+                            orderDate,
+                            isSeen : false,
+                            orderPackUid,
+                            orderUid : context.rootState.uid()                                
+                        })
+                    }  
+
+                    //clear ordernote
+                    context.commit("updateOrderNote","")
+
                     context.commit("clearPlate")
 
                     context.commit("removeProcess",null,{root:true})
+                    res()
+
+                },1000)
+            })
+        },
+        sendSpecialRequest(context,specialRequestContent){
+            context.commit("addProcess",null,{root:true})
+            var orderDate = Date.now()
+            
+            return new Promise((res,rej)=>{
+                //for developing purposes
+                var orderPackUid = context.rootState.uid()
+                setTimeout(() => {
+                    context.commit("pushToTrackingOrders",{
+                        orderType : "specialRequest",
+                        specialRequestContent,
+                        orderDate,
+                        isSeen : false,
+                        orderPackUid,
+                        orderUid : context.rootState.uid(),
+                    })
+
+                    context.commit("removeProcess",null,{root:true})
+
+                    res();
+
+                }, 1000);
+            })
+        },
+
+        sendCheckRequest(context){
+            context.commit("addProcess",null,{root:true})
+            var orderDate = Date.now()
+
+            return new Promise((res,rej)=>{
+                //for developing purposes
+                var orderPackUid = context.rootState.uid()
+                setTimeout(()=>{
+                    context.commit("pushToTrackingOrders",{
+                        orderType : "checkRequest",
+                        orderDate,
+                        isSeen : true,
+                        orderPackUid,
+                        orderUid : context.rootState.uid()
+                    })
+
+                    context.commit("removeProcess",null,{root:true})
+
                     res()
                 },1000)
             })

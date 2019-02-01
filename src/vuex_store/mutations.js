@@ -75,6 +75,21 @@ export default {
         state.calculatedTransition = value
     },
 
+    //language
+    updatePreferredLanguage(state,language){
+        state.preferredLanguage_asString = language
+        state.preferredLanguage = state.languages[language]
+    },
+
+    //push to route history
+    pushToRouteHistory(state,history){
+        
+        state.routeHistory.push(history)
+
+        if(state.routeHistory.length>5)
+             state.routeHistory.shift()
+    },
+
     //helpers
 
     updateBackgroundCard(state,details){

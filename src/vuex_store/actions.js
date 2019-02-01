@@ -24,12 +24,17 @@ export default {
 
         
         var restaurantApp = firebase.initializeApp(fromConfig, uuid())
-        var restaurant_db = restaurantApp.firestore();
+
+      
+
+        var restaurant_db = restaurantApp.firestore()
+
         var restaurant_auth = restaurantApp.auth();
 
         restaurant_db.settings({
             timestampsInSnapshots: true
           });
+  
 
         //committing mutations
         context.commit("update_rApp",restaurantApp)

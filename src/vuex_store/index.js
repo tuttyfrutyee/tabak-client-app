@@ -18,6 +18,9 @@ import modulePlate from "./modules/modulePlate"
 
 import moduleAnimations from "./modules/moduleAnimations"
 
+//language 
+import languages from "../languages"
+
 export default new Vuex.Store({
     state : {
         Vue,
@@ -45,6 +48,14 @@ export default new Vuex.Store({
         calculatedTransition : "nothing",
         //the calculated remsize for the device
         remSize : null,
+
+        //language
+        languages,
+        preferredLanguage_asString : "turkish",
+        preferredLanguage : languages["turkish"], //preselecting
+
+        //route
+        routeHistory : [],
     },
     mutations : main_mutations,
     actions :   main_actions,

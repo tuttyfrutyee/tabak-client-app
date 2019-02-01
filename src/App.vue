@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="minHeight_full">
+  <div :style="{color : globalVariables.colors.fixedAppColor_text_1}" id="app" class="minHeight_full">
       <router-view></router-view>
   </div>
 </template>
@@ -97,6 +97,8 @@ export default {
 
       this.updateCalculatedTransition( transitionTable[to][from] )
 
+      this.pushToRouteHistory(to)
+
     },
     calculateRootFontSize(){
 
@@ -140,7 +142,8 @@ export default {
       "update_http",
       "updateCalculatedTransition",
       "updateUIDGenerator",
-      "updateRemSizeInPx"
+      "updateRemSizeInPx",
+      "pushToRouteHistory"
     ]),
     //mapActions
     ...mapActions([
