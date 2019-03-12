@@ -43,6 +43,7 @@ export default {
                     if(res.data.connections){
                         context.commit("updateConnections",res.data.connections)
                     }
+                    console.log(res.data)
                 })
             })
         },

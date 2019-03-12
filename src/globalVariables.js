@@ -27,7 +27,7 @@ export default
 
     },
 
-   // serverAddress : "https://app.tabakmenu.com"
-    serverAddress : "http://127.0.0.1:8000"
+    serverAddress : "https://app.tabakmenu.com"
+    //serverAddress : "http://127.0.0.1:8000"
 
 }

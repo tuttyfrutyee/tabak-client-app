@@ -12,7 +12,7 @@ export default {
 
     getProducts : serverAddress + "/getProducts",
 
-    getConnections : serverAddress + "/getConnections",
+    getConnections : serverAddress + "/getConnections_asClient",
 
     handlePlateChange : serverAddress + "/handlePlateChange",
 

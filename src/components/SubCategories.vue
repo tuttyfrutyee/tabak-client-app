@@ -2,8 +2,8 @@
 
   <div v-if="dynamicColors" :style="{color:globalVariables.colors.fixedAppColor_text_1}" id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
         <div id="background_subCategories" class="backgroundCard"></div>
-        <banner></banner>
-        <div class="fullWidth fontSSmall_R semiBold beSticky z-indexHigh z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor: dynamicColors.helperThemeColor.background,color: dynamicColors.helperThemeColor.text}">
+        <banner class="z-indexHigh"></banner>
+        <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor: dynamicColors.helperThemeColor.background,color: dynamicColors.helperThemeColor.text}">
              {{wireTitle(_categoryTitle).content}}
         </div>
         <!--Top best 4 -->
@@ -32,11 +32,11 @@
         <!-- End of Best 4-->
 
         <!-- White Gap -->
-        <div v-if="selectedCategory.hasFavorites" :style="{color:globalVariables.colors.fixedAppColor_text_2}" class="fullWidth z-indexHigh fontSVSmall_R semiBold" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.4rem;border-bottom: 1px solid #ddd">-{{preferredLanguage.subCategories.titles.others}}</div>   
+        <div v-if="selectedCategory.hasFavorites" :style="{color:globalVariables.colors.fixedAppColor_text_2}" class="fullWidth z-indexMedium fontSVSmall_R semiBold" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.4rem;border-bottom: 1px solid #ddd">-{{preferredLanguage.subCategories.titles.others}}</div>   
         <!-- End of White Gap -->
 
-        <div v-for="subCategory in subCategories" :key="subCategory.subCategoryUid">
-            <div v-if="getDefaultTitle(subCategory.subCategoryTitle).content !== 'Alt Kategorisizler'" class="beRelative z-indexMedium z-depth-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="height:1.5rem;border-bottom: 1px solid #ddd">
+        <div class="z-indexLow" v-for="subCategory in subCategories" :key="subCategory.subCategoryUid">
+            <div v-if="getDefaultTitle(subCategory.subCategoryTitle).content !== 'Alt Kategorisizler'" class="beRelative z-indexLow z-depth-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="height:1.5rem;border-bottom: 1px solid #ddd">
                 <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem">{{wireTitle(subCategory.subCategoryTitle).content}}</p>
             </div>
             <div class="noPadding">
