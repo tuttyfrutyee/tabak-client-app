@@ -1,50 +1,53 @@
 <template>
 
-  <div :style="{color:globalVariables.colors.fixedAppColor_text_1}" id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
+  <div v-if="dynamicColors" :style="{color:globalVariables.colors.fixedAppColor_text_1}" id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
         <div id="background_subCategories" class="backgroundCard"></div>
         <banner></banner>
-        <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor,color:globalVariables.colors.fixedAppColor_text_2}">
-             {{_categoryTitle}}
+        <div class="fullWidth fontSSmall_R semiBold beSticky z-indexHigh z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor: dynamicColors.helperThemeColor.background,color: dynamicColors.helperThemeColor.text}">
+             {{wireTitle(_categoryTitle).content}}
         </div>
         <!--Top best 4 -->
-        <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5}" class=" beRelative z-depth-2" style="height:2.7rem;border-bottom: 1px solid #ddd">
-            <div class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">{{preferredLanguage.subCategories.titles.frequentlyOrdered}}</div>
-            <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1rem;left:5%;">&#xe838</i>
-        </div>
-        <div class=" noPadding">
-            <div class="row noMargin">
-                <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
-                    <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
-                        <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                        <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
-                        <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
-                            <div class="beRelative fullWidth fullHeight">
-                                <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
+        <div v-if="selectedCategory.hasFavorites" class="invisibleWrapper">
+            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5}" class=" beRelative" style="height:2.7rem;border-bottom: 1px solid #ddd">
+                <div class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">{{preferredLanguage.subCategories.titles.frequentlyOrdered}}</div>
+                <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1rem;left:5%;">&#xe838</i>
+            </div>
+            <div class=" noPadding">
+                <div class="row noMargin">
+                    <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
+                        <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
+                            <div class="beAbsolute fullWidth fullHeight centerInCenter"></div>
+                            <img v-on:load="arrangeProductImage($event)" :src="getImage(product.productImages.lowResolution)" class="beAbsolute centerInCenter productImage _fullWidth">
+                            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
+                                <div class="beRelative fullWidth fullHeight">
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{wireTitle(product.productName).content}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- End of Best 4-->
 
         <!-- White Gap -->
-        <div :style="{color:globalVariables.colors.fixedAppColor_text_2}" class="fullWidth fontSVSmall_R semiBold z-depth-1" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.4rem">-{{preferredLanguage.subCategories.titles.others}}</div>   
+        <div v-if="selectedCategory.hasFavorites" :style="{color:globalVariables.colors.fixedAppColor_text_2}" class="fullWidth z-indexHigh fontSVSmall_R semiBold" style="padding-top:0.1rem;padding-bottom:0.1rem;padding-left:0.4rem;border-bottom: 1px solid #ddd">-{{preferredLanguage.subCategories.titles.others}}</div>   
         <!-- End of White Gap -->
 
-        <div v-for="subCategory in subCategories" :key="subCategory.categoryTitle">
-            <div v-if="subCategory.subCategoryName !== 'Alt Kategorisizler'" class=" beRelative" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="height:1.5rem;">
-                <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem">{{subCategory.subCategoryName}}</p>
+        <div v-for="subCategory in subCategories" :key="subCategory.subCategoryUid">
+            <div v-if="getDefaultTitle(subCategory.subCategoryTitle).content !== 'Alt Kategorisizler'" class="beRelative z-indexMedium z-depth-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="height:1.5rem;border-bottom: 1px solid #ddd">
+                <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem">{{wireTitle(subCategory.subCategoryTitle).content}}</p>
             </div>
             <div class="noPadding">
                 <div class="row noMargin">
                     <div :style="calculatePadding({realIndex:index,totalNumberOfItem:subCategory.products.length})" @click="_selectProduct(product)" v-for="(product,index) in subCategory.products" class="col s6 m4 l3 borderBox product">
                         <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
-                            <div class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                            <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
+                            <div class="beAbsolute fullWidth fullHeight centerInCenter"></div>
+                            <img v-on:load="arrangeProductImage($event)" :src="getImage(product.productImages.lowResolution)" class="beAbsolute centerInCenter productImage _fullWidth">
                             <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{product.productName}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{wireTitle(product.productName).content}}</div>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +65,7 @@
 <script>
 //For vuex store, mapState and mapActions
 //Info : mapAction and mapMutations both inserted in methods block
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 
 import Banner from "./Banner.vue"
 
@@ -212,10 +215,21 @@ export default {
             "backgroundColor" : "#fff"
         }
     },
+    getDefaultTitle(titles){
+      return titles.find(title=>{return title.languageName  === 'turkish'})
+    },      
+    wireTitle(titles){
+      return titles.find(title=>{return title.languageName === this.preferredLanguage_asString})
+    },    
+    getImage(relativeUrl){
+        return this.globalVariables.serverAddress + relativeUrl
+    },
     resize(){
         this.executeAtNextTick(this.arrangeProducts)
         this.trigger = !this.trigger
     },
+    getTotalFavoritePoint(favoritePoint){return favoritePoint.natural + favoritePoint.artificial}, 
+
     //mapMutations and actions
     ...mapActions("moduleProduct",[
         "selectProduct"
@@ -228,26 +242,37 @@ export default {
       },
     mostWanteds(){
         //for developing purposes
-        var bag = []
+        var products = []
         if(this.subCategories)
         this.subCategories.forEach(subCategory=>{
-            subCategory.products.forEach(product=>{bag.push(product)})
+            subCategory.products.forEach(product=>{products.push(product)})
         })
-        var wanteds = []
-        for(var i = 0; i < 4 && bag[i]; i++)
-            wanteds.push(bag[i])
-        return wanteds
+        
+        products.sort((a,b)=>{
+            return (this.getTotalFavoritePoint(a.favoritePoint) > this.getTotalFavoritePoint(b.favoritePoint)) ? -1 : 1
+        })        
+        
+        var favorite4 = []
+        for(var i = 0 ; i < 4 && i < products.length; i++)
+            favorite4.push(products[i])
+        
+        return favorite4
     },
     //mapState
     ...mapState([
-        "preferredLanguage"
+        "preferredLanguage",
+        "preferredLanguage_asString"
     ]),
     ...mapState("moduleSubCategories",[
         "subCategories"
     ]),
     ...mapState("moduleCategories",[
         "selectedCategory"
-    ])
+    ]),
+  //mapGetters
+  ...mapGetters([
+    "dynamicColors"
+  ])    
 
   },
   created(){

@@ -1,3 +1,5 @@
+var axios = require("axios")
+import apiList from "../../apiList.js"
 
 //EXPORTING MODULE
 
@@ -37,6 +39,7 @@ export default {
         removeFromPlate(state,order){
             var counter = 0;
             for(let _order of state.plate){
+                
                 if(areTwoOrdersEqual(_order,order)){
                     state.plate.splice(counter,1)  
                     return
@@ -182,6 +185,17 @@ export default {
                     res()
                 },1000)
             })
+        },
+
+        handlePlateChange(context,newOrder){
+            var existingOrders = context.state.plate
+            
+            return new Promise((_res,_rej)=>{
+                console.log("helllll")
+                axios.post(apiList.handlePlateChange,{newOrder, existingOrders}).then(res=>{
+                    console.log(res.data)
+                })
+            })
         }
     }
 }
@@ -190,14 +204,14 @@ export default {
 function areTwoOrdersEqual(_order,order){
     if(_order.product.productUid === order.product.productUid){
         //check options
-        if(_order.selectedOption.productOptionName === order.selectedOption.productOptionName){
+        if(getDefaultTitle(_order.selectedOption.option).content === getDefaultTitle(order.selectedOption.option).content){
             //check extras
             //check length
             if(_order.selectedExtras.length === order.selectedExtras.length){
                 //check content
                 var areEqual = true
                 _order.selectedExtras.forEach(extra=>{
-                    var exists = order.selectedExtras.find(selectedExtra=>{return selectedExtra.productExtraName === extra.productExtraName})
+                    var exists = order.selectedExtras.find(selectedExtra=>{return getDefaultTitle(selectedExtra.productExtraName).content === getDefaultTitle(extra.productExtraName).content})
                     if(!exists)
                         areEqual = false
                 })
@@ -205,4 +219,9 @@ function areTwoOrdersEqual(_order,order){
             }
         }
     }
+}
+
+
+function getDefaultTitle(titles){
+    return titles.find(title=>{return title.languageName  === 'turkish'})
 }

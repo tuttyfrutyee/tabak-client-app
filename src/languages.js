@@ -10,13 +10,13 @@ export default {
             name : "turkish",
             localName : "Türkçe",
             flagImageUrl : "turkishFlag.png",
-            backgroundColor : "rgba(100,0,0,0.4)"
+            backgroundColor : "rgba(200,200,200,0.2)"
         },
         {
             name : "english",
-            localName : "İngilizce",
+            localName : "English",
             flagImageUrl : "englishFlag.png",
-            backgroundColor : "rgba(0,0,100,0.4)"
+            backgroundColor : "rgba(200,200,200,0.2)"
         },
     ],
     

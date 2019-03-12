@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
-import VueResource from 'vue-resource'
 
-const uid = require("uuid/v4")
+const uuid = require("uuid/v4")
 
 //untracked global variables that changes machine to machine(developing period)
-import untrackedGlobalVariables from "./untrackedGlobalVariables.json"
 import globalVariables from "./globalVariables.js"
 
 //importing materialize css and javascript
@@ -42,9 +40,8 @@ Vue.mixin({
   data : function() {
     return {
       //uuid
-      uid,
+      uid : uuid,
       //untrackedGlobalVariables
-      uTGlobalVariables : untrackedGlobalVariables,
       globalVariables,
       Vue
     }
@@ -54,12 +51,7 @@ Vue.mixin({
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
-Vue.use(VueResource)
 
-Vue.http.interceptors.push((request,next)=>{
-  request.credentials = true;
-  next();
-})
 
 new Vue({
   render: h => h(App),

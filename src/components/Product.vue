@@ -1,5 +1,5 @@
 <template>
-  <div v-if="selectedProduct" id="product" class="beAbsolute fullWidth" style="top:0px;left:0px;">
+  <div v-if="dynamicColors && selectedProduct" id="product" class="beAbsolute fullWidth" style="top:0px;left:0px;">
       <div id="background_subCategories" class="backgroundCard"></div>
       
       <div class="row noMargin beRelative">
@@ -39,7 +39,7 @@
 
 				<div class="progressive-image beRelative fullWidth fullHeight">
 
-					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="selectedProduct.productImages.productIconImage">
+					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="getImage(selectedProduct.productImages.lowResolution)">
 
 					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth">
                 </div>
@@ -48,7 +48,7 @@
 
           <div id="header" class="col s12 beRelative topShadow" style="height:3rem">
             <div class="beAbsolute centerInHeight" style="left:5%; width:95%;">
-                <p id="productName" style="width:70%" class="noPadding noMargin boldFont font_family2 fontSLarge_R">{{selectedProduct.productName}}</p>
+                <p id="productName" style="width:70%" class="noPadding noMargin boldFont font_family2 fontSLarge_R">{{wireTitle(selectedProduct.productName).content}}</p>
             </div>
             <div class="beAbsolute font_family1 fontSMedium_R" style="right:10%;right:5%;bottom:0.3rem">
                 {{selectedProduct.productCost}} ₺
@@ -62,10 +62,10 @@
           <div id="mainPart" class="col s12 noPadding beRelative" style="height:5rem;margin-top:0.8rem">
               <div :class="summaryClass()" class="beAbsolute" :style="summaryStyle()" style="width:48%;left:5%;">
                   <p id="summaryParagraph" class="noMargin font_family1" :style="{color:globalVariables.colors.fixedAppColor_text_3}" style="font-size:0.8rem;max-height:6rem; overflow:scroll">
-                      {{selectedProduct.productOptions[0].productOptionSummary}}
+                      {{wireTitle(selectedProduct.productSummary.summary).content}}
                   </p>
                   
-                  <div v-if="checkSummaryLength()" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor}" class="beAbsolute fullWidth" style="left:0;bottom:-3px;height:1px;"></div>
+                  <div v-if="checkSummaryLength()" :style="{backgroundColor: dynamicColors.helperThemeColor.background}" class="beAbsolute fullWidth" style="left:0;bottom:-3px;height:1px;"></div>
 
               </div>
               <div class="beAbsolute centerInHeight" style="width:30%;max-width:8rem;right:8%;height:2rem">
@@ -96,10 +96,10 @@
                   <div class="col s6 m5 offset-m1 l4 offset-l2 beRelative noPadding">
                         <label class="fluidFont-S">{{preferredLanguage.product.product.titles.options}}</label>
                         <select v-if="selectedProduct.productOptions.length<2" disabled class="fullWidth fontSVSmall_R browser-default noMargin" style="height:6vmax" v-model="order.selectedOption">
-                            <option v-for="option in selectedProduct.productOptions" :value="option" class="fontSVSmall_R" :key="option.optionName">{{option.productOptionName}}</option>
+                            <option v-for="(option,index) in selectedProduct.productOptions" :value="option" class="fontSVSmall_R" :key="index">{{wireTitle(option.option).content}}</option>
                         </select>
                         <select v-else class="fullWidth fontSVSmall_R browser-default noMargin" style="height:6vmax" v-model="order.selectedOption">
-                            <option v-for="option in selectedProduct.productOptions" :value="option" class="fontSVSmall_R" :key="option.optionName">{{option.productOptionName}}</option>
+                            <option v-for="(option,index) in selectedProduct.productOptions" :value="option" class="fontSVSmall_R" :key="index">{{wireTitle(option.option).content}}</option>
                         </select>
                         <div v-if="selectedProduct.productOptions.length>1" class="beAbsolute fullWidth" style="bottom:-1px;height:2px;backgroundColor:#424242;"></div>
                   </div>
@@ -109,7 +109,7 @@
                       <div v-if="selectedProduct.productExtras.length!==0" :data-micromodal-trigger="'modal-'+index" :href="'#modal'+index" :style="extrasStyle()"  class="eightWidth  beAbsolute centerInHeight" style="height:55%;border-radius:3px;right:3%">
                           <div class="beAbsolute centerInCenter noMargin noPadding boldFont center fontSSmall_R">{{preferredLanguage.product.product.titles.extras}}</div>
                           <div v-if="order.selectedExtras.length>0" class="beAbsolute" style="width:1.8rem;height:1.8rem;right:-5%;top:-18%">
-                              <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor,color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" style="border-radius:50%">
+                              <div class="beRelative fullWidth fullHeight" :style="{backgroundColor: dynamicColors.helperThemeColor.background ,color: dynamicColors.helperThemeColor.text}" style="border-radius:50%">
                                   <div class="beAbsolute centerInCenter boldFont fontSVSmall_R">{{order.selectedExtras.length}}</div>
                               </div>
                           </div>
@@ -131,8 +131,8 @@
                                             <div class="center boldFont fontSMedium_R">{{preferredLanguage.product.product.titles.extras}}</div>
                                             <i data-micromodal-close class="material-icons beAbsolute centerInHeight modal-close fontSMedium_R" style="right:8px">&#xe5cd</i>
                                         </div>
-                                        <div @click="toggleSelectedExtras({productExtra,order})" v-for="productExtra in selectedProduct.productExtras" class="col s12 beRelative noPadding waves-effect" style="height:10vmax;border-top:1px solid #cecece;" :key="productExtra.productExtraName">
-                                            <div class="beAbsolute centerInCenter font-family1 boldFont center addPaddingTAB-S fontSSmall_R" style="line-height: normal">{{productExtra.productExtraName}}</div>
+                                        <div @click="toggleSelectedExtras({productExtra,order})" v-for="(productExtra,index) in selectedProduct.productExtras" class="col s12 beRelative noPadding waves-effect" style="height:10vmax;border-top:1px solid #cecece;" :key="index">
+                                            <div class="beAbsolute centerInCenter font-family1 boldFont center addPaddingTAB-S fontSSmall_R" style="line-height: normal">{{wireTitle(productExtra.productExtraName).content}}</div>
                                             <div class="beAbsolute centerInHeight" style="left:5%">
                                                 <i v-if="!isInsideSelectedExtras({productExtra,order})" class="material-icons fontSMedium_R">&#xe835</i>
                                                 <i v-else class="material-icons fontSMedium_R">&#xe834</i>
@@ -148,9 +148,9 @@
                   </div>
               </div>
           </div>
-            <div v-if="!orderSettingsMode" @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor,color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" style="bottom:0;left:0;height:12vmax;-webkit-transform: translateZ(0);">
+            <div v-if="!orderSettingsMode" @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4 enableHardwareAcceleration" :style="{backgroundColor: dynamicColors.helperThemeColor.background, color: dynamicColors.helperThemeColor.text}" style="bottom:0;left:0;height:4.2rem;">
                 <div class="beRelative fullWidth fullHeight">
-                    <div class="beAbsolute centerInCenter boldFont tColorWhite fontSLarge_R">{{preferredLanguage.product.product.titles.addToPlate}}</div>
+                    <div class="beAbsolute centerInCenter boldFont fontSLarge_R">{{preferredLanguage.product.product.titles.addToPlate}}</div>
                     
                     <div class="beAbsolute centerInHeight" style="left:10%">
                         <img id="tabakIcon_product" src="../assets/tabakIcon.png" style="height:3rem">
@@ -164,7 +164,7 @@
 
                 </div>
             </div>
-            <div v-else class="fullWidth beFixed waves-effect z-depth-4" style="bottom:0;left:0;height:9vmax;-webkit-transform: translateZ(0);">
+            <div v-else class="fullWidth beFixed waves-effect z-depth-4 enableHardwareAcceleration" style="bottom:0;left:0;height:4rem;">
                 <div class="row noMargin fullHeight fullWidth noPadding">
                     <div @click="cancelOrderSettingsChanges()" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}" class="col s4 noPadding fullHeight beRelative waves-effect">
                         <div class="beAbsolute centerInCenter fullWidth center fontSSmall_R tColorWhite">{{preferredLanguage.product.productSettings.titles.cancel}}</div>
@@ -180,7 +180,7 @@
 <script>
 //For vuex store, mapState and mapActions   
 //Info : mapAction and mapMutations both inserted in methods block
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 
 export default {
   name: 'product',
@@ -205,7 +205,7 @@ export default {
             var indexOfRemoval = -1
             var counter = 0
             for(let _extra of order.selectedExtras){
-                if(_extra.productExtraName === extra.productExtraName)
+                if(this.getDefaultTitle(_extra.productExtraName).content === this.getDefaultTitle(extra.productExtraName).content)
                     indexOfRemoval = counter
                 counter++
             }
@@ -218,14 +218,23 @@ export default {
       isInsideSelectedExtras(details){
           var order = details.order;
           var extra = details.productExtra;
-          return order.selectedExtras.find(_extra=>{return _extra.productExtraName=== extra.productExtraName})
+          return order.selectedExtras.find(_extra=>{return this.getDefaultTitle(_extra.productExtraName).content=== this.getDefaultTitle(extra.productExtraName).content})
       },
       _pushToPlate(){
+          console.log(this.restaurantSettings.appType)
+          if(this.restaurantSettings.appType==='onlyMenu'){
+              var newOrder = this.deepCopyArray(this.orders[0])
+              newOrder.orderCount = this.orders.length
+              this.handlePlateChange(newOrder)
+          }
+
           this.orders.forEach(order=>{this.pushToPlate(order)})
           this.$router.go(-1)
+
           //be sure the product is not added from suggestions menu
           if(this.routeHistory[this.routeHistory.length-2].includes("subCategories"))
              this.addTodoAnimation({type:'lazy',name:'icon'})
+
       },
       incrementOrderCount(){
           this.orders.push({
@@ -276,6 +285,15 @@ export default {
             return this.paragraph.offsetHeight+ threshold > this.mainPart.offsetHeight  
           }
           return false
+      },
+      getDefaultTitle(titles){
+         return titles.find(title=>{return title.languageName === 'turkish'})
+      },
+      wireTitle(titles){
+         return titles.find(title=>{return title.languageName === this.preferredLanguage_asString})
+      },      
+      getImage(relativeUrl){
+          return this.globalVariables.serverAddress + relativeUrl
       },
       //classes
       summaryClass(){
@@ -334,7 +352,8 @@ export default {
         "updateOrderSelectedToBeChanged"
     ]),
     ...mapActions("modulePlate",[
-        "kickAndReplaceOrder"
+        "kickAndReplaceOrder",
+        "handlePlateChange"
     ]),
     ...mapActions("moduleProduct",[
         "pushToPlate"
@@ -348,17 +367,24 @@ export default {
 
       normalOption(){
           if(this.selectedProduct)
-            return this.selectedProduct.productOptions.find((option)=>{return option.productOptionName === 'Normal'})
+            return this.selectedProduct.productOptions.find((option)=>{return this.getDefaultTitle(option.option).content === 'Normal'})
       },
       //mapState
       ...mapState([
           "preferredLanguage",
-          "routeHistory"
+          "preferredLanguage_asString",
+          "routeHistory",
+          "restaurantSettings"
       ]),
       ...mapState("moduleProduct",[
           "selectedProduct",
           //for orderSettings mode
           "orderSelectedToBeChanged"
+      ]),
+
+      //mapGetters
+      ...mapGetters([
+          "dynamicColors"
       ])
   },
   created(){
@@ -409,7 +435,7 @@ export default {
     if(this.selectedProduct){
 
         var image = new Image();
-        image.src = this.selectedProduct.productImages.productRepresentImage
+        image.src = this.globalVariables.serverAddress + this.selectedProduct.productImages.highResolution
 
         var previewImage = document.getElementById("placeHolderImage")
         var newImage = document.getElementById("representImage")
@@ -454,17 +480,6 @@ export default {
     filter: blur(5px);
 }
 
-#representImage {
-	opacity: 0;
-	transition: opacity 100ms ease-in;
-}
-#imageFilter{
-	opacity: 0;
-	transition: opacity 100ms ease-in;
-}
-#previewImage{
-	transition: opacity 100ms ease-in;
-}
 ._line{
     width: 90%;
     height : 1px;
@@ -494,6 +509,14 @@ select{
     -webkit-box-shadow: 0px -2px 12px -2px rgba(0,0,0,0.14);
     -moz-box-shadow: 0px -2px 12px -2px rgba(0,0,0,0.14);
     box-shadow: 0px -2px 12px -2px rgba(0,0,0,0.14);
+}
+
+.enableHardwareAcceleration{
+        -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 </style>

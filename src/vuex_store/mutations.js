@@ -1,40 +1,6 @@
 
 export default {
 
-    changeActiveComponent(state,componentName){
-        clearAllComponents(state.componentIsActive); 
-        state.componentIsActive[componentName] = true
-    },
-
-    update_uTGlobalVariables(state,variables){
-        state.uTGlobalVariables = variables
-    },
-    //change userIsLoggedIn
-    update_userIsLoggedIn_toFirestoreRestaurant(state,bool){
-        state.userIsLoggedIn_toFirestoreRestaurant = bool;
-    },
-
-//firestore helpers updates
-    //update tabak firestore helpers
-
-    //update restaurant firestore helpers
-    update_rApp(state,app){
-        state.r_app = app;
-    },
-    update_rDb(state,db){
-        state.r_db = db;
-    },
-    update_rAuth(state,auth){
-        state.r_auth = auth;
-    },
-
-    //update shared firestore
-    update_firestore(state,firestore){
-        state.firestore = firestore
-    },
-    update_http(state,http){
-        state.http = http
-    },
     updateUIDGenerator(state,generator){
         state.uid = generator;
     },
@@ -58,8 +24,6 @@ export default {
         if(state.gadget_waitingScreen.onGoingProcessCount < 0)
             state.gadget_waitingScreen.onGoingProcessCount =0
 
-        console.log(state.gadget_waitingScreen.onGoingProcessCount)    
-
         //if there is waiting screen and process count is 0 remove waiting screen
         if(state.gadget_waitingScreen.waitingScreen && state.gadget_waitingScreen.onGoingProcessCount === 0){
             removeWaitingScreen(state.gadget_waitingScreen.waitingScreen);
@@ -75,11 +39,15 @@ export default {
         state.calculatedTransition = value
     },
 
+    updateRestaurantSettings(state,restaurantSettings){
+        state.restaurantSettings = restaurantSettings
+    },
+
     //language
     updatePreferredLanguage(state,language){
         state.preferredLanguage_asString = language
         state.preferredLanguage = state.languages[language]
-    },
+    },    
 
     //push to route history
     pushToRouteHistory(state,history){

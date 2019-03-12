@@ -1,11 +1,11 @@
 <template>
-  <div id="plate" class="fullWidth minHeight_full">
+  <div v-if="dynamicColors" id="plate" class="fullWidth minHeight_full">
     <div id="background_plate" class="backgroundCard"></div>
 
     <div class="row noMargin">
 
         <div class="col s12 noPadding" style="height:3.2rem;min-height:56px">
-            <ul :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}" class="tabs fullHeight beRelative">
+            <ul :style="{backgroundColor: dynamicColors.mainThemeColor.background}" class="tabs fullHeight beRelative">
 
                 <div @click="goBack()" class="beAbsolute centerInHeight z-indexMedium" style="width:2.8rem;height:3.2rem;">
                     <div class="beAbsolute centerInHeight z-indexMedium" style="left:3vmin;width:1.6rem;height:1.6rem;border-radius:50%;background-color:#424242">
@@ -15,17 +15,24 @@
                     </div>
                 </div>
 
-                <li class="tab col s7 fullHeight">
-                    <a :style="{color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" @click="arrangeOrdersHeight()" href="#orders" class="beRelative fullHeight">
+                <li v-if="restaurantSettings.appType==='menuAndOrder'" class="tab col s7 fullHeight">
+                    <a :style="{color: dynamicColors.mainThemeColor.text}" @click="arrangeOrdersHeight()" href="#orders" class="beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fontSVSmall_R">{{preferredLanguage.plate.plate.title}}</div>
                         <div class="beAbsolute centerInHeight" style="right:0px;height:60%;border:0.5px solid #cecece;width:0px"></div>
                     </a>
                 </li>
-                <li @click="handleTrackingOrdersTabTap()" class="tab col s5 fullHeight">
-                    <a :style="{color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" href="#track" class="beRelative fullHeight">
+
+                <li v-if="restaurantSettings.appType==='onlyMenu'" class="tab col s12 fullHeight">
+                    <a :style="{color: dynamicColors.mainThemeColor.text}" @click="arrangeOrdersHeight()" href="#orders" class="beRelative fullHeight">
+                        <div class="beAbsolute centerInCenter fontSVSmall_R">{{preferredLanguage.plate.plate.title}}</div>
+                    </a>
+                </li>                
+
+                <li v-if="restaurantSettings.appType==='menuAndOrder'" @click="handleTrackingOrdersTabTap()" class="tab col s5 fullHeight">
+                    <a :style="{color: dynamicColors.mainThemeColor.text}" href="#track" class="beRelative fullHeight">
                         <div class="beAbsolute centerInCenter fontSVSmall_R">{{preferredLanguage.plate.track.title}}</div>
                         <div v-if="unSeenTrackingOrdersCount>0" class="beAbsolute centerInHeight" style="right:10%;height:1.4rem;width:1.4rem">
-                            <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor,color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" style="border-radius:50%">
+                            <div class="beRelative fullWidth fullHeight" :style="{backgroundColor: dynamicColors.helperThemeColor.background,color: dynamicColors.helperThemeColor.text}" style="border-radius:50%">
                                 <div class="beAbsolute centerInCenter boldFont fontSVSmall_R noPadding" style="line-height:normal">{{unSeenTrackingOrdersCount}}</div>
                             </div>
                         </div>                        
@@ -49,8 +56,8 @@
                             <div @click="navigateToOrderSettings(order)" class="beAbsolute centerInHeight fullHeight waves-effect z-indexLow" style="left:0;right:10%"></div>
                             
                             <div class="beAbsolute centerInHeight text" style="left:15%;width:70%">
-                                <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
-                                <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} {{preferredLanguage.plate.plate.titles.extra}}</span></div>
+                                <div class="fontSSmall_R semiBold">{{wireTitle(order.product.productName).content}}</div>
+                                <div class="fontSVSmall_R"><span v-if="!order.selectedOption.normalFlag">({{wireTitle(order.selectedOption.option).content}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} {{preferredLanguage.plate.plate.titles.extra}}</span></div>
                             </div>
 
                             <div class="beAbsolute centerInHeight fullHeight" style="right:-0.50rem;width:15%">
@@ -61,9 +68,9 @@
                             </div>
                             
                         </div>
-                        <div class="col s12">
+                        <div v-if="restaurantSettings.appType==='menuAndOrder'" class="col s12">
                             <div class="row" style="height:3.5rem;max-height:100px;margin-top:1rem;margin-bottom:0.5rem">
-                                <div data-micromodal-trigger="modal-3" class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor,color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" style="border-radius:4px">
+                                <div data-micromodal-trigger="modal-3" class="col s7 offset-s1 noPadding beRelative fullHeight" :style="{backgroundColor: dynamicColors.mainThemeColor.background ,color: dynamicColors.mainThemeColor.text}" style="border-radius:4px">
                                     <div class="beAbsolute centerInCenter fontSSmall_R fullWidth center">{{preferredLanguage.plate.plate.titles.sendOrder}}</div>
                                 </div>
                                 <div class="col s2 offset-s1 beRelative fullHeight">
@@ -88,7 +95,7 @@
                                                 <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
                                                     <div class="row noMargin borderRadius_toTop">
-                                                        <div class="col s12 beRelative borderRadius_toTop" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor,color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}">
+                                                        <div class="col s12 beRelative borderRadius_toTop" :style="{backgroundColor: dynamicColors.mainThemeColor.background ,color: dynamicColors.mainThemeColor.text}">
                                                              <h5 class="center semiBold fontSVSmall_R">{{preferredLanguage.plate.plate.orderNote.dialogTitle}}</h5>
                                                              <i data-micromodal-close class="material-icons beAbsolute centerInHeight" style="right:8px">&#xe5cd</i>
                                                         </div>
@@ -106,22 +113,22 @@
                         </div>
                        
                     </div>
-                    <div style="height:2px;width:100%;background-color:#bdbdbd;margin-top:0.8rem"></div>
+                    <div v-if="restaurantSettings.appType==='menuAndOrder'" style="height:2px;width:100%;background-color:#bdbdbd;margin-top:0.8rem"></div>
 
-                    <div v-if="suggestedProducts().length>0" class="row noMargin">
+                    <div v-if="suggestedProducts.length>0" class="row noMargin">
                         <div class="col s12 semiBold fontSSmall_R" style="margin-top:1rem">{{preferredLanguage.plate.plate.titles.goesWellWith}}</div>
                         <div class="col s12 noPadding" style="margin-top:1rem;margin-bottom:2rem">
                             <!-- Swiper -->
                             <div class="swiper-container overFlowVisible">
                                 <div class="swiper-wrapper">
 
-                                    <div v-for="product in suggestedProducts()" class="swiper-slide" :key="product.productUid">
+                                    <div v-for="product in suggestedProducts" class="swiper-slide" :key="product.productUid">
                                         <div class="fullWidth beRelative suggestion borderBox" style="overflow:hidden; border-radius:2px">
                                             <div :id="product.productUid" class="beAbsolute fullWidth fullHeight centerInCenter waves-effect"></div>
-                                                    <img v-on:load="arrangeProductImage($event)" :src="product.productImages.productIconImage" class="beAbsolute centerInCenter productImage _fullWidth">
+                                                    <img v-on:load="arrangeProductImage($event)" :src="getImage(product.productImages.lowResolution)" class="beAbsolute centerInCenter productImage _fullWidth">
                                                 <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
                                                     <div class="beRelative fullWidth fullHeight">
-                                                        <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fontSSmall_R">{{product.productName}}</div>
+                                                        <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS fontSSmall_R">{{wireTitle(product.productName).content}}</div>
                                                     </div>
                                                 </div>
                                         </div>                                         
@@ -140,7 +147,7 @@
                     <img src="../assets/tabakIcon.png"  class="beAbsolute centerInCenter"></div>
             </div>
         </div>
-        <div id="track" class="col s12">
+        <div v-if="restaurantSettings.appType==='menuAndOrder'" id="track" class="col s12">
             <div class="row noMargin">
 
                 <!-- Order List here -->
@@ -158,8 +165,8 @@
                                         <div class="beAbsolute centerInHeight fontSSmall_R semiBold" style="left:2%">x{{order.orderCount}}</div>
 
                                         <div class="beAbsolute centerInHeight text" style="left:15%;width:58%">
-                                            <div class="fontSSmall_R semiBold">{{order.product.productName}}</div>
-                                            <div class="fontSVSmall_R"><span v-if="order.selectedOption.productOptionName!=='Normal'">({{order.selectedOption.productOptionName}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} {{preferredLanguage.plate.plate.titles.extra}}</span></div>
+                                            <div class="fontSSmall_R semiBold">{{wireTitle(order.product.productName).content}}</div>
+                                            <div class="fontSVSmall_R"><span v-if="!order.selectedOption.normalFlag">({{wireTitle(order.selectedOption.option).content}})</span><span v-if="order.selectedExtras.length>0"> +{{order.selectedExtras.length}} {{preferredLanguage.plate.plate.titles.extra}}</span></div>
                                         </div>                            
 
                                         <div v-if="index%2===0" class="beAbsolute centerInHeight text" style="right:2%;width:20%">
@@ -292,29 +299,18 @@
 <script>
 //For vuex store, mapState and mapActions
 //Info : mapAction and mapMutations both inserted in methods block
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState, mapGetters} from "vuex";
 
 export default {
   name: 'plate',
   data(){
     return {
-        l_orderNote : ""
+        l_orderNote : "",
+        swiper : null
     }
   },
   methods : {
-    suggestedProducts(){
-    //for developing purposes
-    var bag = []
 
-    for(let subCategory of this.subCategories){
-        subCategory.products.forEach(product=>{bag.push(product)})
-    }
-
-    var wanteds = []
-    for(var i = 0; i < 5 && bag[i]; i++)
-        wanteds.push(bag[i])
-    return wanteds        
-    },
     removeOrder(order){
         this.removeFromPlate(order)
     },
@@ -406,6 +402,12 @@ export default {
         return null
         
     },
+    getImage(relativeUrl){
+        return this.globalVariables.serverAddress + relativeUrl
+    },
+    wireTitle(titles){
+      return titles.find(title=>{return title.languageName === this.preferredLanguage_asString})
+    },
     //for styles
     arrangeOrdersHeight(){
         this.Vue.nextTick(()=>{
@@ -493,6 +495,47 @@ export default {
         },0)
 
     },
+
+    initSwiper(){
+        if(this.plate.length>0 && this.suggestedProducts.length>0){
+
+
+
+            if(this.swiper){
+                this.swiper.destroy()
+            } 
+
+            this.swiper = new Swiper('.swiper-container', {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: false,
+            },
+            breakpoints: {
+                769: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+                },
+                550: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+                },
+            },
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false                
+            },
+            loop: true,
+            on: {
+                    resize : this.arrangeSuggestions,
+                    slideChangeTransitionStart	 : this.arrangeProductsImages,
+                    tap : (event)=>{this.navigateToProduct(event.srcElement.id) }
+                },
+            });
+        }
+        
+    },
     //mapMutations and actions
     ...mapMutations([
         "addProcess",
@@ -567,9 +610,67 @@ export default {
 
            return orderPackBag
        },
+       allProducts(){
+           var allProducts = []
+           this.categories.forEach(category=>{
+               category.subCategories.forEach(subCategory=>{
+                   subCategory.products.forEach(product=>{
+                       allProducts.push(product)
+                   })
+               })
+           })
+           return allProducts
+       },
+    suggestedProducts(){
+        var topProductConnections = []
+
+        this.plate.forEach(order=>{
+            var product = order.product
+            var connection = this.connections.find(connection=>{return connection.productUid === product.productUid})
+            var sortedProductConnections = connection.productConnections.slice(0)
+
+            var getConnectionWeight = (productConnection)=>{return productConnection.connectionWeight_natural + productConnection.connectionWeight_artificial}
+            
+            sortedProductConnections.sort((a,b)=>{
+                return ( getConnectionWeight(a) > getConnectionWeight(b)) ? -1 : 1
+            })
+
+            var productsInPlate = this.plate.map(order=>{return order.product})
+
+            for(var i=0,counter=0; counter < 5 && i < sortedProductConnections.length; i++){
+                var productIsInPlate = productsInPlate.find(product=>{return product.productUid === sortedProductConnections[i].connectedProductUid})
+                if(productIsInPlate){
+                    continue;
+                }
+                var alreadyExistingProductConnection = topProductConnections.find(productConnection=>{return productConnection.connectedProductUid === sortedProductConnections[i].connectedProductUid})
+                if(alreadyExistingProductConnection)
+                    alreadyExistingProductConnection.connectionWeight += getConnectionWeight(sortedProductConnections[i])
+                else
+                    topProductConnections.push({
+                        connectedProductUid : sortedProductConnections[i].connectedProductUid,
+                        connectionWeight : getConnectionWeight(sortedProductConnections[i])
+                    })
+                counter++
+            }
+        })    
+        
+        var suggestedProductConnections = topProductConnections.slice(0)
+        suggestedProductConnections.sort((a,b)=>{return (a.connectionWeight > b.connectionWeight)?1:-1})
+
+        var suggestedProducts = []
+
+        suggestedProductConnections.forEach(productConnection=>{            
+            var suggestedProduct = this.allProducts.find(product=>{return product.productUid === productConnection.connectedProductUid})
+            suggestedProducts.push(suggestedProduct)
+        })
+
+        return suggestedProducts
+    },       
       //mapState
       ...mapState([
           "preferredLanguage",
+          "preferredLanguage_asString",
+          "restaurantSettings"
       ]),
       ...mapState("modulePlate",[
           "plate",
@@ -577,15 +678,27 @@ export default {
           "trackingOrders"
       ]),
       ...mapState("moduleCategories",[
-          "categories"
+          "categories",
+          "connections"
       ]),
       ...mapState("moduleSubCategories",[
           "subCategories"
       ]),
+      //mapGetters
+      ...mapGetters([
+          "dynamicColors"
+      ])
   },
   watch : {
       l_orderNote(newValue){
           this.updateOrderNote(newValue)
+      },
+      plate(){
+          this.Vue.nextTick(()=>{
+            this.initSwiper()
+            this.swiper.update()
+            this.arrangeSuggestions()
+          })
       }
   },
   created(){
@@ -600,43 +713,8 @@ export default {
         var el = document.querySelectorAll('.tabs');
         var instance = M.Tabs.init(el, {});
 
-        this.Vue.nextTick(()=>{
-                //styling some stuff dynamically
-        var slideBar = document.getElementsByClassName("indicator")
-            slideBar[0].style.backgroundColor = this.globalVariables.options.colors.dynamicAppColor_helperThemeColor
-            slideBar[0].style.height = "5px";
-        },0)
 
-
-        if(this.plate.length>0 && this.suggestedProducts().length>0)
-            var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 3,
-            spaceBetween: 30,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: false,
-            },
-            breakpoints: {
-                769: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-                },
-                550: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-                },
-            },
-            autoplay: {
-                delay: 5000000,
-                disableOnInteraction: false                
-            },
-            loop: true,
-            on: {
-                    resize : this.arrangeSuggestions,
-                    slideChangeTransitionStart	 : this.arrangeProductsImages,
-                    tap : (event)=>{this.navigateToProduct(event.srcElement.id) }
-                },
-            });
+        this.initSwiper()
 
         this.arrangeOrdersHeight()
 

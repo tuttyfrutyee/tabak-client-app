@@ -68,7 +68,8 @@ export default {
   computed : {
     //mapState
     ...mapState([
-      "calculatedTransition"
+      "calculatedTransition",
+      "restaurantSettings"
     ])
   },
   methods : {
@@ -118,8 +119,6 @@ export default {
           width = window.innerHeight
       }
 
-      console.log(width)
-
       var minFontSize = 12;
       var maxFontSize = 26;
 
@@ -137,31 +136,37 @@ export default {
       this.updateRemSizeInPx(calculatedFontSize)
 
     },
+    //mapActions
+    ...mapActions([
+      "getRestaurantSettings"
+    ]),
+    ...mapActions("moduleCategories",[
+      "getProducts",
+      "getConnections"
+    ]),
     //mapMutations
     ...mapMutations([
-      "update_http",
       "updateCalculatedTransition",
       "updateUIDGenerator",
       "updateRemSizeInPx",
-      "pushToRouteHistory"
+      "pushToRouteHistory",
+      "changeThemeColor"
     ]),
-    //mapActions
-    ...mapActions([
-      "getFirestoreClientPowers"
-    ]),
-    ...mapActions("moduleCategories",[
-      "watchCategories"
-    ])
+  
   },
   created(){
     this.calculateRootFontSize()
-    //connect to firestore
-    this.getFirestoreClientPowers().then(()=>{
-      this.watchCategories();
+
+    this.updateUIDGenerator(this.uid)
+
+    this.getRestaurantSettings().then(()=>{
+      console.log(this.restaurantSettings.dynamicColors.mainThemeColor.background)
+      this.changeThemeColor(this.restaurantSettings.dynamicColors.mainThemeColor.background)
     })
 
-    this.update_http(this.$http)
-    this.updateUIDGenerator(this.uid)
+    this.getProducts()    
+
+    this.getConnections()
 
   },
   watch : {
@@ -177,21 +182,20 @@ export default {
       "product",
       "orderSettings"
     ]
-    if(!knownPaths.includes(to))
+    if(!knownPaths.includes(to) && this.restaurantSettings)
       return this.$router.push("/categories")
     
     this.handleRouteChange(to,from)
+  },
+
+  restaurantSettings(value){
+    this.$router.push("/categories")
   }
+
   },
   mounted(){
     
-    this.$router.push("/categories")
 
-/*     console.log(screen.height,window.height,document.documentElement.clientHeight)
-    this.$store.dispatch("debug",{
-      "screen-height" : screen.height,
-      "client-height" : document.documentElement.clientHeight
-    }) */
 
   }
   

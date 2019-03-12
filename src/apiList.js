@@ -1,8 +1,20 @@
-var serverAddress = require("./untrackedGlobalVariables.json").serverAddress
+var axios = require("axios")
+import globalVariables from "./globalVariables"
+var serverAddress = globalVariables.serverAddress
 
-//the api endpoints used in waiterApp
+axios.defaults.withCredentials = true
 
-module.exports = {
+console.log(serverAddress)
+
+export default {
+
+    getRestaurantSettings : serverAddress + "/getRestaurantSettings_asClient",
+
+    getProducts : serverAddress + "/getProducts",
+
+    getConnections : serverAddress + "/getConnections",
+
+    handlePlateChange : serverAddress + "/handlePlateChange",
 
     /*
         params : {anything to be consoled to server terminal}

@@ -1,6 +1,6 @@
 <template>
-  <div id="banner" class="z-indexHigh">
-      <div :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}" class="row noMargin" style="height:3.4rem;" >
+  <div id="banner" class="z-indexHigh z-depth-1">
+      <div :style="{backgroundColor:dynamicColors.mainThemeColor.background}" class="row noMargin" style="height:3.6rem;" >
 
 
         <div v-if="isInSubCategories" @click="goBack()" class="col s2 beRelative fullHeight">
@@ -11,7 +11,7 @@
           </div>
         </div>
 
-        <div v-if="globalVariables.options.languages.length>1&&!isInSubCategories" data-micromodal-trigger="modal-language" class="col s2 beRelative fullHeight noPadding">
+        <div v-if="languagesSupported.length>1&&!isInSubCategories" data-micromodal-trigger="modal-language" class="col s2 beRelative fullHeight noPadding">
           <!--Language Flag-->
           <div v-for="language in languages.supportedLanguages" style="display:contents" :key="language.name">
               <div v-if="preferredLanguage_asString===language.name" :style="{backgroundColor:language.backgroundColor}" class="beAbsolute fullWidth fullHeight" style="right:0;top:0"></div>
@@ -20,20 +20,19 @@
         </div>
 
         <!--For placeholder-->
-        <div v-if="(globalVariables.options.languages.length===1&&!isInSubCategories)" class="col s2"></div>
+        <div v-if="(languagesSupported.length===1&&!isInSubCategories)" class="col s2"></div>
 
         <div class="col s8 beRelative fullHeight">
-          <img class="centerInCenter beAbsolute" :style="{height:globalVariables.options.bannerImage.heightRatio + '%'}" style="z-index:2" src="../assets/burger-station.png" alt="">
-          <div v-if="globalVariables.options.bannerCover.exists" class="beAbsolute centerInCenter fullHeight" style="width:80%;z-index:1;border-radius:2px" :style="{backgroundColor:globalVariables.options.bannerCover.color,opacity:globalVariables.options.bannerCover.opacity}"></div>
-          <div class="beAbsolute centerInHeight bColorGrey" style="height:60%;right:0.1rem;width:2px;opacity:0.8"></div>
+          <img class="centerInCenter beAbsolute" :style="{height: bannerImage.heightRatio + '%'}" style="z-index:2" :src="getImage(bannerImage.bannerImageRelativeUrl)" alt="">
+          <div v-if="bannerImage.overlay.doesExist" class="beAbsolute centerInCenter fullHeight" style="width:80%;z-index:1;border-radius:2px" :style="{backgroundColor: bannerImage.overlay.color, opacity: bannerImage.overlay.opacity / 100}"></div>
         </div>
 
-        <div id="plate" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh" style="right:0.1rem;top:0.1rem;height:3.2rem;width:3.2rem;border-radius:50%">
+        <div id="plate" :style="{backgroundColor: dynamicColors.mainThemeColor.background}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh z-depth-2" style="right:0.1rem;top:0.1rem;height:3.2rem;width:3.2rem;border-radius:50%">
           <div style="height:76%"  class="beAbsolute centerInCenter">
             <img id="tabakIcon" class="fullHeight animated" src="../assets/tabakIcon.png" >
             <div v-if="plate.length>0" class="beAbsolute" style="right:15%;bottom:15%;height:1.2rem;width:1.2rem">
-              <div class="beRelative fullWidth fullHeight" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor}" style="border-radius:50%">
-                  <div :style="{color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" class="beAbsolute centerInCenter boldFont fontSVSmall_R noPadding" style="line-height:normal">{{plate.length}}</div>
+              <div class="beRelative fullWidth fullHeight" :style="{backgroundColor: dynamicColors.helperThemeColor.background}" style="border-radius:50%">
+                  <div :style="{color: dynamicColors.helperThemeColor.text}" class="beAbsolute centerInCenter boldFont fontSVSmall_R noPadding" style="line-height:normal">{{plate.length}}</div>
               </div>
             </div>
           </div>
@@ -46,9 +45,9 @@
           <div class="modal__container noPadding" aria-modal="true" aria-labelledby="modal-language-title">
 
 
-              <div class="fullWidth borderBox borderRadius_toTop beRelative" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor}">
-                <div :style="{color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}" class="center semiBold fontSSmall_R" style="padding:0.3rem">{{preferredLanguage.banner.languagePreference.title}}</div>
-                <i data-micromodal-close class="material-icons beAbsolute centerInHeight tColorWhite" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
+              <div class="fullWidth borderBox borderRadius_toTop beRelative" :style="{backgroundColor: dynamicColors.mainThemeColor.background}">
+                <div :style="{color: dynamicColors.mainThemeColor.text}" class="center semiBold fontSSmall_R" style="padding:0.3rem">{{preferredLanguage.banner.languagePreference.title}}</div>
+                <i data-micromodal-close class="material-icons beAbsolute centerInHeight tColorWhite" :style="{color: dynamicColors.mainThemeColor.text}" style="right:8px">&#xe5cd</i>
               </div>
 
               <div class="row noMargin">
@@ -84,7 +83,7 @@
 <script>
 //For vuex store, mapState and mapActions
 //Info : mapAction and mapMutations both inserted in methods block
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 import languages from '../languages';
 
 export default {
@@ -143,6 +142,10 @@ export default {
       var images = require.context('../assets/', false, /\.png$/)
       return images('./' + pic)      
     },
+
+    getImage(relativeUrl){
+      return this.globalVariables.serverAddress + relativeUrl
+    },
     
     //styles and classes
     //mapMutations and mapActions
@@ -162,10 +165,10 @@ export default {
     },
     availableLanguages(){
       return this.languages.supportedLanguages.filter(language => {
-        return this.globalVariables.options.languages.includes(language.name)
+        return this.languagesSupported.includes(language.name)
       })
     },
-
+    //mapState
     ...mapState([
       "remSize",
       "languages", //supported languages by tabak app
@@ -178,6 +181,12 @@ export default {
     ...mapState("moduleAnimations",[
       "todo_animations"
     ]),
+    //mapGetters
+    ...mapGetters([
+      "dynamicColors",
+      "languagesSupported",
+      "bannerImage"
+    ])
   },
   watch:{
     immediateIconAnimation_required(value){
@@ -216,11 +225,7 @@ export default {
 }
 #tabakIcon
 {
-border-width : 0px;
-border-radius : 30%;
--moz-box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
--webkit-box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
-box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
+
 }
 .animated {
   -webkit-animation-fill-mode: both;

@@ -1,5 +1,5 @@
 <template>
-  <div id="categories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
+  <div v-if="dynamicColors" id="categories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
       <div id="background_categories" class="backgroundCard"></div>
       <banner></banner>
       
@@ -7,7 +7,7 @@
         <div class="row">
 
           <!-- Modal Trigger -->
-          <div data-micromodal-trigger="modal-specialRequest" class="col10 offset-s1 categoryBorder waves-effect" style="height:3.1rem;margin-bottom:1rem">
+          <div v-if="restaurantSettings.appType==='menuAndOrder'" data-micromodal-trigger="modal-specialRequest" class="col10 offset-s1 categoryBorder waves-effect" style="height:3.1rem;margin-bottom:1rem">
             <div class="row noMargin fullHeight">
               <div class="col s8 valign-wrapper fullHeight">
                 <p class="center noMargin fontSSmall_R" style="margin-left:20px!important;fullWidth">{{preferredLanguage.categories.specialRequest.title}}</p>
@@ -24,7 +24,7 @@
               <div class="modal__container noPadding" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
                   <div class="row noMargin borderRadius_toTop">
-                    <div class="col s12 beRelative borderRadius_toTop" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_mainThemeColor,color:globalVariables.options.colors.dynamicAppColor_mainTheme_textColor}">
+                    <div class="col s12 beRelative borderRadius_toTop" :style="{backgroundColor: dynamicColors.mainThemeColor.background, color: dynamicColors.mainThemeColor.text}">
                       <div class="center boldFont fontSSmall_R" style="padding:0.3rem">{{preferredLanguage.categories.specialRequest.title}}</div>
                       <i data-micromodal-close class="material-icons beAbsolute centerInHeight" :style="{color:globalVariables.colors.mainTextColor}" style="right:8px">&#xe5cd</i>
                     </div>
@@ -34,8 +34,8 @@
                   </div>
 
                   <div class="row noMargin" style="height:2.3rem">
-                    <div @click="_sendSpecialRequest($event)" class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor:globalVariables.options.colors.dynamicAppColor_helperThemeColor}">
-                      <div class="beAbsolute centerInCenter center boldFont" :style="{color:globalVariables.options.colors.dynamicAppColor_helperTheme_textColor}" style="font-size:1rem">{{preferredLanguage.categories.specialRequest.actionTitle}}</div>
+                    <div @click="_sendSpecialRequest($event)" class="col s5 offset-s7 fullHeight waves-effect beRelative" :style="{backgroundColor: dynamicColors.helperThemeColor.background}">
+                      <div class="beAbsolute centerInCenter center boldFont" :style="{color: dynamicColors.helperThemeColor.text}" style="font-size:1rem">{{preferredLanguage.categories.specialRequest.actionTitle}}</div>
                     </div>
                   </div> 
 
@@ -43,13 +43,13 @@
             </div>
           </div>          
 
-          <div @click="_selectCategory(category)" v-for="category in categories" class="col10 offset-s1 categoryBorder addMarginT-S waves-effect" style="height:4rem" :key="category.categoryUid">
+          <div @click="_selectCategory(category)" v-for="category in categories" class="col10 offset-s1 categoryBorder addMarginT-S" style="height:4rem" :key="category.categoryUid">
             <div class="row noMargin fullHeight">
               <div class="col s8 valign-wrapper fullHeight">
-                <p class="noMargin " style="font-size:1.1rem;margin-left:15px!important">{{category.categoryTitle}}</p>
+                <p class="noMargin " style="font-size:1.1rem;margin-left:15px!important">{{wireTitle(category.categoryTitle).content}}</p>
               </div>
               <div class="col s3 offset-s1 beRelative fullHeight">
-                <img src="../assets/categoryIcons_fordeveloping/dessert.png" style="height:3.2rem" class="centerInCenter beAbsolute">
+                <img :src="getImage(category.categoryIcon.iconImageRelativeUrl)" style="height:3.2rem" class="centerInCenter beAbsolute">
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
 <script>
 //For vuex store, mapState and mapActions
 //Info : mapAction and mapMutations both inserted in methods block
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 
 import Banner from "./Banner.vue"
 import globalVariables from '../globalVariables';
@@ -84,10 +84,16 @@ export default {
   computed : {
 //mapStates
   ...mapState([
-    "preferredLanguage"
+    "preferredLanguage",
+    "preferredLanguage_asString",
+    "restaurantSettings"
   ]),
   ...mapState("moduleCategories",[
     "categories"
+  ]),
+  //mapGetters
+  ...mapGetters([
+    "dynamicColors"
   ])
   },
   methods : {
@@ -118,14 +124,28 @@ export default {
 
     },
 
+    getDefaultTitle(titles){
+      return titles.find(title=>{return title.languageName  === 'turkish'})
+    },    
+
+    wireTitle(titles){
+      return titles.find(title=>{return title.languageName === this.preferredLanguage_asString})
+    },
+
+    getImage(relativeUrl){
+      return this.globalVariables.serverAddress + relativeUrl
+    },
+
     //mapMutations
     //mapActions
     ...mapActions("moduleCategories",[
-      "selectCategory"
+      "selectCategory",
     ]),
     ...mapActions("modulePlate",[
       "sendSpecialRequest"
     ])
+  },
+  created(){
   },
   mounted(){
 

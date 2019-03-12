@@ -1,15 +1,7 @@
 
 export default
 {
-    "clientCredentials" : {
-        apiKey: "AIzaSyDfywl2EI9FFLybwH42LZRhJwdi-W3RK28",
-        authDomain: "damdam-c80fb.firebaseapp.com",
-        databaseURL: "https://damdam-c80fb.firebaseio.com",
-        projectId : "damdam-c80fb",
-        storageBucket: "damdam-c80fb.appspot.com",
-        messagingSenderId: "245002059595"
-        },
-    "colors" : {
+    colors : {
 
         //hard coded app colors
 
@@ -34,32 +26,8 @@ export default
         fixedAppColor_filter : "rgba(0,0,0,0.6)",
 
     },
-    "pictures" : [
-        "dessert.png",
-        "fastfood.png",
-        "spagetti.png"
-    ],
-    "options" : {
-        //hard coded app colors
-        colors : {
-            dynamicAppColor_mainThemeColor : "#000",
-            dynamicAppColor_mainTheme_textColor : "#fff",
-            dynamicAppColor_helperThemeColor : "#f38000",
-            dynamicAppColor_helperTheme_textColor : "#000",
-        },
 
-        bannerCover : {
-            "exists" : true,
-            "color" : "#fff",
-            "opacity" : 0.5
-        },
-        bannerImage : {
-            "heightRatio" : 85
-        },
-        languages : [ //the languages selected by restaurant
-            "turkish",
-            "english"
-        ]
-    },
+   // serverAddress : "https://app.tabakmenu.com"
+    serverAddress : "http://127.0.0.1:8000"
 
 }
