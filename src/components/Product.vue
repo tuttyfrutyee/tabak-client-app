@@ -35,18 +35,29 @@
                 </div>              
   
 
-          <div class="col s12 m8 offset-m2 beRelative noOverflow noPadding" style="height :27vmax">
+          <div v-if="restaurantSettings.appType==='menuAndOrder'" class="col s12 m8 offset-m2 beRelative noOverflow noPadding" style="height :27vmax">
 
 				<div class="progressive-image beRelative fullWidth fullHeight">
 
 					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="getImage(selectedProduct.productImages.lowResolution)">
 
 					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth">
-                </div>
+                </div>            
 
 		  </div>
 
-          <div id="header" class="col s12 beRelative topShadow" style="height:3rem">
+          <div v-else class="col s12 m8 offset-m2 beRelative noOverflow noPadding" style="height:11.5rem">
+
+				<div class="progressive-image beRelative fullWidth fullHeight">
+
+					<img id="placeHolderImage" class="beAbsolute centerInCenter fullWidth" :src="getImage(selectedProduct.productImages.lowResolution)">
+
+					<img id="representImage" class="overlay beAbsolute centerInCenter fullWidth">
+                </div>            
+
+		  </div>
+
+          <div id="header" class="col s12 beRelative topShadow" style="height:3.5rem">
             <div class="beAbsolute centerInHeight" style="left:5%; width:95%;">
                 <p id="productName" style="width:70%" class="noPadding noMargin boldFont font_family2 fontSLarge_R">{{wireTitle(selectedProduct.productName).content}}</p>
             </div>
@@ -59,8 +70,8 @@
             <div class="_line"></div>
           </div>
 
-          <div id="mainPart" class="col s12 noPadding beRelative" style="height:5rem;margin-top:0.8rem">
-              <div :class="summaryClass()" class="beAbsolute" :style="summaryStyle()" style="width:48%;left:5%;">
+          <div id="mainPart" class="col s12 noPadding beRelative" :style="{height:restaurantSettings.appType==='menuAndOrder'?'5rem':'7rem'}" style="height:5rem;margin-top:0.8rem">
+              <div v-if="restaurantSettings.appType==='menuAndOrder'" :class="summaryClass()" class="beAbsolute" :style="summaryStyle()" style="width:48%;left:5%;">
                   <p id="summaryParagraph" class="noMargin font_family1" :style="{color:globalVariables.colors.fixedAppColor_text_3}" style="font-size:0.8rem;max-height:6rem; overflow:scroll">
                       {{wireTitle(selectedProduct.productSummary.summary).content}}
                   </p>
@@ -68,7 +79,17 @@
                   <div v-if="checkSummaryLength()" :style="{backgroundColor: dynamicColors.helperThemeColor.background}" class="beAbsolute fullWidth" style="left:0;bottom:-3px;height:1px;"></div>
 
               </div>
-              <div class="beAbsolute centerInHeight" style="width:30%;max-width:8rem;right:8%;height:2rem">
+
+              <div v-else :class="summaryClass()" class="beAbsolute" :style="summaryStyle()" style="width:90%;left:5%;">
+                  <p id="summaryParagraph" class="noMargin font_family1" :style="{color:globalVariables.colors.fixedAppColor_text_3}" style="font-size:0.9rem;max-height:8rem; overflow:scroll">
+                      {{wireTitle(selectedProduct.productSummary.summary).content}}
+                  </p>
+                  
+                  <div v-if="checkSummaryLength()" :style="{backgroundColor: dynamicColors.helperThemeColor.background}" class="beAbsolute fullWidth" style="left:0;bottom:-3px;height:1px;"></div>
+
+              </div>
+
+              <div v-if="restaurantSettings.appType==='menuAndOrder'" class="beAbsolute centerInHeight" style="width:30%;max-width:8rem;right:8%;height:2rem">
                   <div class="row fullHeight fontSVSmall_R">
                       <div @click="decrementOrderCount" class="col s4 fullHeight beRelative optionBorder waves-effect" style="border-radius:5px 0px 0px 5px">
                           <i class="material-icons beAbsolute center centerInCenter">
@@ -93,7 +114,7 @@
                       <div class="fontSVSmall_R"><span class="boldFont">{{index+1}}</span>. {{preferredLanguage.product.product.titles.product}}</div>
                       <div style="width:20%;height:1px;background-color:#424242"></div>
                   </div>
-                  <div class="col s6 m5 offset-m1 l4 offset-l2 beRelative noPadding">
+                  <div v-if="restaurantSettings.appType==='menuAndOrder'" class="col s6 m5 offset-m1 l4 offset-l2 beRelative noPadding">
                         <label class="fluidFont-S">{{preferredLanguage.product.product.titles.options}}</label>
                         <select v-if="selectedProduct.productOptions.length<2" disabled class="fullWidth fontSVSmall_R browser-default noMargin" style="height:6vmax" v-model="order.selectedOption">
                             <option v-for="(option,index) in selectedProduct.productOptions" :value="option" class="fontSVSmall_R" :key="index">{{wireTitle(option.option).content}}</option>
@@ -103,6 +124,7 @@
                         </select>
                         <div v-if="selectedProduct.productOptions.length>1" class="beAbsolute fullWidth" style="bottom:-1px;height:2px;backgroundColor:#424242;"></div>
                   </div>
+                  <div v-else class="col s6 m5 offset-m1 l4 offset-l2 beRelative noPadding"></div>
                   <div class="col s6 m5 l4 fullHeight beRelative">
 
                       <!-- Modal Trigger - 1 -->
@@ -126,7 +148,7 @@
                     <div class="_modal micromodal-slide z-indexHigh" :id="'modal-'+index" aria-hidden="true">
                         <div  class="modal__overlay" data-micromodal-close>
                             <div class="modal__container" style="opacity : 1" aria-modal="true" >
-                                    <div class="row fullWidth noMargin">
+                                    <div v-if="restaurantSettings.appType==='menuAndOrder'" class="row fullWidth noMargin">
                                         <div class="col s12 beRelative tColorWhite" style="margin-bottom:1vmax" :style="{backgroundColor:globalVariables.colors.fixedAppColor_background_1}">
                                             <div class="center boldFont fontSMedium_R">{{preferredLanguage.product.product.titles.extras}}</div>
                                             <i data-micromodal-close class="material-icons beAbsolute centerInHeight modal-close fontSMedium_R" style="right:8px">&#xe5cd</i>
@@ -140,6 +162,16 @@
                                             <div class="beAbsolute centerInHeight font-family1" style="font-size:0.9rem;right:5%;">+ {{productExtra.productExtraCost}} ₺</div>
                                         </div>
                                     </div>
+                                    <div v-else class="row fullWidth noMargin">
+                                        <div class="col s12 beRelative tColorWhite" style="margin-bottom:1vmax" :style="{backgroundColor:globalVariables.colors.fixedAppColor_background_1}">
+                                            <div class="center boldFont fontSMedium_R">{{preferredLanguage.product.product.titles.extras}}</div>
+                                            <i data-micromodal-close class="material-icons beAbsolute centerInHeight modal-close fontSMedium_R" style="right:8px">&#xe5cd</i>
+                                        </div>
+                                        <div v-for="(productExtra,index) in selectedProduct.productExtras" class="col s12 beRelative noPadding waves-effect" style="height:10vmax;border-top:1px solid #cecece;" :key="index">
+                                            <div class="beAbsolute centerInHeight font-family1 boldFont addPaddingTAB-S fontSSmall_R" style="left:10%;line-height: normal">{{wireTitle(productExtra.productExtraName).content}}</div>
+                                            <div class="beAbsolute centerInHeight font-family1" style="font-size:0.8rem;right:5%;">+ {{productExtra.productExtraCost}} ₺</div>
+                                        </div>
+                                    </div>                                    
                             </div>
                         </div>
                     </div>
@@ -148,7 +180,7 @@
                   </div>
               </div>
           </div>
-            <div v-if="!orderSettingsMode" @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4 enableHardwareAcceleration" :style="{backgroundColor: dynamicColors.helperThemeColor.background, color: dynamicColors.helperThemeColor.text}" style="bottom:0;left:0;height:4.2rem;">
+            <div v-if="!orderSettingsMode && restaurantSettings.appType==='menuAndOrder'" @click="_pushToPlate" class="fullWidth beFixed waves-effect z-depth-4 enableHardwareAcceleration" :style="{backgroundColor: dynamicColors.helperThemeColor.background, color: dynamicColors.helperThemeColor.text}" style="bottom:0;left:0;height:4.2rem;">
                 <div class="beRelative fullWidth fullHeight">
                     <div class="beAbsolute centerInCenter boldFont fontSLarge_R">{{preferredLanguage.product.product.titles.addToPlate}}</div>
                     
@@ -164,7 +196,7 @@
 
                 </div>
             </div>
-            <div v-else class="fullWidth beFixed waves-effect z-depth-4 enableHardwareAcceleration" style="bottom:0;left:0;height:4rem;">
+            <div v-else-if="orderSettingsMode" class="fullWidth beFixed waves-effect z-depth-4 enableHardwareAcceleration" style="bottom:0;left:0;height:4rem;">
                 <div class="row noMargin fullHeight fullWidth noPadding">
                     <div @click="cancelOrderSettingsChanges()" :style="{backgroundColor:globalVariables.colors.fixedAppColor_3}" class="col s4 noPadding fullHeight beRelative waves-effect">
                         <div class="beAbsolute centerInCenter fullWidth center fontSSmall_R tColorWhite">{{preferredLanguage.product.productSettings.titles.cancel}}</div>

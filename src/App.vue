@@ -160,13 +160,13 @@ export default {
     this.updateUIDGenerator(this.uid)
 
     this.getRestaurantSettings().then(()=>{
-      console.log(this.restaurantSettings.dynamicColors.mainThemeColor.background)
       this.changeThemeColor(this.restaurantSettings.dynamicColors.mainThemeColor.background)
+      if(this.restaurantSettings.appType==='menuAndOrder')
+        this.getConnections()
     })
 
     this.getProducts()    
 
-    this.getConnections()
 
   },
   watch : {

@@ -27,7 +27,7 @@
           <div v-if="bannerImage.overlay.doesExist" class="beAbsolute centerInCenter fullHeight" style="width:80%;z-index:1;border-radius:2px" :style="{backgroundColor: bannerImage.overlay.color, opacity: bannerImage.overlay.opacity / 100}"></div>
         </div>
 
-        <div id="plate" :style="{backgroundColor: dynamicColors.mainThemeColor.background}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh z-depth-2" style="right:0.1rem;top:0.1rem;height:3.2rem;width:3.2rem;border-radius:50%">
+        <div v-if="restaurantSettings.appType==='menuAndOrder'" id="plate" :style="{backgroundColor: dynamicColors.mainThemeColor.background}" :class="{'beFixed':isInSubCategories,'beRelative':!isInSubCategories}" @click="navigateToPlate" class="right overFlowVisible z-indexHigh z-depth-2" style="right:0.1rem;top:0.1rem;height:3.2rem;width:3.2rem;border-radius:50%">
           <div style="height:76%"  class="beAbsolute centerInCenter">
             <img id="tabakIcon" class="fullHeight animated" src="../assets/tabakIcon.png" >
             <div v-if="plate.length>0" class="beAbsolute" style="right:15%;bottom:15%;height:1.2rem;width:1.2rem">
@@ -171,6 +171,7 @@ export default {
     },
     //mapState
     ...mapState([
+      "restaurantSettings",
       "remSize",
       "languages", //supported languages by tabak app
       "preferredLanguage",
