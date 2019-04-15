@@ -371,9 +371,11 @@ export default {
           }
       },
       initModals(){
-          MicroModal.init({
-              disableScroll: false
-          });
+          
+        MicroModal.init({
+        awaitCloseAnimation: true, // [7] 
+        });
+
       },
       resize(){
           this.setHeaderHeight();

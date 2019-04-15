@@ -720,7 +720,9 @@ export default {
 
         this.arrangeSuggestions()
 
-        MicroModal.init();
+        MicroModal.init({
+        awaitCloseAnimation: true, // [7] 
+        });
 
         this.l_orderNote = this.orderNote
 

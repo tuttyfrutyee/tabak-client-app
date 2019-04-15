@@ -48,11 +48,15 @@
 }
 //addMargin Group
 //variables for addMargin
+$verySmallMargin : 8px;
 $smallMargin : 15px;
 $mediumMargin : 40px;
 $largeMargin : 80px;
 //endOf Variables
 //addMargin
+.addMargin-VS{
+    margin : $verySmallMargin !important;
+}
 .addMargin-S{
     margin : $smallMargin !important;
 }
@@ -63,6 +67,9 @@ $largeMargin : 80px;
     margin : $largeMargin !important;
 }
 //addMarginL
+.addMarginL-VS{
+    margin-left : $verySmallMargin !important;
+}
 .addMarginL-S{
     margin-left : $smallMargin !important;
 }
@@ -73,6 +80,9 @@ $largeMargin : 80px;
     margin-left : $largeMargin !important;
 }
 //addMarginR
+.addMarginR-VS{
+    margin-right : $verySmallMargin !important;
+}
 .addMarginR-S{
     margin-right : $smallMargin !important;
 }
@@ -83,6 +93,9 @@ $largeMargin : 80px;
     margin-right : $largeMargin !important;
 }
 //addMarginT
+.addMarginT-VS{
+    margin-top : $verySmallMargin !important;
+}
 .addMarginT-S{
     margin-top : $smallMargin !important;
 }
@@ -93,6 +106,9 @@ $largeMargin : 80px;
     margin-top : $largeMargin !important;
 }
 //addMarginB
+.addMarginB-VS{
+    margin-bottom : $verySmallMargin !important;
+}
 .addMarginB-S{
     margin-bottom : $smallMargin !important;
 }
@@ -103,6 +119,10 @@ $largeMargin : 80px;
     margin-bottom : $largeMargin !important;
 }
 //addMarginLAR
+.addMarginLAR-VS{
+    margin-left : $verySmallMargin !important;
+    margin-right : $verySmallMargin !important;
+}
 .addMarginLAR-S{
     margin-left : $smallMargin !important;
     margin-right : $smallMargin !important;
@@ -116,6 +136,10 @@ $largeMargin : 80px;
     margin-right : $largeMargin !important;
 }
 //addMarginTAB
+.addMarginTAB-VS{
+    margin-top : $verySmallMargin !important;
+    margin-bottom : $verySmallMargin !important;
+}
 .addMarginTAB-S{
     margin-top : $smallMargin !important;
     margin-bottom : $smallMargin !important;
@@ -153,6 +177,7 @@ $fontXXLarge : 80px;
     font-size : $fontXXLarge !important;
 }
 $fontSVSmall_R : 0.9rem;
+$fontSMSmall_R : 1rem;
 $fontSmall_R : 1.1rem;
 $fontMedium_R : 1.3rem;
 $fontLarge_R : 1.5rem;
@@ -161,6 +186,9 @@ $fontXLarge_R : 2rem;
 $fontXXLarge_R : 2.5rem;
 .fontSVSmall_R{
     font-size : $fontSVSmall_R !important;
+}
+.fontSMSmall_R{
+    font-size : $fontSMSmall_R ! important
 }
 .fontSSmall_R{
     font-size : $fontSmall_R !important;
@@ -894,11 +922,22 @@ $maxHeightXL : 400px;
         }
   }
   
+  @keyframes mmfadeOut {
+    from { opacity: 1; }
+      to { opacity: 0; }
+}
+
   
   @keyframes mmslideIn {
-    from { transform: translateY(0%); }
+    from { transform: translateY(0); }
       to { transform: translateY(-7vh); }
   }
+
+  @keyframes mmslideOut {
+    from { transform: translateY(-7vh); }
+    to { transform: translateY(0vh); }
+}
+
   
   
   .micromodal-slide {
@@ -929,4 +968,11 @@ $maxHeightXL : 400px;
   .micromodal-slide .modal__container,
   .micromodal-slide .modal__overlay {
     will-change: transform;
+  }
+
+  // gradient for colors
+  .addGradient{
+    background: -webkit-linear-gradient(#7e57c2, #673ab7);
+    background:    -moz-linear-gradient(#7e57c2, #673ab7);
+    background:         linear-gradient(#7e57c2, #673ab7);      
   }

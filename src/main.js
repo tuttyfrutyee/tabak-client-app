@@ -12,7 +12,7 @@ import "materialize-css/dist/css/materialize.min.css"
 import "materialize-css/dist/js/materialize.min.js"
 
 //for modals
-import MicroModal from 'micromodal'
+ import MicroModal from 'micromodal'
 
 //swiper
 import Swiper from "swiper"
@@ -20,7 +20,7 @@ import "swiper/dist/css/swiper.min.css"
 
 window.Swiper = Swiper
 
-window.MicroModal = MicroModal
+ window.MicroModal = MicroModal
 
 //myAlert.css
 //attaching functions to window object --> hence reachable anywhere

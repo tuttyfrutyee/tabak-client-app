@@ -3,30 +3,31 @@
   <div v-if="dynamicColors" :style="{color:globalVariables.colors.fixedAppColor_text_1}" id="subCategories" class="beAbsolute fullWidth minHeight_full fontF_OpenSans" style="top:0px;left:0px">
         <div id="background_subCategories" class="backgroundCard"></div>
         <banner class="z-indexHigh"></banner>
-        <div class="fullWidth fontSSmall_R semiBold beSticky z-indexMedium z-depth-1" style="padding-top:2px;padding-bottom:2px;padding-left:5px;top:-1px;" :style="{backgroundColor: dynamicColors.helperThemeColor.background,color: dynamicColors.helperThemeColor.text}">
+        <div class="fullWidth fontSMSmall_R beSticky z-indexMedium" style="padding-top:2px;padding-bottom:2px;padding-left:10px;top:-1px;" :style="{backgroundColor: dynamicColors.helperThemeColor.background,color: dynamicColors.helperThemeColor.text}">
              {{wireTitle(_categoryTitle).content}}
         </div>
         <!--Top best 4 -->
         <div v-if="selectedCategory.hasFavorites" class="invisibleWrapper">
-            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5}" class=" beRelative" style="height:2.7rem;border-bottom: 1px solid #ddd">
-                <div class="beAbsolute centerInCenter noMargin noPadding semiBold fontSVSmall_R">{{preferredLanguage.subCategories.titles.frequentlyOrdered}}</div>
-                <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1rem;left:5%;">&#xe838</i>
+            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5}" class=" beRelative" style="height:2.4rem;border-bottom: 1px solid #ddd">
+                <div class="beAbsolute centerInCenter noPadding boldFont fontSVSmall_R grey-text text-darken-3" style="white-space: nowrap;">{{preferredLanguage.subCategories.titles.frequentlyOrdered}}</div>
+                <i class="material-icons beAbsolute centerInHeight noMargin" style="font-size:1.4rem;right:5%;color:#f57f17">&#xe838</i>
             </div>
             <div class=" noPadding">
                 <div class="row noMargin">
                     <div :style="calculatePadding({realIndex:index,totalNumberOfItem:mostWanteds.length})" @click="_selectProduct(product)" v-for="(product,index) in mostWanteds" class="col s6 m4 l3 borderBox product">
-                        <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
+                        <div class="fullHeight fullWidth beRelative borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter"></div>
                             <img v-on:load="arrangeProductImage($event)" :src="getImage(product.productImages.lowResolution)" class="beAbsolute centerInCenter productImage _fullWidth">
-                            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
+                            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="border-radius:0.4rem 0.4rem 0.2rem 0.2rem;padding:0 5px 0 5px;bottom:0;left:0;height:25%">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{wireTitle(product.productName).content}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:0.9rem">{{wireTitle(product.productName).content}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="fullWidth" style="height:0.8rem" :style="{backgroundColor:dynamicColors.helperThemeColor.background}"></div>
         </div>
 
         <!-- End of Best 4-->
@@ -36,18 +37,18 @@
         <!-- End of White Gap -->
 
         <div class="z-indexLow" v-for="subCategory in subCategories" :key="subCategory.subCategoryUid">
-            <div v-if="getDefaultTitle(subCategory.subCategoryTitle).content !== 'Alt Kategorisizler'" class="beRelative z-indexLow z-depth-1" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="height:1.5rem;border-bottom: 1px solid #ddd">
+            <div v-if="getDefaultTitle(subCategory.subCategoryTitle).content !== 'Alt Kategorisizler'" class="beSticky z-indexMedium" :style="{backgroundColor:globalVariables.colors.fixedAppColor_backgroundColor_5,color:globalVariables.colors.fixedAppColor_text_3}" style="bottom:0px;height:1.5rem;border-bottom: 1px solid #ddd">
                 <p class="beAbsolute centerInHeight noMargin noPadding semiBold fontSVSmall_R" style="left:0.4rem">{{wireTitle(subCategory.subCategoryTitle).content}}</p>
             </div>
             <div class="noPadding">
                 <div class="row noMargin">
                     <div :style="calculatePadding({realIndex:index,totalNumberOfItem:subCategory.products.length})" @click="_selectProduct(product)" v-for="(product,index) in subCategory.products" class="col s6 m4 l3 borderBox product">
-                        <div class="fullHeight fullWidth beRelative z-depth-0 borderBox" style="overflow:hidden;border-radius:2px">
+                        <div class="fullHeight fullWidth beRelative borderBox" style="overflow:hidden;border-radius:2px">
                             <div class="beAbsolute fullWidth fullHeight centerInCenter"></div>
                             <img v-on:load="arrangeProductImage($event)" :src="getImage(product.productImages.lowResolution)" class="beAbsolute centerInCenter productImage _fullWidth">
-                            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="padding:0 5px 0 5px;bottom:0;left:0;height:30%">
+                            <div :style="{backgroundColor:globalVariables.colors.fixedAppColor_filter}" class="beAbsolute fullWidth filter" style="border-radius:0.4rem 0.4rem 0.2rem 0.2rem;padding:0 5px 0 5px;bottom:0;left:0;height:25%">
                                 <div class="beRelative fullWidth fullHeight">
-                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:1rem">{{wireTitle(product.productName).content}}</div>
+                                    <div class="beAbsolute centerInCenter tColorWhite semiBold center fullWidth text addPaddingLAR-VS" style="font-size:0.9rem">{{wireTitle(product.productName).content}}</div>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +111,7 @@ export default {
             for(let product of products){
                 product.style.height = ((width/mode) * wDh_ratio) + 'px'
                 
-                var filterHeightRatio = 0.3
+                var filterHeightRatio = 0.25
 
                 var expectedFilterHeight = product.offsetHeight * filterHeightRatio
 
@@ -170,7 +171,7 @@ export default {
 
         mode = this.trigger //dummy operation
 
-        var amount = 0.5
+        var amount = 0.3
         var unit = "vmin"
         //the number are in terms of 'vmin'
         var padding = {

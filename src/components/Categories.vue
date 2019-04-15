@@ -69,12 +69,14 @@
 import { mapActions, mapMutations, mapState, mapGetters } from "vuex";
 
 import Banner from "./Banner.vue"
+import Survey from "./Survey.vue"
 import globalVariables from '../globalVariables';
 
 export default {
   name: 'categories',
   components : {
-    Banner
+    Banner,
+    Survey
   },
   data(){
     return {
@@ -149,7 +151,9 @@ export default {
   },
   mounted(){
 
-    MicroModal.init();
+    MicroModal.init({
+      awaitCloseAnimation: true, // [7] 
+    });
 
   },
 }
@@ -166,4 +170,5 @@ export default {
 .waves-effect{
   display : block;
 }
+
 </style>

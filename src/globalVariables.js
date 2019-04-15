@@ -23,7 +23,7 @@ export default
         fixedAppColor_background_4 : "#e53935", //red
         fixedAppColor_background_5 : "#fafafa", //grey-white
             //filter color
-        fixedAppColor_filter : "rgba(0,0,0,0.6)",
+        fixedAppColor_filter : "rgba(0,0,0,0.3)",
 
     },
 

@@ -20,6 +20,7 @@
     "sass-loader": "^7.1.0",
     "swiper": "^4.4.6",
     "uuid": "^3.3.2",
+    "vex-js": "^4.1.0",
     "vue": "^2.5.17",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.2",

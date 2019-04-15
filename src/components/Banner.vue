@@ -76,7 +76,10 @@
 
           </div>
         </div>
-      </div>        
+      </div>  
+
+
+                 
 
   </div>
 </template>
@@ -213,7 +216,11 @@ export default {
     }
 
 
-    MicroModal.init();
+    MicroModal.init({
+      awaitCloseAnimation: true, // [7] 
+    });
+
+
 
 
   }
